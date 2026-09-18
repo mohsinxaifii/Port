@@ -1,0 +1,209 @@
+/* ==================================================================
+   ABOUT PAGE
+
+   A CV set as a printed page: ruled rows, a numbered press list, and
+   the same display scale as the index so the two read as one document.
+   ================================================================== */
+
+.about__bio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  border-bottom: 1px solid var(--rule);
+}
+.about__bio-left {
+  padding: 3vw 3vw 4vw 2vw;
+  border-right: 1px solid var(--rule);
+}
+.about__bio-right { padding: 3vw 2vw 4vw 3vw; }
+
+/* --- Section shell --- */
+.about__section { padding: 4vw 2vw; border-bottom: 1px solid var(--rule); }
+.about__heading {
+  font-family: var(--font-display);
+  font-size: 5.5vw;
+  line-height: .85;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+  margin-bottom: 2.5vw;
+}
+
+/* --- Ruled rows: the CV entries --- */
+.about__rows { display: flex; flex-direction: column; }
+.row {
+  display: grid;
+  grid-template-columns: 9vw 1fr 18vw;
+  align-items: baseline;
+  gap: 2vw;
+  padding: 1.4vw 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.row:last-child { border-bottom: 1px solid var(--rule-soft); }
+.row__period {
+  font-family: var(--font-body);
+  font-size: 1vw;
+  letter-spacing: .04em;
+  opacity: .7;
+  white-space: nowrap;
+}
+.row__title {
+  font-family: var(--font-display);
+  font-size: 2.2vw;
+  line-height: 1;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+.row__org { font-family: var(--font-body); font-size: 1.05vw; opacity: .8; margin-top: .3vw; }
+.row__summary { font-family: var(--font-body); font-size: 1.05vw; line-height: 1.4; margin-top: .5vw; }
+.row__meta { font-family: var(--font-body); font-size: .95vw; line-height: 1.4; opacity: .75; text-align: right; }
+
+/* Live marker on the current role. */
+.row__now {
+  display: inline-flex;
+  align-items: center;
+  gap: .4vw;
+  font-family: var(--font-display);
+  font-size: .8vw;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.row__now::before {
+  content: '';
+  width: .45vw;
+  height: .45vw;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+
+/* --- Skills --- */
+.about__skills { margin-top: 2.5vw; display: flex; flex-direction: column; gap: 1vw; }
+.skill { display: grid; grid-template-columns: 9vw 1fr; gap: 1.5vw; align-items: baseline; }
+.skill__group {
+  font-family: var(--font-display);
+  font-size: 1vw;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: .7;
+}
+.skill__items { font-family: var(--font-body); font-size: 1.1vw; line-height: 1.4; }
+
+/* --- Availability --- */
+.about__available {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 4vw;
+  padding: 5vw 2vw;
+  border-bottom: 1px solid var(--rule);
+}
+.available__status {
+  display: inline-flex;
+  align-items: center;
+  gap: .5vw;
+  font-family: var(--font-display);
+  font-size: 1.1vw;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-bottom: 1.5vw;
+}
+.available__status::before {
+  content: '';
+  width: .5vw; height: .5vw;
+  border-radius: 50%;
+  background-color: var(--accent);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+.available__body {
+  font-family: var(--font-body);
+  font-size: 1.35vw;
+  line-height: 1.4;
+  max-width: 34vw;
+}
+
+/* --- Press: numbered list --- */
+.about__press { display: flex; flex-direction: column; counter-reset: press; }
+.press {
+  display: grid;
+  grid-template-columns: 3vw 1fr 12vw 6vw;
+  align-items: baseline;
+  gap: 1.5vw;
+  padding: 1.1vw 0;
+  border-top: 1px solid var(--rule-soft);
+  transition: padding-left .5s cubic-bezier(.16, 1, .3, 1);
+}
+.press:last-child { border-bottom: 1px solid var(--rule-soft); }
+.press:hover { padding-left: 1vw; }
+.press__num {
+  counter-increment: press;
+  font-family: var(--font-numeral);
+  font-size: 1.6vw;
+  opacity: .6;
+}
+.press__num::before { content: counter(press); }
+.press__title { font-family: var(--font-body); font-size: 1.4vw; line-height: 1.2; }
+.press__source {
+  font-family: var(--font-display);
+  font-size: 1.1vw;
+  letter-spacing: -.01em;
+  text-transform: uppercase;
+}
+.press__year { font-family: var(--font-body); font-size: 1vw; opacity: .7; text-align: right; }
+
+/* --- Clients marquee-ish strip --- */
+.about__clients {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw 2.5vw;
+  padding: 4vw 2vw;
+  border-bottom: 1px solid var(--rule);
+}
+.client {
+  font-family: var(--font-display);
+  font-size: 4vw;
+  line-height: 1;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  opacity: .28;
+  transition: opacity .4s;
+}
+.about__clients:hover .client { opacity: .16; }
+.client:hover { opacity: 1; }
+
+/* ------------------------------------------------------------------
+   MOBILE
+------------------------------------------------------------------ */
+@media (max-width: 991px) {
+  .about__bio { grid-template-columns: 1fr; }
+  .about__bio-left { padding: 8vw 4vw; border-right: 0; border-bottom: 1px solid var(--rule); }
+  .about__bio-right { padding: 8vw 4vw; }
+
+  .about__section { padding: 12vw 4vw; }
+  .about__heading { font-size: 12vw; margin-bottom: 8vw; }
+
+  .row { grid-template-columns: 1fr; gap: .8vw; padding: 5vw 0; }
+  .row__period { font-size: 3.2vw; }
+  .row__title { font-size: 7vw; }
+  .row__org, .row__summary { font-size: 4vw; margin-top: 2vw; }
+  .row__meta { font-size: 3.4vw; text-align: left; margin-top: 2vw; }
+  .row__now { font-size: 3vw; gap: 1.5vw; }
+  .row__now::before { width: 1.8vw; height: 1.8vw; }
+
+  .about__skills { margin-top: 10vw; gap: 5vw; }
+  .skill { grid-template-columns: 1fr; gap: 1.5vw; }
+  .skill__group { font-size: 3.2vw; }
+  .skill__items { font-size: 4vw; }
+
+  .about__available { grid-template-columns: 1fr; gap: 8vw; padding: 12vw 4vw; }
+  .available__status { font-size: 3.4vw; gap: 2vw; margin-bottom: 5vw; }
+  .available__status::before { width: 2vw; height: 2vw; }
+  .available__body { font-size: 4.6vw; max-width: none; }
+
+  .press { grid-template-columns: 8vw 1fr; gap: 2vw; padding: 4vw 0; }
+  .press__num { font-size: 5vw; }
+  .press__title { font-size: 4.6vw; }
+  .press__source { font-size: 3.6vw; grid-column: 2; }
+  .press__year { font-size: 3.2vw; text-align: left; grid-column: 2; }
+
+  .about__clients { gap: 3vw 6vw; padding: 12vw 4vw; }
+  .client { font-size: 10vw; opacity: .5; }
+}

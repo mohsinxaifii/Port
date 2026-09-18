@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio — Index</title>
+  <meta name="description" content="Portfolio — selected work, background and contact.">
+  <link rel="icon" href="/ref/site/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body class="is-index">
+  <!-- Landscape phones get a rotate prompt: the vw type scale assumes portrait. -->
+  <div class="rotate">
+    <p class="rotate__desc">Please rotate your device<br>to ensure a better experience.</p>
+  </div>
+
+  <!-- The three paper overlays -->
+  <canvas id="curtain" aria-hidden="true"></canvas>
+
+
+  <main class="app" data-scroll-container>
+    <div class="paper-texture" aria-hidden="true"></div>
+    <div data-nav-mount></div>
+
+    <div>
+
+      <!-- Featured carousel -->
+      <section class="featured" data-intro="stagger" data-featured-mount></section>
+
+      <!-- Giant wordmark -->
+      <section class="wordmark-block">
+        <h1 class="wordmark" data-fit data-intro="wordmark" data-wordmark></h1>
+      </section>
+
+      <div class="sheet">
+
+      <!-- Intro: headline, portrait, drop-cap, roles -->
+      <section class="intro">
+        <div class="intro__left">
+          <h2 class="display" data-headline-lead></h2>
+          <h2 class="display display--emphasis" data-headline-emphasis></h2>
+          <div class="divs">
+            <span class="divs__mark divs__mark--short"></span>
+            <span class="divs__mark"></span>
+          </div>
+          <div data-figure-mount></div>
+
+          <div class="intro__dropcap">
+            <p class="has-dropcap" data-intro-copy></p>
+          </div>
+        </div>
+        <div class="intro__right">
+          <div data-portrait-mount></div>
+          <div class="roles" data-roles-mount></div>
+          <div class="divs">
+            <span class="divs__mark"></span>
+            <span class="divs__mark"></span>
+            <span class="divs__mark"></span>
+            <span class="divs__mark"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stamp block -->
+      <section class="stamp-block">
+        <h2 class="stamp-block__head">Website</h2>
+        <div data-stamp-mount></div>
+      </section>
+
+      <!-- Upcoming + process -->
+      <section class="process">
+        <div class="process__intro" data-upcoming-text></div>
+        <div class="process__card" data-upcoming-card></div>
+        <div class="process__figure" data-process-figure></div>
+        <div class="process__think">
+          <h2 class="display" data-process-lead></h2>
+          <h2 class="display display--emphasis" data-process-emphasis></h2>
+          <div class="divs">
+            <span class="divs__mark divs__mark--short"></span>
+            <span class="divs__mark"></span>
+          </div>
+          <p class="has-dropcap" style="margin-top:2vw" data-process-intro></p>
+          <p class="process__body" data-process-body></p>
+          <a class="cta" href="/work.html" data-cta></a>
+        </div>
+      </section>
+
+      <!-- Counters -->
+      <section class="counters" data-counters-mount></section>
+
+      <!-- Slab -->
+      <section class="slab">
+        <div class="slab__words" data-slab-mount></div>
+        <div class="slab__side" data-slab-side></div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="quotes">
+        <div class="quotes__deck" data-quotes-mount></div>
+      </section>
+
+      <!-- Featured strip: card | headline | card -->
+      <section class="strip" data-strip-mount></section>
+
+      <div data-footer-mount></div>
+      </div><!-- /.sheet -->
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/home.js"></script>
+</body>
+</html>

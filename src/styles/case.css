@@ -1,0 +1,107 @@
+/* ==================================================================
+   CASE STUDY PAGE
+   ================================================================== */
+
+.case__head {
+  padding: 12vw 2vw 3vw;
+  border-bottom: 1px solid var(--rule);
+}
+.case__meta {
+  display: flex;
+  align-items: baseline;
+  gap: .8vw;
+  font-family: var(--font-body);
+  font-size: 1.05vw;
+  letter-spacing: .02em;
+  opacity: .8;
+}
+.case__title {
+  margin-top: 1vw;
+  font-family: var(--font-display);
+  font-size: 18vw;
+  line-height: .78;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+
+.case__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 4vw;
+  padding: 4vw 2vw;
+  border-bottom: 1px solid var(--rule);
+}
+.case__facts { display: flex; flex-direction: column; gap: 1.2vw; }
+.fact { display: grid; grid-template-columns: 7vw 1fr; gap: 1.5vw; align-items: baseline; }
+.fact__key {
+  font-family: var(--font-display);
+  font-size: 1vw;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  opacity: .65;
+}
+.fact__value { font-family: var(--font-body); font-size: 1.15vw; line-height: 1.4; }
+.fact__value a { text-decoration: underline; text-underline-offset: .15em; }
+
+.case__section { padding: 5vw 2vw; border-bottom: 1px solid var(--rule); }
+.case__section-title {
+  font-family: var(--font-display);
+  font-size: 9vw;
+  line-height: .8;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+  margin-bottom: 2.5vw;
+}
+.case__body {
+  font-family: var(--font-body);
+  font-size: 1.35vw;
+  line-height: 1.45;
+  letter-spacing: -.01em;
+  max-width: 46vw;
+}
+
+/* --- Gallery: full-bleed plates with a hairline frame --- */
+.case__gallery { display: flex; flex-direction: column; gap: 2vw; padding: 4vw 2vw; }
+.plate { border: 1px solid var(--ink); overflow: hidden; }
+.plate img { width: 100%; height: auto; display: block; }
+.plate--empty { aspect-ratio: 16 / 9; }
+.plate--empty span { font-size: 1.6vw; }
+
+/* --- Next project --- */
+.case__next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4vw;
+  padding: 5vw 2vw;
+  border-top: 1px solid var(--rule);
+}
+.case__next-label {
+  font-family: var(--font-display);
+  font-size: 6vw;
+  line-height: .85;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+  .case__head { padding: 30vw 4vw 8vw; }
+  .case__meta { font-size: 3.4vw; gap: 2vw; }
+  .case__title { font-size: 20vw; margin-top: 4vw; }
+
+  .case__intro { grid-template-columns: 1fr; gap: 8vw; padding: 12vw 4vw; }
+  .fact { grid-template-columns: 1fr; gap: 1vw; }
+  .fact__key { font-size: 3.2vw; }
+  .fact__value { font-size: 4.2vw; }
+
+  .case__section { padding: 12vw 4vw; }
+  .case__section-title { font-size: 16vw; margin-bottom: 8vw; }
+  .case__body { font-size: 4.4vw; max-width: none; }
+
+  .case__gallery { gap: 6vw; padding: 12vw 4vw; }
+  .plate--empty span { font-size: 4.5vw; }
+
+  .case__next { flex-direction: column; align-items: flex-start; gap: 8vw; padding: 12vw 4vw; }
+  .case__next-label { font-size: 16vw; }
+  .case__next .card { width: 100%; }
+}

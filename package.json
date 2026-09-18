@@ -1,0 +1,23 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "predev": "node scripts/gen-cases.mjs",
+    "dev": "vite",
+    "prebuild": "node scripts/gen-cases.mjs",
+    "build": "vite build",
+    "preview": "vite preview",
+    "gen:cases": "node scripts/gen-cases.mjs",
+    "gen:textures": "node scripts/gen-textures.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "ogl": "^1.0.11"
+  }
+}

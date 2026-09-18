@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio — About</title>
+  <meta name="description" content="About — background, experience, recognition and contact.">
+  <link rel="icon" href="/ref/site/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body class="is-about">
+  <div class="rotate">
+    <p class="rotate__desc">Please rotate your device<br>to ensure a better experience.</p>
+  </div>
+
+  <canvas id="curtain" aria-hidden="true"></canvas>
+
+
+  <main class="app" data-scroll-container>
+    <div class="paper-texture" aria-hidden="true"></div>
+    <div data-nav-mount></div>
+
+    <div>
+
+      <!-- Masthead -->
+      <section class="wordmark-block">
+        <h1 class="wordmark" data-fit data-intro="wordmark" data-about-title></h1>
+      </section>
+
+      <div class="sheet">
+
+      <!-- Bio -->
+      <section class="about__bio">
+        <div class="about__bio-left">
+          <h2 class="display" data-bio-lead></h2>
+          <h2 class="display display--emphasis" data-bio-emphasis></h2>
+          <div class="divs">
+            <span class="divs__mark divs__mark--short"></span>
+            <span class="divs__mark"></span>
+          </div>
+        </div>
+        <div class="about__bio-right">
+          <p class="has-dropcap" data-intro="stagger" data-bio-copy></p>
+          <div class="about__skills" data-skills-mount></div>
+        </div>
+      </section>
+
+      <!-- Recognition -->
+      <section class="about__section" data-recognition-section>
+        <h2 class="about__heading" data-recognition-heading></h2>
+        <div class="about__rows" data-recognition-mount></div>
+      </section>
+
+      <!-- Experience -->
+      <section class="about__section">
+        <h2 class="about__heading" data-experience-heading></h2>
+        <div class="about__rows" data-experience-mount></div>
+      </section>
+
+      <!-- Education -->
+      <section class="about__section" data-education-section>
+        <h2 class="about__heading" data-education-heading></h2>
+        <div class="about__rows" data-education-mount></div>
+      </section>
+
+      <!-- Availability -->
+      <section class="about__available" data-available-mount></section>
+
+      <!-- Press -->
+      <section class="about__section" data-press-section>
+        <h2 class="about__heading" data-press-heading></h2>
+        <ol class="about__press" data-press-mount></ol>
+      </section>
+
+      <!-- Clients -->
+      <section class="about__clients" data-clients-mount></section>
+
+      <div data-footer-mount></div>
+      </div><!-- /.sheet -->
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/about.js"></script>
+</body>
+</html>

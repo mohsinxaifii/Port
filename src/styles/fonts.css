@@ -1,0 +1,93 @@
+/* ============================================================
+   TYPE SYSTEM
+   ------------------------------------------------------------
+   Four roles, mirroring the reference build:
+
+     --font-display  headings, giant type, nav, marquee
+     --font-body     body copy, project descriptions
+     --font-accent   the single swapped letters: W[o]rk, Ab[o]ut
+     --font-numeral  award counters (9 / 1 / 6 / 8)
+
+   Licence status per role is recorded beside each @font-face.
+   See REFERENCE.md before deploying.
+   ============================================================ */
+
+/* ---- Stand-in for the display role only (see below) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Instrument+Serif:ital@0;1&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&display=swap');
+
+/* ------------------------------------------------------------
+   BODY - PP Editorial New (Pangram Pangram, free for personal use)
+   INSTALLED. Original foundry files, unmodified.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Editorial New';
+  src: url('../assets/fonts/PPEditorialNew-Ultralight.otf') format('opentype');
+  font-weight: 200; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Editorial New';
+  src: url('../assets/fonts/PPEditorialNew-Regular.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   ACCENT - Domaine Display Condensed (Klim)
+   INSTALLED AS *TEST* FONTS. Klim's Test Font Licence permits
+   internal evaluation and mock-ups only - explicitly NOT
+   commercial or customer-facing use. Fine while building; a
+   retail licence is required before this site goes live.
+   Buy: https://klim.co.nz/retail-fonts/domaine-display/
+
+   Test cuts also carry a reduced character set (A-Z a-z 0-9 . , -)
+   and no OpenType features. That covers this role, which only ever
+   sets a single swapped letter, a drop cap, or a digit - anything
+   outside the set simply falls through to the next family.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Domaine Display';
+  src: url('../assets/fonts/TestDomaineDispCond-Regular.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Domaine Display';
+  src: url('../assets/fonts/TestDomaineDispCond-Medium.woff2') format('woff2');
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   NUMERALS - Encient German Gothic (freeware blackletter)
+   INSTALLED. Stands in for Germgoth, which fills the same
+   blackletter role on the reference.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: 'Germgoth';
+  src: url('../assets/fonts/EncientGermanGothic.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   DISPLAY - Canopee (VJ-Type, commercial). NOT INSTALLED.
+   The copy supplied carries "wf-rip" in its version string - a
+   marker left by webfont-ripping tools - so it is an unlicensed
+   rip rather than a foundry file. Running on a stand-in until a
+   real licence exists. Buy: https://vj-type.com
+   Then drop Canopee.woff2 into src/assets/fonts/ and uncomment.
+   ------------------------------------------------------------ */
+/*
+@font-face {
+  font-family: 'Canopee';
+  src: url('../assets/fonts/Canopee.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+*/
+
+:root {
+  /* Canopee is a condensed, high-contrast display SERIF with sharp flared
+     serifs - closer to a Victorian poster face than to a grotesque. The
+     stand-in has to be a high-contrast serif or the whole page reads wrong. */
+  --font-display: 'Canopee', 'Playfair Display', 'Bodoni Moda', Georgia, serif;
+  --font-display-weight: 900;
+  --font-body: 'Editorial New', 'Instrument Serif', Georgia, serif;
+  --font-accent: 'Domaine Display', 'Bodoni Moda', 'Didot', Georgia, serif;
+  --font-numeral: 'Germgoth', 'Domaine Display', 'Bodoni Moda', Georgia, serif;
+}

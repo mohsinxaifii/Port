@@ -1,0 +1,201 @@
+@import './fonts.css';
+
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root {
+  --ink: #1d1d1b;
+  --paper: #cdc6be;
+  --paper-warm: #e2dedb;
+  --paper-deep: #beb5ab;
+  --accent: #c03f13;
+
+  --rule: rgba(29, 29, 27, .5);
+  --rule-soft: rgba(29, 29, 27, .18);
+
+  /* Paper overlay */
+  --texture-opacity: .3;
+
+  /* Curtain transition */
+  --curtain-duration: 2s;
+
+  --vh: 1vh; /* set by js/viewport.js */
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html.no-scroll { overflow: hidden; }
+
+body {
+  margin: 0;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  overflow-x: hidden;
+}
+/* The dark body is the surface the paper sheet is dropped onto during the
+   intro turn - it is a backdrop, not the page ground. The sheet itself
+   (.app) is paper, and everything belonging to it lives inside. */
+body { background-color: var(--ink); }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--font-display-weight, 400);
+  text-transform: uppercase;
+  letter-spacing: -.03em;
+}
+p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+::selection { background: var(--ink); color: var(--paper); }
+
+/* ============================================================
+   THE PAPER ILLUSION
+   Three stacked fixed overlays. Order matters:
+     1. .paper-texture  fibre grain, multiply-blended
+     2. #curtain        the WebGL torn-paper transition
+   ============================================================ */
+.paper-texture {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+  pointer-events: none;
+  opacity: var(--texture-opacity);
+  mix-blend-mode: multiply;
+  background-image: url('/ref/site/pt-texture-2.jpg');
+  background-position: 50%;
+  background-repeat: repeat;
+}
+
+
+#curtain,
+#curtain-below {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+#curtain { z-index: 999; }
+#curtain-below { z-index: 1; }
+
+/* ------------------------------------------------------------
+   The sheet.
+
+   Pages open on ink (the wordmark block bleeds to the edges) and
+   turn to paper from the first content section down. Without this
+   the body colour shows through and ink text sits on ink ground.
+   ------------------------------------------------------------ */
+.sheet {
+  position: relative;
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* ============================================================
+   ROTATE-DEVICE GATE
+   ============================================================ */
+.rotate {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 8vw;
+  background-color: var(--paper);
+  text-align: center;
+}
+.rotate__desc {
+  font-family: var(--font-body);
+  font-size: 5vw;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+}
+@media (max-width: 991px) and (orientation: landscape) {
+  .rotate { display: flex; }
+}
+
+/* ============================================================
+   SHARED PRIMITIVES
+   ============================================================ */
+
+/* Drop cap — the opening paragraph of every bio/intro block */
+.has-dropcap {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.45vw;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+.has-dropcap::first-letter {
+  float: left;
+  font-family: var(--font-accent);
+  font-size: 3.3em;
+  line-height: .74;
+  padding-right: .08em;
+  padding-top: .06em;
+}
+
+/* Display-face elements that are not headings still need its weight. */
+.wordmark, .display, .role, .headline__title, .card__title, .card__badge,
+.marquee__text, .marquee__cta, .menu__title, .slab__word, .counter__title,
+.counter__label, .about__heading, .case__title, .case__section-title,
+.case__next-label, .work__title, .footer__title, .nav__wordmark, .nav__location,
+.social, .social__sep, .cta__text, .row__title, .client, .stamp-block__head,
+.legal__title, .headline__tip-label, .quote__name, .press__source,
+.skill__group, .available__status, .row__now, .fact__key, .stamp__mark {
+  font-weight: var(--font-display-weight, 400);
+}
+
+/* The signature move: a single letter swapped into the accent serif.
+   Case and style are inherited - only the family changes, so the letter
+   reads as a deliberate substitution rather than a typo. The optical
+   size of the serif runs large next to the display face, so it is
+   pulled back slightly to sit on the same visual weight. */
+.sw {
+  font-family: var(--font-accent);
+  font-size: .92em;
+  letter-spacing: .01em;
+}
+
+.under {
+  text-decoration: underline;
+  text-underline-offset: .12em;
+  text-decoration-thickness: .04em;
+}
+
+/* Ticked rule marks that sit under section headings */
+.divs { display: flex; gap: .5vw; margin-top: 1.2vw; }
+.divs__mark { width: 2.4vw; height: 1px; background-color: var(--ink); }
+.divs__mark--short { width: 1.2vw; }
+
+.screen-reader-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 767px) {
+  .has-dropcap { font-size: 4.4vw; line-height: 1.3; }
+}

@@ -1,0 +1,473 @@
+/* ==================================================================
+   LAYOUT - nav, menu, project cards, headline blocks, footer.
+   Shared by every page. Page-specific rules live in home.css / work.css.
+   ================================================================== */
+
+/* ------------------------------------------------------------------
+   NAV
+------------------------------------------------------------------ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  color: var(--ink);
+}
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 10.8vh;
+  padding: 4vh 2vw;
+  background-color: var(--paper);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.nav__location,
+.nav__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.05vw;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.nav__wordmark { font-size: 1.4vw; letter-spacing: -.02em; }
+
+/* Two-line burger. Rotates into a cross while the menu is torn open. */
+.nav__toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .6vw;
+}
+.nav__line {
+  width: 2rem;
+  height: 2px;
+  background-color: var(--ink);
+  transition: transform .45s cubic-bezier(.16, 1, .3, 1);
+}
+.nav__toggle:hover .nav__line:first-child { transform: translateX(-18%); }
+body.menu-open .nav__line:first-child { transform: translateY(.23vw) rotate(6deg); }
+body.menu-open .nav__line:last-child { transform: translateY(-.23vw) rotate(-6deg); }
+
+/* ------------------------------------------------------------------
+   MENU - lives under the curtain, revealed once the tear completes
+------------------------------------------------------------------ */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 890;
+  display: none;            /* toggled to flex by nav.js */
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vw 4vw 4vw;
+  background-color: var(--ink);
+  color: var(--paper);
+}
+.menu__list { display: flex; flex-direction: column; }
+.menu__link {
+  position: relative;
+  display: block;
+  padding: .2vw 0;
+}
+.menu__title {
+  font-family: var(--font-display);
+  font-size: 13vw;
+  line-height: .92;
+  letter-spacing: -.04em;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1), opacity .4s;
+}
+.menu__link:hover .menu__title { transform: translateX(2vw); }
+.menu__list:hover .menu__link:not(:hover) .menu__title { opacity: .4; }
+
+/* Marker on the page you are currently on. */
+.menu__marker {
+  position: absolute;
+  top: 50%;
+  right: 1vw;
+  width: .8vw;
+  height: .8vw;
+  border-radius: 50%;
+  background-color: var(--paper);
+  transform: translateY(-50%);
+  display: none;
+}
+.menu__link[aria-current='page'] .menu__marker { display: block; }
+
+/* ------------------------------------------------------------------
+   SOCIAL ROW - used in the menu and the footer
+------------------------------------------------------------------ */
+.socials {
+  display: flex;
+  align-items: center;
+  gap: .8vw;
+  margin-top: 3vw;
+}
+.social {
+  font-family: var(--font-display);
+  font-size: 1.15vw;
+  letter-spacing: .01em;
+  text-transform: lowercase;
+  transition: opacity .3s;
+}
+.social:hover { opacity: .55; }
+.social__sep { opacity: .45; font-size: 1.15vw; }
+
+/* ------------------------------------------------------------------
+   HEADLINE BLOCK - the ruled column of title + description + tip
+------------------------------------------------------------------ */
+.headline {
+  width: 29vw;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 3vw;
+  border-left: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+}
+.headline--bare {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0;
+  border: 0;
+}
+.headline--bare .headline__title { white-space: normal; font-size: 2.6vw; }
+.headline--bare .headline__desc { font-size: 1.5vw; line-height: 1.25; }
+.headline__title {
+  display: block;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 4.5vw;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+}
+.headline__desc {
+  margin-top: 1vw;
+  font-family: var(--font-body);
+  font-size: 2.6vw;
+  line-height: 1.15;
+  letter-spacing: -.03em;
+}
+.headline__tip { display: flex; align-items: baseline; gap: .6vw; margin-top: 2vw; }
+.headline__tip-label {
+  font-family: var(--font-display);
+  font-size: 1vw;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+.headline__tip-text {
+  font-family: var(--font-body);
+  font-size: .95vw;
+  opacity: .75;
+}
+
+/* The hand-drawn ellipse looping the headline word. */
+.headline__doodle {
+  position: absolute;
+  inset: -1.2vw -2.4vw;
+  pointer-events: none;
+  overflow: visible;
+}
+.headline__doodle ellipse {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 620;
+  stroke-dashoffset: 620;
+  transition: stroke-dashoffset .9s cubic-bezier(.16, 1, .3, 1);
+}
+.headline__wrap { position: relative; display: inline-block; }
+.headline__wrap:hover .headline__doodle ellipse { stroke-dashoffset: 0; }
+
+/* The process CTA is looped permanently, not on hover. */
+.headline__wrap--drawn .headline__doodle ellipse { stroke-dashoffset: 0; }
+
+/* ------------------------------------------------------------------
+   PROJECT CARD
+------------------------------------------------------------------ */
+.card { flex: none; width: 28vw; }
+.card + .card { margin-left: 3vw; }
+
+.card__frame {
+  position: relative;
+  width: 100%;
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.card__img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 1.1s cubic-bezier(.16, 1, .3, 1);
+}
+.card:hover .card__img { transform: scale(1.045); }
+
+/* Placeholder shown wherever real imagery has not landed yet - cards,
+   gallery plates, the portrait. One treatment so empty slots read as a
+   deliberate state rather than as broken images. */
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--paper-deep) 0 2px,
+      transparent 2px 9px
+    ),
+    var(--paper-warm);
+}
+.placeholder span {
+  font-family: var(--font-display);
+  font-size: 1.4vw;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: .5;
+}
+.card__placeholder { aspect-ratio: 5 / 2; }
+
+.card__meta {
+  display: flex;
+  align-items: center;
+  gap: .6vw;
+  margin-top: .5vw;
+}
+/* The client mark, not set text - matching the reference lockup. */
+.card__logo {
+  width: auto;
+  height: auto;
+  max-height: 2.4vw;
+  max-width: 15vw;
+  object-fit: contain;
+  object-position: left bottom;
+}
+.card__title {
+  font-family: var(--font-display);
+  font-size: 1.5vw;
+  line-height: 1.3;
+  letter-spacing: -.02em;
+  text-transform: uppercase;
+}
+.card__badge {
+  font-family: var(--font-display);
+  font-size: 1.2vw;
+  line-height: 1.25;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  padding: .1vw .3vw 0;
+  color: var(--paper);
+  background-color: var(--accent);
+}
+.card__year { margin-left: auto; font-family: var(--font-body); font-size: .95vw; opacity: .7; }
+.card__desc {
+  margin-top: 1vw;
+  max-width: 95%;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.2vw;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+}
+
+/* ------------------------------------------------------------------
+   DRAG SLIDER
+------------------------------------------------------------------ */
+.slider { overflow: hidden; cursor: grab; }
+.slider.is-dragging { cursor: grabbing; }
+.slider__track {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 2vw;
+  will-change: transform;
+}
+.slider__track > * { user-select: none; }
+.slider img { pointer-events: none; }
+
+/* ------------------------------------------------------------------
+   CTA LINK - "All Work" with the long arrow
+------------------------------------------------------------------ */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1vw;
+  margin-top: 2.5vw;
+}
+.cta__text {
+  font-family: var(--font-display);
+  font-size: 2.4vw;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+}
+.cta__arrow {
+  width: 4vw;
+  height: auto;
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+.cta:hover .cta__arrow { transform: translateX(.8vw); }
+
+/* ------------------------------------------------------------------
+   FOOTER
+------------------------------------------------------------------ */
+.footer { position: relative; z-index: 5; }
+
+.marquee {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 11vw;
+  overflow: hidden;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.marquee__inner {
+  display: flex;
+  flex: none;
+  animation: marquee-scroll 18s linear infinite;
+}
+.marquee__inner:hover { animation-play-state: paused; }
+.marquee__group { display: flex; align-items: center; flex: none; }
+.marquee__text {
+  font-family: var(--font-display);
+  font-size: 6vw;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.marquee__cta {
+  margin: 0 2vw 0 1.5vw;
+  padding: .5vw .8vw .8vw;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 6vw;
+  line-height: .78;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color .35s;
+}
+.marquee__cta:hover { background-color: var(--accent); }
+
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.footer__info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 2.5vw 2vw;
+}
+.footer__title {
+  font-family: var(--font-display);
+  font-size: 2.4vw;
+  line-height: 1;
+  letter-spacing: -.03em;
+  text-transform: uppercase;
+}
+.footer__year { font-family: var(--font-body); font-size: 1vw; opacity: .7; margin-top: .4vw; }
+.footer__legal { margin-top: 1.2vw; }
+.footer__legal a { font-family: var(--font-body); font-size: .95vw; }
+.footer__legal a:hover { text-decoration: underline; }
+
+/* The postage stamp - perforated edge drawn as an SVG path (partials.js),
+   with the text laid over it so it keeps the real display face. */
+.stamp {
+  position: relative;
+  width: 8vw;
+  aspect-ratio: 4 / 5;
+  transform: rotate(-2.5deg);
+  transition: transform .6s cubic-bezier(.16, 1, .3, 1);
+}
+.stamp:hover { transform: rotate(1.5deg) scale(1.03); }
+.stamp__shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.stamp__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .3vw;
+  text-align: center;
+}
+.stamp__mark {
+  font-family: var(--font-display);
+  font-size: 1.5vw;
+  line-height: .95;
+  text-transform: uppercase;
+  letter-spacing: -.02em;
+}
+.stamp__sub { font-family: var(--font-body); font-size: .7vw; letter-spacing: .06em; text-transform: uppercase; }
+
+/* ------------------------------------------------------------------
+   MOBILE
+------------------------------------------------------------------ */
+@media (max-width: 991px) {
+  .nav { padding: 4vw; }
+  .nav__location { display: none; }
+  .nav__wordmark { font-size: 4.5vw; }
+  .nav__toggle { width: 8vw; height: 5vw; gap: 1.4vw; }
+
+  .menu { padding: 20vw 6vw 8vw; }
+  .menu__title { font-size: 22vw; }
+  .menu__marker { width: 2.4vw; height: 2.4vw; }
+  .social, .social__sep { font-size: 4vw; }
+  .socials { gap: 2vw; margin-top: 10vw; }
+
+  .headline {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+    padding: 0 4vw;
+    border: 0;
+  }
+  .headline__title { font-size: 20vw; line-height: .9; }
+  .headline__desc { font-size: 7vw; line-height: 1.05; margin-top: 4vw; }
+  .headline__tip { margin-top: 6vw; gap: 2vw; }
+  .headline__tip-label { font-size: 3.4vw; }
+  .headline__tip-text { font-size: 3.2vw; }
+
+  .card { width: 82vw; }
+  .card + .card { margin-left: 6vw; }
+  .card__title { font-size: 6vw; }
+  .card__badge { font-size: 2.6vw; padding: 1vw 1.6vw 1.2vw; }
+  .card__year { font-size: 3.2vw; }
+  .card__desc { font-size: 4vw; max-width: none; margin-top: 2vw; }
+  .card__placeholder span { font-size: 4.5vw; }
+
+  .cta__text { font-size: 9vw; }
+  .cta__arrow { width: 14vw; }
+
+  .marquee { height: 26vw; }
+  .marquee__text, .marquee__cta { font-size: 14vw; }
+  .marquee__cta { padding: 1.5vw 2.5vw 2.5vw; margin: 0 5vw 0 4vw; }
+
+  .footer__info { flex-direction: column; align-items: flex-start; gap: 8vw; padding: 8vw 4vw; }
+  .footer__title { font-size: 9vw; }
+  .footer__year { font-size: 3.4vw; }
+  .footer__legal a { font-size: 3.4vw; }
+  .stamp { width: 26vw; --perf: 1.3vw; }
+  .stamp__mark { font-size: 4.5vw; }
+  .stamp__sub { font-size: 2.2vw; }
+}

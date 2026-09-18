@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio — Work</title>
+  <meta name="description" content="Selected work — case studies and projects.">
+  <link rel="icon" href="/ref/site/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body class="is-work">
+  <div class="rotate">
+    <p class="rotate__desc">Please rotate your device<br>to ensure a better experience.</p>
+  </div>
+
+  <canvas id="curtain" aria-hidden="true"></canvas>
+
+
+  <!--
+    Horizontal scroll: the wheel drives the track sideways. The rail is
+    one flex row; each column is a full-height slice of the sheet.
+  -->
+  <main class="app work" data-scroll-container data-scroll-direction="horizontal">
+    <div class="paper-texture" aria-hidden="true"></div>
+    <div data-nav-mount></div>
+
+    <div class="work__rail">
+      <section class="work__opening">
+        <h1 class="work__title" data-fit data-intro="wordmark" data-work-title></h1>
+        <p class="work__lead has-dropcap" data-intro="stagger" data-work-lead></p>
+      </section>
+
+      <section class="work__grid" data-work-mount></section>
+
+      <section class="work__end">
+        <div data-footer-mount></div>
+      </section>
+    </div>
+  </main>
+
+  <script type="module" src="/src/js/work.js"></script>
+</body>
+</html>
