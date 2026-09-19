@@ -6,107 +6,184 @@
      experience   work history
      press        talks, interviews, features (numbered list)
      testimonials the stacked quote cards on the index page
+
+   Content here is taken from the CV. Three arrays are deliberately
+   empty - recognition, press and testimonials - because the CV records
+   no awards, no published pieces and no quotes, and inventing any of
+   them is the one kind of placeholder that cannot be safely left in.
+   Each empty array hides its own section; fill one and it reappears.
    ================================================================== */
 
 export const availability = {
-  headline: 'Looking for',
+  headline: 'Open to',
   emphasis: 'new opportunities!',
-  status: 'Available now',                                  // PLACEHOLDER
+  status: 'Available now',
   body:
-    "Whether you're looking for someone to build a project - or have a " +
-    'full-time role in mind, you can reach me by clicking',
+    "Whether you're looking for someone to build a storefront, the systems " +
+    'behind it, or the automation that connects them, you can reach me by clicking',
   linkLabel: 'here',
 }
 
 export const bio = {
   short:
-    'Independent developer with a focus on interface engineering, ' +
-    'motion and product design.',                           // PLACEHOLDER
+    'Full-stack developer working across storefronts, internal systems and ' +
+    'the AI layer that connects them.',
   long:
-    'As a multidisciplinary developer, I care about building things that ' +
-    'are as considered under the hood as they are on the surface.',
+    "Full-stack developer trusted with end-to-end ownership of a business's " +
+    'digital operation: the customer-facing storefront, the internal systems ' +
+    'behind it, and the AI and automation layer that ties them together. ' +
+    'Three years shipping work that moves commercial numbers.',
 }
 
-/* Recognition / awards. Empty is fine - the section hides itself. */
-export const recognition = [
-  { org: 'Award or platform', year: '2026', detail: 'What it was for' }, // PLACEHOLDER
-  { org: 'Award or platform', year: '2025', detail: 'What it was for' },
-  { org: 'Award or platform', year: '2025', detail: 'What it was for' },
-]
+/* Recognition / awards. Empty is fine - the section hides itself.
+   Nothing in the CV to put here; add real entries when you have them. */
+export const recognition = []
 
-/* Work history. `current: true` renders the live marker. */
+/* Work history, newest first. `current: true` renders the live marker. */
 export const experience = [
   {
-    role: 'Independent / Freelance',                        // PLACEHOLDER
-    org: 'Self-employed',
-    from: '2023',
+    role: 'Software Developer',
+    org: 'Design Dimensions',
+    from: 'Jul 2026',
     to: 'Present',
     current: true,
-    clients: ['Client A', 'Client B', 'Client C'],
-    summary: 'What you do in this role, in one line.',
+    clients: ['Full client portfolio'],
+    summary:
+      'Sole technical decision-maker for the studio and every client account - ' +
+      'architecture, build, integration and optimisation, plus AI chat assistants ' +
+      'and the sales analytics behind them.',
   },
   {
-    role: 'Previous Role',                                  // PLACEHOLDER
-    org: 'Company Name',
-    from: '2021',
-    to: '2023',
+    role: 'Software Developer',
+    org: 'Oyela Technologies',
+    from: 'Apr 2026',
+    to: 'Jul 2026',
     current: false,
     clients: [],
-    summary: 'What you did there, in one line.',
+    summary:
+      'Built the internal ERP from scratch, replacing manual processes across ' +
+      'departments, and optimised the company Shopify storefront for performance ' +
+      'and conversion.',
+  },
+  {
+    role: 'Lead Software Developer',
+    org: 'Radiant Web Tech',
+    from: 'Jul 2024',
+    to: 'Apr 2026',
+    current: false,
+    clients: [],
+    summary:
+      'Led end-to-end delivery on custom e-commerce builds while mentoring a ' +
+      'cross-functional team and owning client relationships directly.',
+  },
+  {
+    role: 'Full Stack Web Developer',
+    org: 'The Ayurveda Co.',
+    from: 'Aug 2023',
+    to: 'Jul 2024',
+    current: false,
+    clients: [],
+    summary:
+      'Rebuilt the storefront from scratch on a custom theme, sharply cutting ' +
+      'load times and driving an 8x increase in conversion rate.',
+  },
+  {
+    role: 'Web Developer & Designer',
+    org: 'LPPR',
+    from: 'Feb 2023',
+    to: 'May 2023',
+    current: false,
+    clients: [],
+    summary:
+      'Delivered a responsive, accessible, SEO-optimised site end to end, ' +
+      'translating Figma and Illustrator layouts into production code.',
   },
 ]
 
 export const education = [
   {
-    qualification: 'Your Degree',                           // PLACEHOLDER
-    org: 'Institution',
-    from: '2017',
+    qualification: 'Bachelor of Computer Applications',
+    org: 'IGNOU',
+    from: '2023',
+    to: '2026',
+  },
+  {
+    qualification: 'Higher Secondary School',
+    org: 'S.B.V. Noor Nagar',
+    from: '2021',
+    to: '2023',
+  },
+  {
+    qualification: 'Secondary School',
+    org: 'J.N. International School',
+    from: '2019',
     to: '2021',
   },
 ]
 
 export const skills = [
-  { group: 'Languages', items: ['JavaScript', 'TypeScript', 'Python'] },     // PLACEHOLDER
-  { group: 'Frontend', items: ['React', 'Next.js', 'GSAP', 'WebGL'] },
-  { group: 'Backend', items: ['Node', 'PostgreSQL', 'REST', 'GraphQL'] },
-  { group: 'Tooling', items: ['Git', 'Docker', 'CI/CD', 'Figma'] },
-]
-
-/* Press, talks, interviews. Rendered as a numbered list. */
-export const press = [
-  { source: 'Publication', year: '2026', title: 'Title of the piece', url: '#' }, // PLACEHOLDER
-  { source: 'Publication', year: '2025', title: 'Title of the piece', url: '#' },
-]
-
-/* The stacked quote cards. Three or four reads best. Photos optional -
-   a monogram placeholder renders when `avatar` is null. */
-export const testimonials = [
   {
-    quote:
-      'A quote from someone you have worked with. Real ones land far ' +
-      'harder than invented ones - ask for these before you launch.',
-    name: 'Their Name',                                     // PLACEHOLDER
-    role: 'Their Role',
-    org: null,
-    orgUrl: null,
-    avatar: '/ref/site/sam-day.jpg',
+    group: 'E-commerce',
+    items: [
+      'Shopify Theme Development', 'Custom Shopify Development', 'Liquid',
+      'Admin API', 'Storefront API', 'Shopify Apps', 'Metafields',
+      'Headless Commerce', 'Checkout', 'Subscriptions',
+    ],
   },
   {
-    quote: 'A second quote goes here.',
-    name: 'Their Name',
-    role: 'Their Role',
-    org: null,
-    orgUrl: null,
-    avatar: '/ref/site/sofia-papadopoulou.jpg',
+    group: 'Development',
+    items: [
+      'JavaScript (ES6+)', 'React', 'HTML5', 'CSS3', 'AJAX', 'Node.js',
+      'REST APIs', 'Webhooks', 'MySQL', 'System Architecture', 'ERP Systems',
+    ],
   },
   {
-    quote: 'A third quote goes here.',
-    name: 'Their Name',
-    role: 'Their Role',
-    org: null,
-    orgUrl: null,
-    avatar: '/ref/site/bruno-arizio.jpg',
+    group: 'AI & Automation',
+    items: [
+      'OpenAI', 'Claude', 'AI Assistants', 'Prompt Engineering',
+      'LLM Integration', 'Workflow Automation', 'Lead Qualification',
+    ],
+  },
+  {
+    group: 'Design & UX',
+    items: [
+      'Figma', 'Adobe Illustrator', 'UI Design', 'UX Design',
+      'Responsive Design', 'Design Systems', 'Wireframing', 'Prototyping',
+    ],
+  },
+  {
+    group: 'Cloud',
+    items: ['AWS EC2', 'AWS RDS', 'Linux', 'Deployment', 'DNS', 'Production'],
+  },
+  {
+    group: 'Performance',
+    items: [
+      'Conversion Rate Optimisation', 'Website Audits', 'A/B Testing', 'GA4',
+      'Core Web Vitals', 'Attribution', 'Customer Journey Analysis',
+    ],
+  },
+  {
+    group: 'Languages',
+    items: ['English', 'Hindi', 'Urdu'],
   },
 ]
 
-export const clients = ['Client A', 'Client B', 'Client C', 'Client D']  // PLACEHOLDER
+/* Press, talks, interviews. Empty hides the section. */
+export const press = []
+
+/* The stacked quote cards on the index.
+
+   Empty on purpose. The slots previously held invented quotes attached to
+   photographs of three real, named designers, which reads as a fabricated
+   endorsement - the hardest kind of placeholder to walk back once it is
+   live. Ask past colleagues for real ones; each needs quote, name and role,
+   and `avatar` may be null for a monogram. */
+export const testimonials = []
+
+/* Places the work was done. Employers, not clients won independently. */
+export const clients = [
+  'Design Dimensions',
+  'Oyela Technologies',
+  'Radiant Web Tech',
+  'The Ayurveda Co.',
+]

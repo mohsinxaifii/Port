@@ -100,19 +100,20 @@ mount('[data-counters-mount]', counters.map((c) => `
   </div>
 `).join(''))
 
+/* The cut-outs that punctuated these rows were photographs of the designer
+   whose site this layout was replicated from, so they are gone. The words
+   carry the block on their own; drop your own cut-outs back in as
+   <img class="slab__figure"> if you want the punctuation. */
 mount('[data-slab-mount]', `
   <div class="slab__row" data-reveal>
-    <img class="slab__figure" src="/ref/site/avatar-hat.jpeg" alt="" aria-hidden="true">
     <span class="slab__word">${swap(site.slab.one)}</span>
     <span class="slab__word">${swap(site.slab.two)}</span>
   </div>
   <div class="slab__row" data-reveal>
     <span class="slab__word slab__word--outline">${swap(site.slab.three)}</span>
-    <img class="slab__figure slab__figure--wide" src="/ref/site/trophy.jpeg" alt="" aria-hidden="true">
   </div>
   <div class="slab__row" data-reveal>
     <span class="slab__word">${swap(site.slab.four)}</span>
-    <img class="slab__figure" src="/ref/site/avatar-star.jpeg" alt="" aria-hidden="true">
   </div>
 `)
 
@@ -128,6 +129,11 @@ const quoteMark = `
           fill="currentColor"/>
   </svg>
 `
+
+/* No testimonials yet, so the whole band goes - about.js hides its empty
+   sections the same way. Without this the index keeps a tall strip of blank
+   paper where the deck used to be. Add entries to cv.js and it returns. */
+if (!testimonials.length) $('.quotes')?.remove()
 
 mount('[data-quotes-mount]', testimonials.map((t) => {
   const initials = t.name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase()

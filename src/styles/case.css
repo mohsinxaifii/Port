@@ -2,8 +2,17 @@
    CASE STUDY PAGE
    ================================================================== */
 
+/* First block on the page, so its top padding is the fixed nav's clearance.
+   The nav is sized in vh, and 12vw is a width-derived number - the two only
+   agree at some aspect ratios. At 16:9 it cleared the bar with room to spare,
+   but on a window taller than it is wide (~1000x1400 and up) the nav covered
+   the client line and the top of the title, the same way it did on About.
+
+   max() rather than a straight swap: the 12vw of air is the designed spacing
+   and holds at normal ratios, and the vh term only takes over when the nav
+   actually grows past it. */
 .case__head {
-  padding: 12vw 2vw 3vw;
+  padding: max(12vw, calc(10.8vh + 2vw)) 2vw 3vw;
   border-bottom: 1px solid var(--rule);
 }
 .case__meta {
@@ -15,11 +24,15 @@
   letter-spacing: .02em;
   opacity: .8;
 }
+/* line-height .78 made the box shorter than the glyphs standing in it, so
+   the title's ink climbed over the client/year line above. The extra
+   margin-top clears the meta row; the looser line-height keeps a
+   two-word title from overlapping itself on the second line. */
 .case__title {
-  margin-top: 1vw;
+  margin-top: 2.5vw;
   font-family: var(--font-display);
   font-size: 18vw;
-  line-height: .78;
+  line-height: .9;
   letter-spacing: -.045em;
   text-transform: uppercase;
 }

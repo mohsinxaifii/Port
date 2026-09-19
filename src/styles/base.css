@@ -47,6 +47,25 @@ body {
    (.app) is paper, and everything belonging to it lives inside. */
 body { background-color: var(--ink); }
 
+/* ------------------------------------------------------------------
+   INTRO HOLD
+
+   Both classes are added and removed by initIntro(). They are keyed to a
+   class set from JS rather than applied to .app outright, so a script that
+   fails or is blocked leaves the page plainly visible and usable instead of
+   permanently hidden and inert.
+------------------------------------------------------------------ */
+
+/* The sheet stays out of sight until its first screen has loaded, so the page
+   is never caught assembling itself. visibility rather than opacity or
+   display: it keeps the layout intact, and initReveals() and initFitText()
+   both measure while this is still applied. */
+html.is-booting .app { visibility: hidden; }
+
+/* Nothing on the sheet takes a click until it has come to rest. The nav and
+   every card live inside .app, so the one rule covers the lot. */
+html.is-intro .app { pointer-events: none; }
+
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
   font-family: var(--font-display);
@@ -161,14 +180,21 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-weight: var(--font-display-weight, 400);
 }
 
-/* The signature move: a single letter swapped into the accent serif.
-   Case and style are inherited - only the family changes, so the letter
-   reads as a deliberate substitution rather than a typo. The optical
-   size of the serif runs large next to the display face, so it is
-   pulled back slightly to sit on the same visual weight. */
+/* The signature move: a single letter set apart mid-word - W[o]rk, Ab[o]ut.
+
+   It used to change family, which stopped working the moment the page went
+   to one typeface: the accent role now resolves to the same family as the
+   display role, so a family swap would be no swap at all. Slope carries it
+   instead. Case is still inherited, so the letter reads as a deliberate
+   substitution rather than a typo.
+
+   The italic runs slightly narrower and lighter than the upright beside it,
+   so it is nudged back up rather than down - the .92em that used to pull a
+   large-on-the-body accent serif into line would now make it look dropped. */
 .sw {
   font-family: var(--font-accent);
-  font-size: .92em;
+  font-style: italic;
+  font-size: 1.02em;
   letter-spacing: .01em;
 }
 

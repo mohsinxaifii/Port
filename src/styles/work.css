@@ -19,11 +19,17 @@
 }
 
 /* --- Opening slice --- */
+/* max-width is what makes the masthead fittable. .work__rail is
+   width: max-content, so it grows to whatever its children ask for - which
+   means js/fit.js measures this slice as exactly fitting however long the
+   title is, and "Featured Work" simply ran off the right of the viewport.
+   Capping the slice gives fitOne() a real budget to scale against. */
 .work__opening {
   flex: none;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  max-width: 96vw;
   padding: 0 4vw 6vw 2vw;
   border-right: 1px solid var(--rule);
 }

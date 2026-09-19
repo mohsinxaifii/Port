@@ -2,515 +2,164 @@
    PROJECTS
 
    One entry per case study. `slug` becomes /work/<slug>.
-
-   Every image slot is filled with reference artwork from
-   public/ref/work/ so the layout renders at full density while you
-   work. All of it is placeholder art standing in for your own
-   screenshots - see REFERENCE.md before publishing.
+   scripts/gen-cases.mjs wipes and regenerates /work on every dev and
+   build run, so adding or removing an entry here is all it takes.
 
    `featured: true` puts it in the index carousel.
    `upcoming: true` puts it in the "Upcoming Next" slot (pick one).
+
+   Every image slot is null. The artwork that was here is the client
+   work of the designer whose site this layout was replicated from -
+   Prada, AvroKO, WOW Concept and others - and pairing those screenshots
+   with your own project names is a claim you cannot support. Null
+   renders a hatched placeholder at the right aspect ratio, so the
+   layout holds until your own screenshots go in:
+
+     thumb: '/work/ayurveda/thumb.jpg',
+     gallery: ['/work/ayurveda/01.jpg', '/work/ayurveda/02.jpg'],
+
+   The five entries below are the real engagements from the CV. The
+   background and story fields carry what the CV states; expand them
+   with specifics only you know.
    ================================================================== */
 
 export const projects = [
   {
-    slug: 'project-01',
-    title: 'Project One',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
+    slug: 'ayurveda-storefront',
+    title: 'Storefront Rebuild',
+    client: 'The Ayurveda Co.',
+    year: '2024',
+    isNew: false,
+    featured: true,
+    upcoming: false,
+    role: 'Full-stack development',
+    stack: ['Shopify', 'Liquid', 'JavaScript', 'Core Web Vitals'],
+    url: null,
+    thumb: null,
+    thumbAlt: null,
+    logo: null,
+    description:
+      'A complete storefront rebuild on a custom theme that sharply cut page '
+      + 'load times and drove an 8x increase in conversion rate.',
+    background:
+      'The existing store was slow enough that performance was costing sales. '
+      + 'The brief was a rebuild from scratch on a custom theme rather than '
+      + 'another round of patching, with Core Web Vitals and the customer '
+      + 'journey treated as the measures of success.',
+    story:
+      'Rebuilt the theme from the ground up, then worked with product and '
+      + 'marketing to tighten the journey end to end. Integrated third-party '
+      + 'marketing tools, subscription models and advanced tracking pixels so '
+      + 'attribution and engagement could actually be read. Conversion rate '
+      + 'finished 8x higher than the store it replaced.',
+  },
+  {
+    slug: 'oyela-erp',
+    title: 'Internal ERP',
+    client: 'Oyela Technologies',
+    year: '2026',
     isNew: true,
     featured: true,
     upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
+    role: 'Sole developer',
+    stack: ['Node.js', 'MySQL', 'REST APIs', 'AWS'],
     url: null,
-    thumb: '/ref/work/aquerone/thumb.jpeg',
+    thumb: null,
     thumbAlt: null,
-    logo: '/ref/work/aquerone/logo.svg',
+    logo: null,
     description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
+      'A company-wide ERP built from scratch, replacing manual processes and '
+      + 'streamlining daily operations across departments.',
     background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
+      'Operations ran on manual process spread across teams, with no single '
+      + 'system holding them. The company needed one built from nothing, by one '
+      + 'developer, without pausing the work it was replacing.',
     story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/aquerone/gallery-1.jpeg',
-      '/ref/work/aquerone/gallery-2.jpeg',
-      '/ref/work/aquerone/gallery-3.jpeg',
-      '/ref/work/aquerone/gallery-4.jpeg',
-      '/ref/work/aquerone/gallery-5.jpeg',
-      '/ref/work/aquerone/gallery-6.jpeg'
-    ],
+      'Designed the schema and system architecture, then built and deployed the '
+      + 'ERP department by department. Partnered with the data and business '
+      + 'intelligence teams on internal reporting, and separately optimised the '
+      + 'company Shopify storefront for performance and conversion.',
   },
   {
-    slug: 'project-02',
-    title: 'Project Two',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
+    slug: 'studio-ai-assistants',
+    title: 'AI Assistants & Sales Analytics',
+    client: 'Design Dimensions',
+    year: '2026',
     isNew: true,
     featured: true,
     upcoming: true,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
+    role: 'Technical lead',
+    stack: ['OpenAI', 'Claude', 'Node.js', 'Workflow Automation'],
     url: null,
-    thumb: '/ref/work/argor-heraeus/thumb.jpeg',
+    thumb: null,
     thumbAlt: null,
-    logo: '/ref/work/argor-heraeus/logo.svg',
+    logo: null,
     description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
+      'AI chat assistants trained on studio and client data that answer product '
+      + 'queries, qualify inbound leads and resolve first-line support unaided.',
     background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
+      'The studio carries a full client portfolio and no separate technical '
+      + 'function. Support and lead qualification were taking time from people '
+      + 'whose work was design and production.',
     story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/argor-heraeus/gallery-1.jpeg',
-      '/ref/work/argor-heraeus/gallery-2.jpeg',
-      '/ref/work/argor-heraeus/gallery-3.jpeg',
-      '/ref/work/argor-heraeus/gallery-4.jpeg'
-    ],
+      'Built and deployed assistants trained on studio and client data, handling '
+      + 'product questions and first-line support without escalation. Alongside '
+      + 'them, designed sales tracking and analytics giving leadership real-time '
+      + 'visibility into pipeline, revenue attribution and campaign performance.',
   },
   {
-    slug: 'project-03',
-    title: 'Project Three',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: true,
-    featured: true,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/avroko/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/avroko/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/avroko/gallery-1.jpeg',
-      '/ref/work/avroko/gallery-2.jpeg',
-      '/ref/work/avroko/gallery-3.jpeg',
-      '/ref/work/avroko/gallery-4.jpeg',
-      '/ref/work/avroko/gallery-5.jpeg',
-      '/ref/work/avroko/gallery-6.jpeg'
-    ],
-  },
-  {
-    slug: 'project-04',
-    title: 'Project Four',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: true,
-    featured: true,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/chiara-luzzana/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/chiara-luzzana/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/chiara-luzzana/gallery-1.jpeg',
-      '/ref/work/chiara-luzzana/gallery-2.jpeg',
-      '/ref/work/chiara-luzzana/gallery-3.jpeg',
-      '/ref/work/chiara-luzzana/gallery-4.jpeg',
-      '/ref/work/chiara-luzzana/gallery-5.jpeg',
-      '/ref/work/chiara-luzzana/gallery-6.jpeg'
-    ],
-  },
-  {
-    slug: 'project-05',
-    title: 'Project Five',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
+    slug: 'radiant-commerce',
+    title: 'Custom Commerce Builds',
+    client: 'Radiant Web Tech',
+    year: '2025',
     isNew: false,
     featured: true,
     upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
+    role: 'Lead developer',
+    stack: ['Shopify Admin API', 'Headless', 'Middleware', 'AJAX API'],
     url: null,
-    thumb: '/ref/work/cobo/thumb.webp',
+    thumb: null,
     thumbAlt: null,
-    logo: '/ref/work/cobo/logo.svg',
+    logo: null,
     description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
+      'End-to-end delivery on custom e-commerce builds - architecture, backend '
+      + 'workflows and headless implementations - while leading the team shipping them.',
     background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
+      'A run of custom commerce builds, each needing technical architecture set '
+      + 'before development started, and a team to be pointed at it. Client '
+      + 'relationships sat with the same person owning delivery.',
     story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/cobo/gallery-1.webp',
-      '/ref/work/cobo/gallery-2.webp',
-      '/ref/work/cobo/gallery-3.webp',
-      '/ref/work/cobo/gallery-4.webp',
-      '/ref/work/cobo/gallery-5.webp'
-    ],
+      'Owned architecture, development and launch across builds, writing advanced '
+      + 'backend workflows, custom middleware and headless implementations against '
+      + 'the Shopify Admin, REST and AJAX APIs. Mentored a cross-functional team '
+      + 'and translated commercial goals into technical milestones directly with '
+      + 'clients, designers and marketers.',
   },
   {
-    slug: 'project-06',
-    title: 'Project Six',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: true,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/deplace-maison/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/deplace-maison/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/deplace-maison/gallery-1.jpeg',
-      '/ref/work/deplace-maison/gallery-2.jpeg',
-      '/ref/work/deplace-maison/gallery-3.jpeg',
-      '/ref/work/deplace-maison/gallery-4.jpeg'
-    ],
-  },
-  {
-    slug: 'project-07',
-    title: 'Project Seven',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
+    slug: 'lppr-site',
+    title: 'Marketing Site',
+    client: 'LPPR',
     year: '2023',
     isNew: false,
     featured: false,
     upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
+    role: 'Development & design',
+    stack: ['HTML5', 'CSS3', 'JavaScript', 'Figma'],
     url: null,
-    thumb: '/ref/work/edoardo-smerilli/thumb.jpeg',
+    thumb: null,
     thumbAlt: null,
-    logo: '/ref/work/edoardo-smerilli/logo.svg',
+    logo: null,
     description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
+      'A responsive, accessible, SEO-optimised site delivered end to end from '
+      + 'Figma and Illustrator layouts.',
     background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
+      'A design handoff that needed taking all the way to production, with '
+      + 'accessibility and search visibility part of the brief rather than a '
+      + 'later pass.',
     story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/edoardo-smerilli/gallery-1.jpeg',
-      '/ref/work/edoardo-smerilli/gallery-2.jpeg',
-      '/ref/work/edoardo-smerilli/gallery-3.jpeg',
-      '/ref/work/edoardo-smerilli/gallery-4.jpeg',
-      '/ref/work/edoardo-smerilli/gallery-5.jpeg',
-      '/ref/work/edoardo-smerilli/gallery-6.jpeg'
-    ],
-  },
-  {
-    slug: 'project-08',
-    title: 'Project Eight',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/loftgarten/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/loftgarten/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/loftgarten/gallery-1.jpeg',
-      '/ref/work/loftgarten/gallery-2.jpeg',
-      '/ref/work/loftgarten/gallery-3.jpeg',
-      '/ref/work/loftgarten/gallery-4.jpeg',
-      '/ref/work/loftgarten/gallery-5.jpeg',
-      '/ref/work/loftgarten/gallery-6.jpeg'
-    ],
-  },
-  {
-    slug: 'project-09',
-    title: 'Project Nine',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/om-swami/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/om-swami/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/om-swami/gallery-1.jpg',
-      '/ref/work/om-swami/gallery-2.jpg',
-      '/ref/work/om-swami/gallery-3.jpg',
-      '/ref/work/om-swami/gallery-4.jpg',
-      '/ref/work/om-swami/gallery-5.jpg',
-      '/ref/work/om-swami/gallery-6.jpg'
-    ],
-  },
-  {
-    slug: 'project-10',
-    title: 'Project Ten',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/prada/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/prada/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/prada/gallery-1.jpeg',
-      '/ref/work/prada/gallery-2.jpeg',
-      '/ref/work/prada/gallery-3.jpeg',
-      '/ref/work/prada/gallery-4.jpeg',
-      '/ref/work/prada/gallery-5.jpeg'
-    ],
-  },
-  {
-    slug: 'project-11',
-    title: 'Project Eleven',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/sal-parasuco/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/sal-parasuco/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/sal-parasuco/gallery-1.jpeg',
-      '/ref/work/sal-parasuco/gallery-2.jpeg',
-      '/ref/work/sal-parasuco/gallery-3.jpeg',
-      '/ref/work/sal-parasuco/gallery-4.jpeg',
-      '/ref/work/sal-parasuco/gallery-5.jpeg'
-    ],
-  },
-  {
-    slug: 'project-12',
-    title: 'Project Twelve',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/the-books-of-ye/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/the-books-of-ye/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/the-books-of-ye/gallery-1.jpeg',
-      '/ref/work/the-books-of-ye/gallery-2.jpeg',
-      '/ref/work/the-books-of-ye/gallery-3.jpeg',
-      '/ref/work/the-books-of-ye/gallery-4.jpeg',
-      '/ref/work/the-books-of-ye/gallery-5.jpeg'
-    ],
-  },
-  {
-    slug: 'project-13',
-    title: 'Project Thirteen',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/the-hiring-chain/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/the-hiring-chain/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/the-hiring-chain/gallery-1.jpeg',
-      '/ref/work/the-hiring-chain/gallery-2.jpeg',
-      '/ref/work/the-hiring-chain/gallery-3.jpeg',
-      '/ref/work/the-hiring-chain/gallery-4.jpeg'
-    ],
-  },
-  {
-    slug: 'project-14',
-    title: 'Project Fourteen',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/the-roger-hub/thumb.webp',
-    thumbAlt: null,
-    logo: '/ref/work/the-roger-hub/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/the-roger-hub/gallery-1.webp',
-      '/ref/work/the-roger-hub/gallery-2.webp',
-      '/ref/work/the-roger-hub/gallery-3.webp',
-      '/ref/work/the-roger-hub/gallery-4.webp'
-    ],
-  },
-  {
-    slug: 'project-15',
-    title: 'Project Fifteen',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/thinkers/thumb.jpeg',
-    thumbAlt: null,
-    logo: '/ref/work/thinkers/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/thinkers/gallery-1.jpeg',
-      '/ref/work/thinkers/gallery-2.jpeg',
-      '/ref/work/thinkers/gallery-3.jpeg',
-      '/ref/work/thinkers/gallery-4.jpeg',
-      '/ref/work/thinkers/gallery-5.jpeg'
-    ],
-  },
-  {
-    slug: 'project-16',
-    title: 'Project Sixteen',                    // PLACEHOLDER
-    client: 'Client Name',                       // PLACEHOLDER
-    year: '2023',
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: 'Design & Development',                // PLACEHOLDER
-    stack: ['React', 'Node'],                    // PLACEHOLDER
-    url: null,
-    thumb: '/ref/work/wow-concept/thumb.webp',
-    thumbAlt: null,
-    logo: '/ref/work/wow-concept/logo.svg',
-    description:
-      'A one-or-two sentence summary of the project, written the way you '
-      + 'would describe it out loud. This is what shows on the cards.',
-    background:
-      'The longer story: what the brief was, what you were responsible '
-      + 'for, and what constraints shaped the work.',
-    story:
-      'What you actually built and why the decisions went the way they '
-      + 'did. Keep it concrete.',
-    gallery: [
-      '/ref/work/wow-concept/gallery-1.jpg',
-      '/ref/work/wow-concept/gallery-2.jpg',
-      '/ref/work/wow-concept/gallery-3.jpg',
-      '/ref/work/wow-concept/gallery-4.webp',
-      '/ref/work/wow-concept/gallery-5.jpg',
-      '/ref/work/wow-concept/gallery-6.jpg'
-    ],
+      'Translated the Figma and Illustrator layouts into scalable production '
+      + 'code, responsive across breakpoints and built to be accessible and '
+      + 'indexable from the first deploy.',
   },
 ]
 

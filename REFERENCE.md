@@ -54,28 +54,56 @@ regenerates an original paper texture if you would rather not ship his.
 
 ## Fonts
 
-| Role | Face | Status |
+All four roles are Google Fonts, served from one request in
+`src/styles/fonts.css`. Nothing needs a licence and nothing is self-hosted.
+
+| Role | Face | Notes |
 |---|---|---|
-| Body | **PP Editorial New** Light | **Installed.** Pangram Pangram, free for personal use |
-| Display | Canopée | Stand-in (Bebas Neue). VJ-Type, **paid** |
-| Accent | Domaine Display Cond | Stand-in (Bodoni Moda). Klim, **paid** |
-| Numerals | Germgoth | Stand-in (Bodoni Moda). Free |
+| Display | **Bodoni Moda** 700 | Variable, `opsz` 6–96. Headings, nav, giant type |
+| Body | **Newsreader** 200–800 | Variable, drawn for long-form reading |
+| Accent | **Prata** 400 | The swapped letters and the drop cap |
+| Numerals | **Pirata One** 400 | Blackletter, for the award counters |
 
-Editorial New is in `src/assets/fonts/` and bundled by Vite. Only the Light
-(300) weight is present — the few Medium runs are synthesised. Add
-`EditorialNew-Medium.woff2` and uncomment its block in `src/styles/fonts.css`
-to fix that, and grab a clean copy from
-[pangrampangram.com](https://pangrampangram.com/products/editorial-new).
+Families are named in exactly one place — the `:root` block in
+`src/styles/fonts.css`. No other stylesheet sets a `font-family` by name, so
+changing a role is a one-line edit.
 
-Canopée and Domaine are retail fonts from small foundries and are not
-installed. Once you have licences, drop the `.woff2` files in
-`src/assets/fonts/` and uncomment the matching block — the stand-ins stay as
-fallbacks and nothing else in the codebase changes.
+The display face runs up to 31vw (`.wordmark`) and 24vw
+(`.stamp-block__head`). Bodoni Moda and Newsreader both carry an optical-size
+axis, which is why they were picked: at those sizes the browser renders the
+display master rather than scaling up a text cut. `font-optical-sizing`
+defaults to `auto`, so no rule is needed for it.
 
-Worth knowing: Canopée's signature is condensed proportions with a circular
-O/C/G, and the accent-letter swap already reproduces that effect by setting
-one round letter per phrase in a contrasting serif. That is why the wordmark
-reads correctly on the stand-ins — the design is not waiting on the purchase.
+The accent role is deliberately a fourth family rather than a reuse of the
+display or body face. It exists to be noticed — one round letter swapped
+mid-word (`W[o]rk`), plus the drop cap — so it has to contrast with both the
+headings and the body copy. Prata is a Didone like the display face but
+rounder in the bowl, which is the circular-O effect the swap reproduces.
+
+### What was here before
+
+The previous build self-hosted four faces, two of which could not legally
+ship:
+
+- **Canopée** (VJ-Type, paid) — the supplied copy carried `wf-rip` in its
+  version string, i.e. a webfont rip rather than a foundry file. It was never
+  actually installed, so the display role silently fell through to Playfair
+  Display 900 — which is what the giant type was really being set in.
+- **Domaine Display Cond** (Klim, paid) — installed as **test** cuts, which
+  Klim's licence permits for internal evaluation and mock-ups only.
+- **PP Editorial New** (Pangram Pangram) — free for personal use only.
+- **Encient German Gothic** — freeware blackletter.
+
+The files are still in `src/assets/fonts/` but nothing references them now.
+They are safe to delete:
+
+```
+src/assets/fonts/PPEditorialNew-Regular.otf
+src/assets/fonts/PPEditorialNew-Ultralight.otf
+src/assets/fonts/TestDomaineDispCond-Medium.woff2
+src/assets/fonts/TestDomaineDispCond-Regular.woff2
+src/assets/fonts/EncientGermanGothic.ttf
+```
 
 ## Swapping an image
 

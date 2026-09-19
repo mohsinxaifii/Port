@@ -1,7 +1,34 @@
 /* ==================================================================
-   LAYOUT - nav, menu, project cards, headline blocks, footer.
+   LAYOUT - the sheet, nav, menu, project cards, headline blocks, footer.
    Shared by every page. Page-specific rules live in home.css / work.css.
    ================================================================== */
+
+/* ------------------------------------------------------------------
+   THE SHEET
+
+   Every page is one sheet of paper on the dark body, and every page
+   module imports this file - which is why the rule lives here. It used
+   to sit in home.css, which home.js, about.js and legal.js import but
+   work.js and case.js do not, so the work page and all sixteen
+   generated case pages rendered an unpainted .app: ink text on the ink
+   body showing through, i.e. a blank dark screen.
+
+   transform-origin and will-change are for the intro, which turns this
+   element on every page - see initIntro() in js/reveal.js.
+
+   min-height rather than height: .work overrides it with an explicit
+   height to build its sideways rail, and the two must not fight.
+------------------------------------------------------------------ */
+.app {
+  position: relative;
+  z-index: 2;
+  width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: var(--paper);
+  transform-origin: 50% 10%;
+  will-change: transform;
+}
 
 /* ------------------------------------------------------------------
    NAV
@@ -167,10 +194,27 @@ body.menu-open .nav__line:last-child { transform: translateY(-.23vw) rotate(-6de
   opacity: .75;
 }
 
-/* The hand-drawn ellipse looping the headline word. */
+/* The hand-drawn ellipse looping the headline word.
+
+   max-width is the important line. The global reset gives every svg
+   `max-width: 100%`, which clamped this box to the width of the very word it
+   is supposed to go around: the loop was drawn at 94.5% of a box one word
+   wide, then shifted left by the left inset, so it sat off-centre and cut
+   through the letters rather than enclosing them. The clamp applies to width
+   alone, which is why the box grew taller but never wider no matter what
+   width was asked for - including an explicit pixel value.
+
+   The size is then set explicitly rather than by `inset`, because an <svg>
+   carrying a viewBox and no width/height attributes sizes as a replaced
+   element: with left and right both resolved the pair over-constrains and
+   `right` is dropped. */
 .headline__doodle {
   position: absolute;
-  inset: -1.2vw -2.4vw;
+  left: -2.4vw;
+  top: -1.2vw;
+  width: calc(100% + 4.8vw);
+  height: calc(100% + 2.4vw);
+  max-width: none;
   pointer-events: none;
   overflow: visible;
 }
@@ -251,8 +295,19 @@ body.menu-open .nav__line:last-child { transform: translateY(-.23vw) rotate(-6de
   object-fit: contain;
   object-position: left bottom;
 }
+/* Heavier than the rest of the display type. The card lockup carries the
+   project name at 1.5vw against a thumbnail, and at the shared 700 it sat
+   too light to hold that corner.
+
+   800, not 900: Newsreader's weight axis stops at 800, so 900 renders
+   identically - measured at 344.55px wide either way, against 332.63px at
+   700. Asking for 900 would put a weight in the stylesheet that the font
+   cannot draw. Set here rather than on --font-display-weight, which is
+   shared with thirty-odd other elements; this rule wins on equal
+   specificity because layout.css is imported after base.css. */
 .card__title {
   font-family: var(--font-display);
+  font-weight: 800;
   font-size: 1.5vw;
   line-height: 1.3;
   letter-spacing: -.02em;
@@ -345,14 +400,17 @@ body.menu-open .nav__line:last-child { transform: translateY(-.23vw) rotate(-6de
   text-transform: uppercase;
   white-space: nowrap;
 }
+/* line-height .78 made the plate shorter than the letters standing on it, so
+   the ink box cut through their tops and tails. The plate should hug the type,
+   not crop it. */
 .marquee__cta {
   margin: 0 2vw 0 1.5vw;
-  padding: .5vw .8vw .8vw;
+  padding: .35vw .8vw .45vw;
   background-color: var(--ink);
   color: var(--paper);
   font-family: var(--font-display);
   font-size: 6vw;
-  line-height: .78;
+  line-height: 1;
   letter-spacing: -.03em;
   text-transform: uppercase;
   white-space: nowrap;

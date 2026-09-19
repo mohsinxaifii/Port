@@ -3,8 +3,11 @@ import gsap from 'gsap'
 /* ------------------------------------------------------------------
    Entrance animations.
 
-   initIntro()   the one-time page load sequence. Scroll is held for its
-                 duration so the viewer cannot scroll past the reveal.
+   initIntro()   the one-time page load sequence. The sheet is held out of
+                 sight until the first screen has actually loaded, then
+                 turned into place. Scroll and clicks are held for the whole
+                 of it, so the viewer cannot scroll past the reveal or open
+                 a link out from under a sheet that is still moving.
    initReveals() elements marked [data-reveal] rise into place as they
                  enter the viewport, once each.
 
@@ -13,17 +16,92 @@ import gsap from 'gsap'
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-export function initIntro({ onComplete } = {}) {
+const root = document.documentElement
+
+/* How long to wait on the first screen before starting anyway. One broken or
+   very slow image must not be able to hold the page hostage; past this the
+   intro runs and the straggler arrives behind the turn, which is no worse
+   than the behaviour before any of this was gated. */
+const ASSET_TIMEOUT = 4000
+
+/**
+ * Resolves once the first screen is actually on the page - or after
+ * ASSET_TIMEOUT, whichever comes first.
+ *
+ * Only images intersecting the first viewport are waited on. Waiting on the
+ * whole document would mean waiting on every thumbnail far below the fold,
+ * which is slow and pointless: those carry [data-reveal] and have long since
+ * arrived by the time they are scrolled to.
+ */
+function firstScreenReady() {
+  const fold = window.innerHeight
+  const images = [...document.images].filter((img) => {
+    const r = img.getBoundingClientRect()
+    return r.top < fold && r.bottom > 0
+  })
+
+  /* These are marked lazy in the markup, which is right for the page at rest
+     and wrong here: a lazy image inside a hidden sheet may not be fetched at
+     all, so awaiting it as-is would cost the full timeout every load. */
+  for (const img of images) {
+    img.loading = 'eager'
+    img.fetchPriority = 'high'
+  }
+
+  const decoded = images.map((img) => (
+    img.complete && img.naturalWidth
+      ? Promise.resolve()
+      : new Promise((resolve) => {
+          img.addEventListener('load', resolve, { once: true })
+          // A 404 resolves too - a missing image is not a reason to stall.
+          img.addEventListener('error', resolve, { once: true })
+        })
+  ))
+
+  /* Webfonts count as much as the images here. The wordmark is sized to its
+     measured width, so starting on the fallback face means turning a sheet
+     whose type jumps size partway through the turn. */
+  const fonts = document.fonts?.ready ?? Promise.resolve()
+
+  return Promise.race([
+    Promise.all([fonts, ...decoded]),
+    new Promise((resolve) => setTimeout(resolve, ASSET_TIMEOUT)),
+  ])
+}
+
+export async function initIntro({ onComplete } = {}) {
   const targets = document.querySelectorAll('[data-intro]')
+
+  /* Held from here rather than from module load, so the hold and its release
+     live in one function and cannot be orphaned on a page that imports this
+     module without running an intro. Page modules mount their markup and call
+     this synchronously, so this lands before the browser has painted any of
+     that markup - the sheet is never seen assembling itself. */
+  root.classList.add('is-booting', 'is-intro')
 
   if (reducedMotion || !targets.length) {
     gsap.set(targets, { clearProps: 'all', opacity: 1, y: 0 })
+    root.classList.remove('is-booting', 'is-intro')
+    document.dispatchEvent(new Event('intro:done'))
     onComplete?.()
     return null
   }
 
-  const tl = gsap.timeline({ onComplete })
-  tl.set(document.body, { autoAlpha: 1 })
+  await firstScreenReady()
+  root.classList.remove('is-booting')
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      // Clicks come back only once the sheet has come to rest.
+      root.classList.remove('is-intro')
+      /* The sheet's transform is cleared by now, so anything that measures
+         itself can finally do so against the resting layout. js/fit.js
+         listens for this - without it, the fit taken mid-turn is the one
+         the page is left with. */
+      document.dispatchEvent(new Event('intro:done'))
+      onComplete?.()
+    },
+  })
 
   /* The sheet itself.
 
@@ -67,12 +145,20 @@ export function initIntro({ onComplete } = {}) {
     tl.set(sheet, { clearProps: 'transform,transformOrigin' }, 4.5)
   }
 
-  // The nav and wordmark ride the sheet now, so they need no separate move -
-  // animating them on top of the turn only muddies it. One late stagger is
-  // enough to bring the page to rest.
+  /* The nav and wordmark ride the sheet, so they need no separate move -
+     animating them on top of the turn only muddies it. What is left is a
+     small settle at the end, to bring the page to rest.
+
+     Deliberately no opacity here. A from() tween has immediateRender on by
+     default, so `opacity: 0` was applied the moment this timeline was built
+     and not released until the playhead reached the tween at 3.4s - leaving
+     the top of the sheet blank for three and a half seconds of a four and a
+     half second turn. On the index that element is the entire featured row,
+     so the sheet turned into place with a hole where its masthead belongs.
+     The sheet is meant to read as one printed page: what is on it was
+     printed before it arrived, not faded in afterwards. */
   if (document.querySelector('[data-intro="stagger"]')) {
     tl.from('[data-intro="stagger"]', {
-      opacity: 0,
       y: '2vw',
       duration: 1,
       ease: 'power3.out',

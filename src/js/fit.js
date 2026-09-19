@@ -38,7 +38,22 @@ function fitOne(el) {
   // A Range measures the text itself, excluding the box's own padding.
   const range = document.createRange()
   range.selectNodeContents(el)
-  const textWidth = range.getBoundingClientRect().width
+
+  /* getBoundingClientRect reports pixels after transforms; clientWidth and
+     offsetWidth report layout pixels. The intro turns .app under a scale, so
+     a pass landing mid-turn measured the text at a fraction of its real
+     width and concluded every heading fitted comfortably. Worse, the first
+     line of this function clears the previous fit - so that pass threw away
+     a good fit and put nothing back, leaving the headings overflowing for
+     the rest of the page's life. setTimeout(fitAll, 600) below lands inside
+     the turn on every load, which is exactly how that happened.
+
+     Dividing by the element's own scale puts the measurement back into
+     layout pixels, so the result no longer depends on when this runs. */
+  const scale = el.offsetWidth > 0
+    ? el.getBoundingClientRect().width / el.offsetWidth
+    : 1
+  const textWidth = range.getBoundingClientRect().width / (scale || 1)
   if (!textWidth) return
 
   if (textWidth > available) {
@@ -85,6 +100,12 @@ export function initFitText() {
   window.addEventListener('load', fitAll)
   // Backstop: webfont application can trail every event above.
   setTimeout(fitAll, 600)
+  /* The sheet carries a transform for the whole of the intro and a fit is
+     only as good as the last pass over it, so take one more once the turn
+     has ended and the transform is gone. fitOne() is scale-corrected and no
+     longer needs this to be right, but the two together mean no single
+     mistimed pass can leave the page overflowing. Fired by js/reveal.js. */
+  document.addEventListener('intro:done', fitAll)
 
   let frame
   window.addEventListener('resize', () => {
