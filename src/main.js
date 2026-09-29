@@ -53,3 +53,17 @@ runLoader().then(async () => {
 })
 
 addEventListener('modechange', () => requestAnimationFrame(() => ScrollTrigger.refresh()))
+
+/* Pinned sections (Experience) measure their scroll positions up front.
+   Anything that changes the page height later - lazy screenshots loading,
+   fonts, the receipt printing - would leave the pin starting in the wrong
+   place, so re-measure whenever <main> changes height. */
+let lastHeight = 0
+let refreshTimer
+new ResizeObserver(([entry]) => {
+  const h = Math.round(entry.contentRect.height)
+  if (Math.abs(h - lastHeight) < 2) return
+  lastHeight = h
+  clearTimeout(refreshTimer)
+  refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120)
+}).observe($('main'))
