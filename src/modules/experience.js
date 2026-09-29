@@ -1,6 +1,6 @@
 /* ==================================================================
-   EXPERIENCE - each job is a boarding pass, oldest to newest, flying
-   from one company code to the next. The last pass is an open seat
+   EXPERIENCE - each job is a boarding pass, newest first, flying
+   from its company code to the next job's. The last pass is an open seat
    ("YOU?") that doubles as the hire CTA. On desktop the row is pinned
    and scrubbed sideways; on mobile it stacks.
    ================================================================== */
@@ -26,7 +26,8 @@ const duration = (from, to) => {
 }
 
 export function initExperience() {
-  const trips = [...experience].reverse()
+  // Newest first (cv.js order), so the current job leads the row.
+  const trips = experience
   const current = experience.find((j) => j.current)
 
   if (current) {
@@ -36,12 +37,14 @@ export function initExperience() {
   }
 
   const passes = trips.map((job, i) => {
-    const next = trips[i + 1]
+    // Each pass flies to the job that came after it; the current one flies to you.
+    const next = trips[i - 1]
     const destination = next ? next.code : 'YOU'
+    const flight = String(trips.length - i).padStart(3, '0')
     return `
       <article class="pass${job.current ? ' pass--current' : ''}">
         <div class="pass__main">
-          <div class="pass__top"><span>Boarding pass</span><span>Flight MM${String(i + 1).padStart(3, '0')}</span></div>
+          <div class="pass__top"><span>Boarding pass</span><span>Flight MM${flight}</span></div>
           <div class="pass__route">
             <p class="pass__code">${esc(job.code)}<small>${esc(job.from)}</small></p>
             <div class="pass__line" aria-hidden="true"></div>
