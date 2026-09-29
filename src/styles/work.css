@@ -44,17 +44,51 @@
 .work__lead { max-width: 32vw; margin-top: 2.5vw; }
 
 /* --- Project grid: two rows, staggered vertically --- */
+/* Rows are sized to the cards, not 1fr of the viewport: 1fr split the full
+   height, so the top row sat under the fixed nav and a dead band opened
+   between the rows. The top padding is the nav's clearance; the bottom
+   leaves room for the lower row's stagger. */
 .work__grid {
   flex: none;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   grid-auto-flow: column;
   align-content: center;
-  gap: 3vw 3vw;
-  padding: 0 4vw;
+  gap: 2.5vw 3vw;
+  padding: 10.8vh 4vw 3vw;
+}
+/* The grid owns the spacing - the slider's sibling margin would push every
+   card but the first off its column. */
+.work__grid .card + .card { margin-left: 0; }
+/* Descriptions vary in length; capping them keeps both rows the same height
+   so the stagger reads as deliberate. The full copy is on the case page. */
+.work__grid .card__desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 /* Offset the lower row so the strip never reads as a rigid table. */
 .work__grid > :nth-child(even) { transform: translateY(3vw); }
+
+/* The rail is one viewport tall but the cards are sized in vw, so on a wide,
+   short window (1920x900, 2560x1080) two rows of cards ran past the bottom
+   and up under the nav. --u is 1vw until the window gets wider than ~16:9,
+   then follows the height instead - the grid keeps its designed proportions
+   everywhere it already fitted and shrinks only where it did not. */
+@media (min-width: 992px) {
+  .work__grid {
+    --u: min(1vw, 1.8vh);
+    gap: calc(2.5 * var(--u)) calc(3 * var(--u));
+    padding-bottom: calc(3 * var(--u));
+  }
+  .work__grid > :nth-child(even) { transform: translateY(calc(3 * var(--u))); }
+  .work__grid .card { width: calc(28 * var(--u)); }
+  .work__grid .card__meta { gap: calc(.6 * var(--u)); margin-top: calc(.5 * var(--u)); }
+  .work__grid .card__title { font-size: calc(1.5 * var(--u)); }
+  .work__grid .card__badge { font-size: calc(1.2 * var(--u)); }
+  .work__grid .card__desc { font-size: calc(1.2 * var(--u)); margin-top: var(--u); }
+}
 
 .work__end {
   flex: none;
@@ -90,6 +124,7 @@
   .work__grid > :nth-child(even) { transform: none; }
   .work__grid .card { width: 100%; }
   .work__grid .card + .card { margin-left: 0; }
+  .work__grid .card__desc { display: block; overflow: visible; }
 
   .work__end { width: 100%; border-left: 0; }
   .work__end .footer__info { padding: 8vw 4vw; }

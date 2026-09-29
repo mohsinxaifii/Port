@@ -18,7 +18,7 @@ mount('[data-nav-mount]', navMarkup('/work.html'))
 mount('[data-footer-mount]', footerMarkup())
 
 mount('[data-work-title]', swap('Featured Work'))
-mount('[data-work-lead]', esc(site.process.body))
+mount('[data-work-lead]', esc(site.workLead ?? site.process.body))
 mount('[data-work-mount]', projects.map(cardMarkup).join(''))
 
 document.title = `${site.wordmark} — Work`

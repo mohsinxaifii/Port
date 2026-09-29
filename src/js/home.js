@@ -162,8 +162,10 @@ mount('[data-quotes-mount]', testimonials.map((t) => {
   `
 }).join(''))
 
-// The strip that closes the page: a card either side of a headline.
-const stripCards = featuredProjects.slice(0, 2)
+// The strip that closes the page: a card either side of a headline. It takes
+// the next two featured projects so the page does not open and close on the
+// same pair; with fewer than four featured it falls back to the lead pair.
+const stripCards = featuredProjects.length >= 4 ? featuredProjects.slice(2, 4) : lead
 mount('[data-strip-mount]', [
   stripCards[0] ? cardMarkup(stripCards[0]) : '',
   headlineMarkup({

@@ -1,155 +1,58 @@
-# Portfolio
+# Mohd Mohsin — portfolio
 
-A paper-and-ink portfolio: smooth scroll, a WebGL torn-paper page transition,
-and a display type system built around one substituted letter per phrase.
-
-Built as a Vite multi-page app in plain JavaScript — no framework, no build
-step beyond Vite itself.
+A single-page portfolio: clean enough for a recruiter to scan in ten seconds,
+with a layer of toys on top for everyone else. Plain JavaScript on Vite, with
+GSAP + Lenis for motion and OGL for WebGL.
 
 ```bash
 npm install
 npm run dev      # http://localhost:5173
 npm run build    # -> dist/
-npm run preview  # serve the build
 ```
 
----
+## Editing content
 
-## Where to edit things
-
-**All content lives in `src/data/`. You should not need to touch the HTML.**
+All content lives in `src/data/`. You shouldn't need to touch the HTML.
 
 | File | Holds |
 |---|---|
-| `src/data/site.js` | Name, location, email, headline, roles, socials, counters |
-| `src/data/projects.js` | Every project + case study |
-| `src/data/cv.js` | Experience, education, skills, recognition, press, testimonials |
+| `src/data/site.js` | Name, email, CV path, roles, socials, counters, stickers |
+| `src/data/projects.js` | Every project. `featured: true` puts it in the big cards; the rest go in the archive list |
+| `src/data/cv.js` | Experience (boarding passes), education, skills, ball-pit labels |
 
-Values still carrying placeholder copy are marked `// PLACEHOLDER`.
+Project screenshots live in `public/work/<slug>/` (`thumb.jpg` 5:2,
+`gallery-N.jpg` 16:9).
 
-```bash
-grep -rn PLACEHOLDER src/data/    # everything still to fill in
-```
+**CV PDF:** drop it at `public/cv/Mohd-Mohsin-CV.pdf`. Until it exists, the
+download buttons show a toast instead of a 404.
 
-### Adding a project
+## Page map
 
-Append an entry to `projects.js`. The slug becomes the page URL:
+| Section | Toy |
+|---|---|
+| Hero | The name is a WebGL flowmap: it warps like liquid under the cursor |
+| Impact | Odometer counters |
+| Work | Featured cards, filterable archive with a WebGL hover preview, full-screen case overlay (deep-links as `#p-<slug>`) |
+| Experience | Boarding passes, scrubbed sideways on desktop; the last one is an open seat |
+| Stack | Physics ball pit: grab, throw, shake |
+| CV | Thermal receipt printer: print, then drag the receipt down to tear it off and download |
+| Contact | Velocity marquee, copy-to-clipboard email, a "Hire me" button that runs away |
+| Footer | Bug-squashing mini game |
 
-```js
-{
-  slug: 'acme-redesign',        // -> /work/acme-redesign.html
-  title: 'Acme Redesign',
-  featured: true,               // show in the index carousel
-  upcoming: false,              // the "Upcoming Next" slot — pick exactly one
-  thumb: '/work/acme.jpg',      // file in public/work/, or null for a placeholder
-  // ...
-}
-```
+Global toys: the Recruiter/Chaos switch (recruiter mode hides every `.toy`
+and mutes sound), synthesised sound effects (WebAudio, no files), a
+context cursor, draggable stickers, a pull-cord light switch, and a gravity
+easter egg (type `mohsin`, or the Konami code).
 
-`npm run dev` and `npm run build` regenerate `/work/*.html` from this list
-automatically. Deleting an entry deletes its page.
-
----
-
-## Images
-
-Drop files in `public/` and reference them by absolute path (`/work/acme.jpg`).
-
-Every image slot has a hatched placeholder at the correct aspect ratio, so the
-layout is already final — real images drop straight in:
-
-| Slot | Field | Aspect |
-|---|---|---|
-| Project card / case hero | `projects[].thumb` | 29:11 |
-| Case study gallery | `projects[].gallery` | 16:9 |
-| Portrait | `site.portrait` | 4:5 |
-| Testimonial avatar | `testimonials[].avatar` | 1:1 |
-
-The portrait is multiply-blended into the paper, so a cut-out on a white or
-transparent ground works best.
-
----
-
-## Type
-
-Four roles, wired in `src/styles/fonts.css`:
-
-| Role | Intended face | Currently | Licence |
-|---|---|---|---|
-| `--font-display` | Canopée | Bebas Neue | VJ-Type, **commercial** |
-| `--font-body` | PP Editorial New | Instrument Serif | Pangram Pangram, free for personal use |
-| `--font-accent` | Domaine Display Condensed | Bodoni Moda | Klim, **commercial** |
-| `--font-numeral` | Germgoth | Bodoni Moda | free |
-
-To install a real face: drop the `.woff2` into `src/assets/fonts/` and
-uncomment its `@font-face` block in `fonts.css`. Nothing else changes — the
-stand-in stays as the fallback.
-
-### The letter swap
-
-One round letter per display phrase is set in the accent serif — the move the
-whole type system is built on. `swap()` in `src/js/partials.js` applies it
-automatically to the first `o`/`c`/`g`. To choose a different letter, bracket
-it in the source string:
-
-```js
-'Portfolio'    // -> P[o]rtfolio   (first o/c/g)
-'Portf[o]lio'  // -> Portf[o]lio   (explicit)
-```
-
-Exactly one is the point — several read as a mistake rather than a decision.
-
----
-
-## How it works
+## Code map
 
 ```
-src/js/
-  curtain.js   WebGL torn-paper transition (OGL + GSAP)
-  scroll.js    Lenis — vertical, or horizontal on /work
-  slider.js    pointer-drag carousel with inertia
-  nav.js       menu open/close, driving the curtain
-  reveal.js    intro timeline + scroll-triggered reveals
-  partials.js  shared markup: nav, footer, cards, stamp, letter swap
-  viewport.js  mobile 100vh fix, ruled paper grid
+index.html            markup + section skeleton
+src/main.js           boot order
+src/css/base.css      tokens (colour, type, spacing), buttons, nav, reveals
+src/css/sections.css  every section's layout
+src/css/toys.css      loader, cursor, stickers, pit, printer, cord, bugs
+src/modules/          one file per section / behaviour
 ```
 
-**The paper illusion** is three fixed overlays stacked in `base.css`: a
-multiply-blended fibre texture at 30%, sixteen ruled columns at 5%, and the
-curtain canvas above both.
-
-**The texture** is generated, not shipped as a stock asset —
-`npm run gen:textures` rebuilds `public/textures/paper.png` from seeded value
-noise plus directional fibres. Change the seed in `scripts/gen-textures.mjs`
-for different stock.
-
-**The curtain** tears a sheet across the viewport on menu open/close. The tear
-line is one-dimensional noise across the edge — deliberately *not* varying
-along the direction of travel, which is what separates a tear from fur. It
-renders only while its tween is running, so an idle curtain costs nothing.
-
-Motion respects `prefers-reduced-motion`; touch devices get native scrolling
-rather than smoothed scrolling.
-
----
-
-## Deploying
-
-Static output — any host works.
-
-```bash
-npm run build     # -> dist/
-```
-
-Netlify / Vercel: build `npm run build`, publish `dist`.
-
----
-
-## Credit
-
-The design language — the paper ground, the ruled grid, the torn-paper
-transition, the substituted letter — follows
-[niccolomiranda.com](https://www.niccolomiranda.com/). The implementation here
-is original: the shader, the texture generator, the scroll and slider layers
-were all written from scratch rather than lifted, and none of that site's
-assets, fonts, or code are redistributed here.
+Motion respects `prefers-reduced-motion`. Deploy `dist/` to any static host.

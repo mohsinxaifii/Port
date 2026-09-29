@@ -3,7 +3,7 @@ import '../styles/layout.css'
 import '../styles/case.css'
 
 import { site } from '../data/site.js'
-import { projectBySlug, nextProject } from '../data/projects.js'
+import { projectBySlug, nextProject, domainOf } from '../data/projects.js'
 import { navMarkup, footerMarkup, cardMarkup, swap, esc } from './partials.js'
 
 import { initViewportUnit } from './viewport.js'
@@ -24,20 +24,21 @@ if (!project) {
   mount('[data-nav-mount]', navMarkup('/work.html'))
   mount('[data-footer-mount]', footerMarkup())
 
-  mount('[data-case-meta]', `
-    <span>Client: ${esc(project.client)}</span>
-    <span>&bull;</span>
-    <span>${esc(project.year)}</span>
-  `)
+  // Year is optional; the domain fills the slot when there is a live site.
+  mount('[data-case-meta]', [
+    `Client: ${esc(project.client)}`,
+    project.year ? esc(project.year) : null,
+    project.url ? esc(domainOf(project.url)) : null,
+  ].filter(Boolean).map((t) => `<span>${t}</span>`).join('<span>&bull;</span>'))
   mount('[data-case-title]', swap(project.title))
   mount('[data-case-intro]', esc(project.description))
 
   mount('[data-case-facts]', [
     ['Role', esc(project.role)],
-    ['Year', esc(project.year)],
+    project.year ? ['Year', esc(project.year)] : null,
     project.stack?.length ? ['Stack', project.stack.map(esc).join(', ')] : null,
     project.url
-      ? ['Live', `<a href="${esc(project.url)}" target="_blank" rel="noopener noreferrer">Visit site</a>`]
+      ? ['Live', `<a href="${esc(project.url)}" target="_blank" rel="noopener noreferrer">${esc(domainOf(project.url))}</a>`]
       : null,
   ].filter(Boolean).map(([key, value]) => `
     <div class="fact">

@@ -1,189 +1,182 @@
 /* ==================================================================
-   CV - drives the /about page.
-
-   Four blocks, in page order:
-     recognition  the awards/recognition slider
-     experience   work history
-     press        talks, interviews, features (numbered list)
-     testimonials the stacked quote cards on the index page
-
-   Content here is taken from the CV. Three arrays are deliberately
-   empty - recognition, press and testimonials - because the CV records
-   no awards, no published pieces and no quotes, and inventing any of
-   them is the one kind of placeholder that cannot be safely left in.
-   Each empty array hides its own section; fill one and it reappears.
+   CV - work history, education and skills, taken from the PDF at
+   public/cv/Mohd-Mohsin-CV.pdf. Newest first. `code` is the three-letter
+   "airport code" printed on each boarding pass in Experience.
    ================================================================== */
 
-export const availability = {
-  headline: 'Open to',
-  emphasis: 'new opportunities!',
-  status: 'Available now',
-  body:
-    "Whether you're looking for someone to build a storefront, the systems " +
-    'behind it, or the automation that connects them, you can reach me by clicking',
-  linkLabel: 'here',
-}
+export const summary =
+  "Full-stack developer trusted with end-to-end ownership of a business's " +
+  'digital operation. The customer-facing storefront, the internal systems ' +
+  'behind it, and the AI and automation layer that connects them.'
 
-export const bio = {
-  short:
-    'Full-stack developer working across storefronts, internal systems and ' +
-    'the AI layer that connects them.',
-  long:
-    "Full-stack developer trusted with end-to-end ownership of a business's " +
-    'digital operation: the customer-facing storefront, the internal systems ' +
-    'behind it, and the AI and automation layer that ties them together. ' +
-    'Three years shipping work that moves commercial numbers.',
-}
+export const about = [
+  'Currently accountable for the entire technology function at a design and ' +
+    'production studio: every client account’s architecture, full project ' +
+    'development, AI chat assistants, sales analytics and workflow automation.',
+  'Previously led a cross-functional development and design team while owning ' +
+    'client relationships directly. 3+ years shipping systems that move commercial ' +
+    'numbers: an 8x conversion-rate increase on a storefront rebuilt from scratch, ' +
+    'internal ERPs delivered solo, and manual operations replaced by automation.',
+]
 
-/* Recognition / awards. Empty is fine - the section hides itself.
-   Nothing in the CV to put here; add real entries when you have them. */
-export const recognition = []
-
-/* Work history, newest first. `current: true` renders the live marker. */
 export const experience = [
   {
+    code: 'DDM',
     role: 'Software Developer',
     org: 'Design Dimensions',
     from: 'Jul 2026',
     to: 'Present',
     current: true,
-    clients: ['Full client portfolio'],
-    summary:
-      'Sole technical decision-maker for the studio and every client account - ' +
-      'architecture, build, integration and optimisation, plus AI chat assistants ' +
-      'and the sales analytics behind them.',
+    points: [
+      'Own the entire technology function for the studio and its full client portfolio as the sole technical decision-maker.',
+      'Build and deploy AI chat assistants trained on studio and client data to answer product queries, qualify leads and resolve first-line support.',
+      'Design sales tracking and analytics systems giving leadership real-time visibility into pipeline, revenue attribution and campaigns.',
+    ],
   },
   {
+    code: 'OYL',
     role: 'Software Developer',
     org: 'Oyela Technologies',
     from: 'Apr 2026',
     to: 'Jul 2026',
-    current: false,
-    clients: [],
-    summary:
-      'Built the internal ERP from scratch, replacing manual processes across ' +
-      'departments, and optimised the company Shopify storefront for performance ' +
-      'and conversion.',
+    points: [
+      "Built the company's internal ERP system from scratch, replacing manual processes across departments.",
+      'Partnered with data and BI teams on internal reporting, and optimised the Shopify storefront for performance and conversion.',
+      'Developed internal tools and workflows that cut dependency on manual processes.',
+    ],
   },
   {
+    code: 'RWT',
     role: 'Lead Software Developer',
     org: 'Radiant Web Tech',
     from: 'Jul 2024',
     to: 'Apr 2026',
-    current: false,
-    clients: [],
-    summary:
-      'Led end-to-end delivery on custom e-commerce builds while mentoring a ' +
-      'cross-functional team and owning client relationships directly.',
+    points: [
+      'Led end-to-end delivery on custom e-commerce builds, owning architecture, development and launches.',
+      'Built backend workflows, custom middleware and headless implementations on Shopify Admin, REST and AJAX APIs.',
+      'Managed and mentored a cross-functional team while owning client relationships directly.',
+    ],
   },
   {
+    code: 'AYC',
     role: 'Full Stack Web Developer',
     org: 'The Ayurveda Co.',
     from: 'Aug 2023',
     to: 'Jul 2024',
-    current: false,
-    clients: [],
-    summary:
-      'Rebuilt the storefront from scratch on a custom theme, sharply cutting ' +
-      'load times and driving an 8x increase in conversion rate.',
+    points: [
+      'Rebuilt the entire store from scratch on a custom theme, sharply cutting load times and driving an 8x increase in conversion rate.',
+      'Improved UX, Core Web Vitals and customer journeys with product and marketing teams.',
+      'Integrated marketing tools, subscription models and tracking pixels for better attribution.',
+    ],
   },
   {
+    code: 'LPR',
     role: 'Web Developer & Designer',
     org: 'LPPR',
     from: 'Feb 2023',
     to: 'May 2023',
-    current: false,
-    clients: [],
-    summary:
-      'Delivered a responsive, accessible, SEO-optimised site end to end, ' +
-      'translating Figma and Illustrator layouts into production code.',
+    points: [
+      'Delivered a responsive, accessible, SEO-optimised website end to end, translating Figma and Illustrator layouts into scalable production code.',
+    ],
   },
 ]
 
 export const education = [
-  {
-    qualification: 'Bachelor of Computer Applications',
-    org: 'IGNOU',
-    from: '2023',
-    to: '2026',
-  },
-  {
-    qualification: 'Higher Secondary School',
-    org: 'S.B.V. Noor Nagar',
-    from: '2021',
-    to: '2023',
-  },
-  {
-    qualification: 'Secondary School',
-    org: 'J.N. International School',
-    from: '2019',
-    to: '2021',
-  },
+  { qualification: 'Bachelor of Computer Applications', org: 'IGNOU', years: '2023–26' },
+  { qualification: 'Higher Secondary School', org: 'S.B.V. Noor Nagar', years: '2023' },
+  { qualification: 'Secondary School', org: 'J.N. International School', years: '2021' },
 ]
+
+export const languages = ['English', 'Hindi', 'Urdu']
 
 export const skills = [
   {
     group: 'E-commerce',
     items: [
       'Shopify Theme Development', 'Custom Shopify Development', 'Liquid',
-      'Admin API', 'Storefront API', 'Shopify Apps', 'Metafields',
-      'Headless Commerce', 'Checkout', 'Subscriptions',
+      'Shopify Admin API', 'Storefront API', 'Shopify Apps', 'Metafields',
+      'Headless Commerce', 'Checkout', 'Subscriptions', 'Third-Party Integrations',
     ],
   },
   {
     group: 'Development',
     items: [
       'JavaScript (ES6+)', 'React', 'HTML5', 'CSS3', 'AJAX', 'Node.js',
-      'REST APIs', 'Webhooks', 'MySQL', 'System Architecture', 'ERP Systems',
+      'REST APIs', 'Webhooks', 'MySQL', 'Database Design', 'System Architecture',
+      'Internal Tools', 'ERP Systems',
     ],
   },
   {
     group: 'AI & Automation',
     items: [
-      'OpenAI', 'Claude', 'AI Assistants', 'Prompt Engineering',
-      'LLM Integration', 'Workflow Automation', 'Lead Qualification',
+      'OpenAI', 'Claude', 'AI Assistants', 'Prompt Engineering', 'LLM Integration',
+      'Workflow Automation', 'AI-Powered Support', 'Lead Qualification Automation',
     ],
   },
   {
     group: 'Design & UX',
     items: [
-      'Figma', 'Adobe Illustrator', 'UI Design', 'UX Design',
-      'Responsive Design', 'Design Systems', 'Wireframing', 'Prototyping',
+      'Figma', 'Adobe Illustrator', 'UI Design', 'UX Design', 'Responsive Design',
+      'Design Systems', 'Wireframing', 'Prototyping', 'UX Research',
+      'User Journey Analysis', 'Competitor Research',
     ],
   },
   {
-    group: 'Cloud',
-    items: ['AWS EC2', 'AWS RDS', 'Linux', 'Deployment', 'DNS', 'Production'],
+    group: 'Cloud & Infrastructure',
+    items: [
+      'AWS EC2', 'AWS RDS', 'Linux', 'Deployment', 'Hosting',
+      'Domain & DNS Configuration', 'Production Environments',
+    ],
   },
   {
-    group: 'Performance',
+    group: 'Performance & Analytics',
     items: [
       'Conversion Rate Optimisation', 'Website Audits', 'A/B Testing', 'GA4',
-      'Core Web Vitals', 'Attribution', 'Customer Journey Analysis',
+      'Conversion Tracking', 'Core Web Vitals', 'Frontend Performance',
+      'Attribution', 'Customer Journey Analysis',
     ],
   },
-  {
-    group: 'Languages',
-    items: ['English', 'Hindi', 'Urdu'],
-  },
 ]
 
-/* Press, talks, interviews. Empty hides the section. */
-export const press = []
+/* Tools that show up in the project stacks but not in the CV skill list. */
+export const alsoUsed = ['GSAP', 'Webflow', 'Laravel', 'PHP', 'Vite', 'Bootstrap']
 
-/* The stacked quote cards on the index.
+/* Ball labels for the Stack pit. Anything not listed uses its full name;
+   the full name still shows in the pit caption on hover. */
+const SHORT = {
+  'Shopify Theme Development': 'Shopify Themes',
+  'Custom Shopify Development': 'Custom Shopify',
+  'Shopify Admin API': 'Admin API',
+  'Headless Commerce': 'Headless',
+  'Third-Party Integrations': 'Integrations',
+  'JavaScript (ES6+)': 'JavaScript',
+  'Database Design': 'DB Design',
+  'System Architecture': 'Architecture',
+  'ERP Systems': 'ERP',
+  'Prompt Engineering': 'Prompting',
+  'LLM Integration': 'LLMs',
+  'Workflow Automation': 'Automation',
+  'AI-Powered Support': 'AI Support',
+  'Lead Qualification Automation': 'Lead Qual.',
+  'Adobe Illustrator': 'Illustrator',
+  'Responsive Design': 'Responsive',
+  'User Journey Analysis': 'User Journeys',
+  'Competitor Research': 'Competitor Research',
+  'Domain & DNS Configuration': 'DNS',
+  'Production Environments': 'Production',
+  'Conversion Rate Optimisation': 'CRO',
+  'Website Audits': 'Audits',
+  'A/B Testing': 'A/B Tests',
+  'Conversion Tracking': 'Tracking',
+  'Frontend Performance': 'Perf',
+  'Customer Journey Analysis': 'CJ Analysis',
+}
 
-   Empty on purpose. The slots previously held invented quotes attached to
-   photographs of three real, named designers, which reads as a fabricated
-   endorsement - the hardest kind of placeholder to walk back once it is
-   live. Ask past colleagues for real ones; each needs quote, name and role,
-   and `avatar` may be null for a monogram. */
-export const testimonials = []
+const TONES = ['lime', 'ink', 'pink', 'blue', 'orange', 'paper', 'violet']
 
-/* Places the work was done. Employers, not clients won independently. */
-export const clients = [
-  'Design Dimensions',
-  'Oyela Technologies',
-  'Radiant Web Tech',
-  'The Ayurveda Co.',
-]
+/* Pit groups: every CV skill, plus the extra project tools. */
+export const pit = [...skills, { group: 'Also shipped with', items: alsoUsed }].map((g, i) => ({
+  group: g.group,
+  tone: TONES[i % TONES.length],
+  items: g.items.map((full) => ({ full, label: SHORT[full] || full })),
+}))
