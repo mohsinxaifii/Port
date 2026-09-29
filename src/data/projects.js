@@ -15,13 +15,15 @@
    `year` is optional - null hides it everywhere.
    ================================================================== */
 
+import { asset } from './asset.js'
+
 const ROLE = 'Design, development & delivery'
 const SHOPIFY = ['Shopify', 'Liquid', 'JavaScript', 'CSS']
 
 // Every project follows the same image layout, so build the paths once.
 const shots = (slug, count = 3) => ({
-  thumb: `/work/${slug}/thumb.jpg`,
-  gallery: Array.from({ length: count }, (_, i) => `/work/${slug}/gallery-${i + 1}.jpg`),
+  thumb: asset(`/work/${slug}/thumb.jpg`),
+  gallery: Array.from({ length: count }, (_, i) => asset(`/work/${slug}/gallery-${i + 1}.jpg`)),
 })
 
 export const projects = [
@@ -39,7 +41,7 @@ export const projects = [
     ...shots('kachori-story'),
     // Illustrated cover: people round a table sharing kachoris. Cropped
     // from 30% down so the headline and the plate both stay in frame.
-    thumb: '/work/kachori-story/cover.jpg',
+    thumb: asset('/work/kachori-story/cover.jpg'),
     thumbPosition: '50% 30%',
     thumbAlt: 'The Kachori Story illustration: "From the heart of the streets to your table", a row of people sharing kachoris, chai and samosas',
     logo: null,

@@ -3,6 +3,8 @@
    projects (projects.js) or work history (cv.js).
    ================================================================== */
 
+import { asset } from './asset.js'
+
 export const site = {
   name: 'Mohsin',
   fullName: 'Mohd Mohsin',
@@ -11,11 +13,11 @@ export const site = {
   email: 'mohsinxaifi@gmail.com',
   phone: '+971 55 780 5809',
   title: 'Full-Stack Developer / Software Developer',
-  portrait: '/me.webp',
+  portrait: asset('/me.webp'),
 
   // Drop your PDF at public/cv/Mohd-Mohsin-CV.pdf. Until it exists the
   // download buttons say so instead of serving a 404.
-  cv: '/cv/Mohd-Mohsin-CV.pdf',
+  cv: asset('/cv/Mohd-Mohsin-CV.pdf'),
 
   roles: ['Full-stack developer', 'Shopify engineer', 'Automation builder'],
 
