@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mohd Mohsin — Full-stack developer in New Delhi</title>
+  <meta name="description" content="Contact Mohd Mohsin in India: +91 9319617848, mohsinxaifi@gmail.com, New Delhi. Download the CV as a PDF.">
+  <meta name="theme-color" content="#F3F2EC">
+  <meta property="og:title" content="Mohd Mohsin — Full-stack developer, New Delhi">
+  <meta property="og:description" content="India contact details and CV.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+
+  <!-- Same theme the visitor picked on the main site, before first paint. -->
+  <script>
+    (function () {
+      var d = document.documentElement, t
+      try { t = JSON.parse(localStorage.getItem('theme')) } catch (e) {}
+      d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      if (d.dataset.theme === 'dark') document.querySelector('meta[name="theme-color"]').content = '#0D0D0B'
+    })()
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/css/base.css">
+  <style>
+    .in { min-height: 100svh; display: flex; flex-direction: column; }
+    .in__nav { display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); }
+    .in__nav .nav__logo { font-weight: 600; font-size: 18px; letter-spacing: -.04em; }
+    .in__nav .nav__logo sup { font-size: .5em; font-weight: 400; margin-left: 1px; }
+
+    .in__main { flex: 1; display: grid; align-content: center; gap: clamp(40px, 6vw, 80px); padding-block: clamp(48px, 8vw, 120px); }
+    .in__head { display: grid; gap: var(--s5); }
+    .in__title { font-size: var(--fs-h2); }
+    .in__lede { font-size: var(--fs-lg); color: var(--ink-2); max-width: 44ch; }
+
+    .in__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); border-top: 1px solid var(--line); }
+    .in__item { display: grid; gap: var(--s2); padding: var(--s5) 0; border-bottom: 1px solid var(--line); }
+    .in__value { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -.035em; line-height: 1.1; overflow-wrap: anywhere; }
+    a.in__value { transition: color .3s var(--ease); }
+    a.in__value:hover { color: var(--ink-2); }
+
+    .in__ctas { display: flex; flex-wrap: wrap; gap: var(--s3); }
+    .in__foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s3); padding-block: var(--s5); border-top: 1px solid var(--line); }
+    .in__foot a:hover { color: var(--ink); }
+  </style>
+</head>
+
+<body>
+  <div class="in container">
+    <header class="in__nav">
+      <a class="nav__logo" href="../" aria-label="Back to the main portfolio">mohsin<sup>®</sup></a>
+      <p class="label">India</p>
+    </header>
+
+    <main class="in__main">
+      <div class="in__head">
+        <p class="label">Contact · India</p>
+        <h1 class="h2 in__title">Mohd <em>Mohsin</em></h1>
+        <p class="in__lede">Full-Stack Developer / Software Developer, based in New Delhi. Storefronts, the systems behind them, and the AI that ties it all together.</p>
+      </div>
+
+      <dl class="in__list">
+        <div class="in__item">
+          <dt class="label">Phone</dt>
+          <dd style="margin:0"><a class="in__value" href="tel:+919319617848">+91 93196 17848</a></dd>
+        </div>
+        <div class="in__item">
+          <dt class="label">Email</dt>
+          <dd style="margin:0"><a class="in__value" href="mailto:mohsinxaifi@gmail.com">mohsinxaifi@gmail.com</a></dd>
+        </div>
+        <div class="in__item">
+          <dt class="label">Location</dt>
+          <dd style="margin:0"><span class="in__value">New Delhi, India</span></dd>
+        </div>
+        <div class="in__item">
+          <dt class="label">LinkedIn</dt>
+          <dd style="margin:0"><a class="in__value" href="https://linkedin.com/in/mohsinxaifi" target="_blank" rel="noopener">in/mohsinxaifi</a></dd>
+        </div>
+      </dl>
+
+      <div class="in__ctas">
+        <a class="btn btn--ink" href="../cv/Mohd-Mohsin-CV-India.pdf" download="Mohd-Mohsin-CV.pdf">Download CV (PDF) <span class="btn__arrow">↓</span></a>
+        <a class="btn btn--line" href="../">View portfolio</a>
+      </div>
+    </main>
+
+    <footer class="in__foot">
+      <p class="label">© Mohd Mohsin</p>
+      <a class="label" href="../">← Back to portfolio</a>
+    </footer>
+  </div>
+</body>
+</html>
