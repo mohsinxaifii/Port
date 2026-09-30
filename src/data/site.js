@@ -5,19 +5,35 @@
 
 import { asset } from './asset.js'
 
+/* Per-region contact details. The main page is Dubai; /in/ (generated from
+   index.html by vite.config.js, tagged <html data-region="in">) is India.
+   Everything else on the page is shared. Until a CV PDF exists at its
+   path, the download buttons say so instead of serving a 404. */
+const regions = {
+  ae: {
+    location: 'Dubai, UAE',
+    city: 'Dubai',
+    timezone: 'Asia/Dubai',
+    phone: '+971 55 780 5809',
+    cv: asset('/cv/Mohd-Mohsin-CV.pdf'),
+  },
+  in: {
+    location: 'New Delhi, India',
+    city: 'New Delhi',
+    timezone: 'Asia/Kolkata',
+    phone: '+91 93196 17848',
+    cv: asset('/cv/Mohd-Mohsin-CV-India.pdf'),
+  },
+}
+const region = regions[globalThis.document?.documentElement.dataset.region] ?? regions.ae
+
 export const site = {
   name: 'Mohsin',
   fullName: 'Mohd Mohsin',
-  location: 'Dubai, UAE',
-  timezone: 'Asia/Dubai',
+  ...region,
   email: 'mohsinxaifi@gmail.com',
-  phone: '+971 55 780 5809',
   title: 'Full-Stack Developer / Software Developer',
   portrait: asset('/me.webp'),
-
-  // Drop your PDF at public/cv/Mohd-Mohsin-CV.pdf. Until it exists the
-  // download buttons say so instead of serving a 404.
-  cv: asset('/cv/Mohd-Mohsin-CV.pdf'),
 
   roles: ['Full-stack developer', 'Shopify engineer', 'Automation builder'],
 

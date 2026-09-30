@@ -1,23 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-region="in" data-mode="chaos">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Mohd Mohsin — Full-stack developer in New Delhi</title>
-  <meta name="description" content="Contact Mohd Mohsin in India: +91 9319617848, mohsinxaifi@gmail.com, New Delhi. Download the CV as a PDF.">
+  <meta name="description" content="Mohd Mohsin builds Shopify storefronts, the internal systems behind them, and the AI and automation that ties them together. 18 live sites, based in New Delhi.">
   <meta name="theme-color" content="#F3F2EC">
-  <meta property="og:title" content="Mohd Mohsin — Full-stack developer, New Delhi">
-  <meta property="og:description" content="India contact details and CV.">
+  <meta property="og:title" content="Mohd Mohsin — Full-stack developer">
+  <meta property="og:description" content="Storefronts, the systems behind them, and the AI that ties them together.">
   <meta property="og:type" content="website">
   <link rel="icon" href="/icon.svg" type="image/svg+xml">
 
-  <!-- Same theme the visitor picked on the main site, before first paint. -->
+  <!-- Set theme + mode before first paint so there's no flash. -->
   <script>
     (function () {
-      var d = document.documentElement, t
-      try { t = JSON.parse(localStorage.getItem('theme')) } catch (e) {}
+      var d = document.documentElement, t, m
+      try { t = JSON.parse(localStorage.getItem('theme')); m = JSON.parse(localStorage.getItem('mode')) } catch (e) {}
       d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-      if (d.dataset.theme === 'dark') document.querySelector('meta[name="theme-color"]').content = '#0D0D0B'
+      d.dataset.mode = m || 'chaos'
+      d.classList.add('js')
     })()
   </script>
 
@@ -25,72 +26,256 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/css/base.css">
-  <style>
-    .in { min-height: 100svh; display: flex; flex-direction: column; }
-    .in__nav { display: flex; justify-content: space-between; align-items: center; height: var(--nav-h); }
-    .in__nav .nav__logo { font-weight: 600; font-size: 18px; letter-spacing: -.04em; }
-    .in__nav .nav__logo sup { font-size: .5em; font-weight: 400; margin-left: 1px; }
-
-    .in__main { flex: 1; display: grid; align-content: center; gap: clamp(40px, 6vw, 80px); padding-block: clamp(48px, 8vw, 120px); }
-    .in__head { display: grid; gap: var(--s5); }
-    .in__title { font-size: var(--fs-h2); }
-    .in__lede { font-size: var(--fs-lg); color: var(--ink-2); max-width: 44ch; }
-
-    .in__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); border-top: 1px solid var(--line); }
-    .in__item { display: grid; gap: var(--s2); padding: var(--s5) 0; border-bottom: 1px solid var(--line); }
-    .in__value { font-size: var(--fs-h3); font-weight: 500; letter-spacing: -.035em; line-height: 1.1; overflow-wrap: anywhere; }
-    a.in__value { transition: color .3s var(--ease); }
-    a.in__value:hover { color: var(--ink-2); }
-
-    .in__ctas { display: flex; flex-wrap: wrap; gap: var(--s3); }
-    .in__foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--s3); padding-block: var(--s5); border-top: 1px solid var(--line); }
-    .in__foot a:hover { color: var(--ink); }
-  </style>
+  <link rel="stylesheet" href="/src/css/sections.css">
+  <link rel="stylesheet" href="/src/css/toys.css">
 </head>
 
 <body>
-  <div class="in container">
-    <header class="in__nav">
-      <a class="nav__logo" href="../" aria-label="Back to the main portfolio">mohsin<sup>®</sup></a>
-      <p class="label">India</p>
-    </header>
-
-    <main class="in__main">
-      <div class="in__head">
-        <p class="label">Contact · India</p>
-        <h1 class="h2 in__title">Mohd <em>Mohsin</em></h1>
-        <p class="in__lede">Full-Stack Developer / Software Developer, based in New Delhi. Storefronts, the systems behind them, and the AI that ties it all together.</p>
-      </div>
-
-      <dl class="in__list">
-        <div class="in__item">
-          <dt class="label">Phone</dt>
-          <dd style="margin:0"><a class="in__value" href="tel:+919319617848">+91 93196 17848</a></dd>
-        </div>
-        <div class="in__item">
-          <dt class="label">Email</dt>
-          <dd style="margin:0"><a class="in__value" href="mailto:mohsinxaifi@gmail.com">mohsinxaifi@gmail.com</a></dd>
-        </div>
-        <div class="in__item">
-          <dt class="label">Location</dt>
-          <dd style="margin:0"><span class="in__value">New Delhi, India</span></dd>
-        </div>
-        <div class="in__item">
-          <dt class="label">LinkedIn</dt>
-          <dd style="margin:0"><a class="in__value" href="https://linkedin.com/in/mohsinxaifi" target="_blank" rel="noopener">in/mohsinxaifi</a></dd>
-        </div>
-      </dl>
-
-      <div class="in__ctas">
-        <a class="btn btn--ink" href="../cv/Mohd-Mohsin-CV-India.pdf" download="Mohd-Mohsin-CV.pdf">Download CV (PDF) <span class="btn__arrow">↓</span></a>
-        <a class="btn btn--line" href="../">View portfolio</a>
-      </div>
-    </main>
-
-    <footer class="in__foot">
-      <p class="label">© Mohd Mohsin</p>
-      <a class="label" href="../">← Back to portfolio</a>
-    </footer>
+  <!-- Loader -->
+  <div class="loader" data-loader aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__count" data-loader-count>000</span>
+      <span class="loader__word">loading vibes</span>
+    </div>
   </div>
+
+  <a class="skip" href="#work">Skip to work</a>
+
+  <!-- Nav -->
+  <header class="nav" data-nav>
+    <a class="nav__logo" href="#top" aria-label="Back to top">mohsin<sup>®</sup></a>
+
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#about" data-nav-link="about">About</a>
+      <a href="#work" data-nav-link="work">Work</a>
+      <a href="#experience" data-nav-link="experience">Experience</a>
+      <a href="#stack" data-nav-link="stack">Stack</a>
+      <a href="#cv" data-nav-link="cv">CV</a>
+      <a href="#contact" data-nav-link="contact">Contact</a>
+    </nav>
+
+    <div class="nav__controls">
+      <button class="mode" data-mode-toggle type="button" aria-label="Switch between recruiter mode and chaos mode">
+        <span class="mode__opt" data-opt="recruiter">Recruiter</span>
+        <span class="mode__opt" data-opt="chaos">Chaos</span>
+        <span class="mode__thumb" aria-hidden="true"></span>
+      </button>
+      <button class="icon-btn" data-sound-toggle type="button" aria-label="Toggle sound">
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </button>
+      <button class="icon-btn icon-btn--theme" data-theme-toggle type="button" aria-label="Toggle dark mode">
+        <span class="theme-dot" aria-hidden="true"></span>
+      </button>
+      <button class="nav__burger" data-menu-toggle type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+    </div>
+  </header>
+
+  <div class="menu" id="menu" data-menu hidden>
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#experience">Experience</a>
+    <a href="#stack">Stack</a>
+    <a href="#cv">CV</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Light-switch pull cord -->
+  <button class="cord toy" data-cord type="button" aria-label="Pull to switch the lights">
+    <span class="cord__line"></span>
+    <span class="cord__knob"></span>
+  </button>
+
+  <main id="top">
+    <!-- 00 Hero -->
+    <section class="hero" id="hero" data-section="hero">
+      <div class="container hero__top">
+        <p class="label">Portfolio ©<span data-year></span></p>
+        <ul class="hero__roles label" data-roles></ul>
+        <p class="label hero__loc">New Delhi, India</p>
+      </div>
+
+      <div class="hero__name" data-hero>
+        <h1 class="hero__h1">Mohsin</h1>
+        <canvas class="hero__gl" data-hero-gl aria-hidden="true"></canvas>
+        <p class="hero__hint toy label">↑ drag your cursor through the name. it's wet.</p>
+      </div>
+
+      <div class="container hero__bottom">
+        <p class="hero__pitch" data-reveal>
+          I build <em>storefronts</em>, the systems behind them, and the <em>AI</em> that ties it all together.
+        </p>
+        <div class="hero__meta" data-reveal>
+          <p class="status"><span class="status__dot"></span><span data-status>Available for work</span> · <span data-clock>New Delhi</span></p>
+          <div class="hero__ctas">
+            <a class="btn btn--ink" href="#work" data-cursor="scroll">See the work <span class="btn__arrow">↓</span></a>
+            <a class="btn btn--line" href="#cv" data-cursor="print">Get my CV</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section class="impact" id="impact" data-section="impact">
+      <div class="container impact__grid" data-counters></div>
+    </section>
+
+    <!-- 01 About -->
+    <section class="section about" id="about" data-section="about">
+      <div class="container about__grid">
+        <figure class="about__photo" data-portrait data-cursor="boop">
+          <img src="/me.webp" alt="Portrait of Mohd Mohsin" width="661" height="720" loading="lazy" decoding="async">
+          <figcaption class="about__tag toy">that's me 👋</figcaption>
+        </figure>
+        <div class="about__copy">
+          <p class="label">(01) About</p>
+          <h2 class="h2" data-split>Hi, I'm <em>Mohsin</em>.</h2>
+          <p class="about__lede" data-reveal data-about-lede></p>
+          <div class="about__body" data-reveal data-about-body></div>
+          <dl class="facts" data-reveal data-facts></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 Work -->
+    <section class="section work" id="work" data-section="work">
+      <div class="container">
+        <header class="sec-head">
+          <p class="label">(02) Selected work</p>
+          <h2 class="h2" data-split>Things I've <em>shipped</em></h2>
+          <p class="sec-head__intro" data-reveal>Eighteen live sites, each designed, built and delivered end to end: Shopify storefronts for food, wellness, fashion and jewellery, plus custom builds in React, Laravel and Webflow.</p>
+        </header>
+
+        <div class="featured" data-featured></div>
+
+        <div class="archive">
+          <div class="archive__head">
+            <h3 class="h3">The archive</h3>
+            <div class="chips" data-filters role="group" aria-label="Filter projects"></div>
+          </div>
+          <ol class="archive__list" data-archive></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Experience -->
+    <section class="section experience" id="experience" data-section="experience">
+      <div class="container">
+        <header class="sec-head">
+          <p class="label">(03) Experience</p>
+          <h2 class="h2" data-split>Where I've <em>clocked in</em></h2>
+          <p class="sec-head__intro" data-reveal data-current></p>
+        </header>
+      </div>
+      <div class="exp__pin" data-exp-pin>
+        <div class="exp__track" data-exp-track></div>
+      </div>
+      <div class="container">
+        <div class="layovers" data-education></div>
+      </div>
+    </section>
+
+    <!-- 04 Stack -->
+    <section class="section stack" id="stack" data-section="stack">
+      <div class="container">
+        <header class="sec-head">
+          <p class="label">(04) Stack</p>
+          <h2 class="h2" data-split>The toolbox, but make it <em>bouncy</em></h2>
+          <p class="sec-head__intro" data-reveal>Commerce, code, AI, design, cloud and the numbers that prove it worked. Grab one. Throw it. Nobody's watching.</p>
+        </header>
+
+        <div class="pit-wrap toy">
+          <div class="pit__legend" data-pit-legend role="group" aria-label="Highlight a skill category"></div>
+          <div class="pit" data-pit>
+            <div class="pit__ui">
+              <span class="label" data-pit-count></span>
+              <button class="btn btn--sm btn--line" type="button" data-pit-shake>Shake it</button>
+            </div>
+            <p class="pit__caption" data-pit-caption aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="skills" data-skills></div>
+      </div>
+    </section>
+
+    <!-- 05 CV -->
+    <section class="section cv" id="cv" data-section="cv">
+      <div class="container cv__grid">
+        <header class="cv__copy">
+          <p class="label">(05) Curriculum vitae</p>
+          <h2 class="h2" data-split>Take a <em>receipt</em></h2>
+          <p class="cv__lede" data-reveal>Everything on this page, compressed into one PDF your ATS will actually parse. Print it from the machine, tear it off, it's yours.</p>
+          <div class="cv__ctas" data-reveal>
+            <a class="btn btn--ink" href="#" data-cv-download>Download PDF <span class="btn__arrow">↓</span></a>
+            <a class="btn btn--line" href="#contact">Or just say hi</a>
+          </div>
+        </header>
+
+        <div class="printer-stage">
+          <div class="printer" data-printer>
+            <div class="printer__body">
+              <span class="printer__brand">MOH-80 thermal</span>
+              <span class="printer__led" data-printer-led></span>
+              <button class="printer__btn" type="button" data-print data-cursor="print">Print CV</button>
+            </div>
+            <div class="printer__slot"></div>
+            <div class="printer__paper" data-paper>
+              <div class="receipt" data-receipt></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 Contact -->
+    <section class="contact" id="contact" data-section="contact">
+      <div class="marquee" data-marquee aria-hidden="true">
+        <div class="marquee__row" data-marquee-row></div>
+      </div>
+
+      <div class="container contact__inner">
+        <svg class="badge" viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="badge-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+          <circle cx="100" cy="100" r="98" class="badge__bg"/>
+          <text class="badge__text"><textPath href="#badge-circle">open to work ✦ open to work ✦ open to work ✦ </textPath></text>
+          <text x="100" y="116" text-anchor="middle" class="badge__mid">✦</text>
+        </svg>
+        <p class="label">(06) Contact</p>
+        <h2 class="contact__title" data-split>Got a store that should sell <em>more</em>? Let's talk.</h2>
+
+        <button class="email" type="button" data-copy-email data-cursor="copy">
+          <span data-email-text></span>
+          <span class="email__hint label">click to copy</span>
+        </button>
+
+        <div class="contact__row">
+          <a class="btn btn--accent" data-hire data-cursor="hire" href="#">Hire me <span class="btn__arrow">→</span></a>
+          <ul class="socials" data-socials></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="bugs toy" data-bugs>
+      <p class="label bugs__score">bugs fixed today: <b data-bug-score>0</b></p>
+      <p class="label bugs__hint">psst · type m-o-h-s-i-n anywhere</p>
+    </div>
+    <div class="container footer__row">
+      <p class="label">© <span data-year></span> Mohd Mohsin</p>
+      <p class="label footer__built">Built with GSAP, WebGL &amp; too much Coffee</p>
+      <a class="label" href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- Case study overlay -->
+  <div class="case" data-case role="dialog" aria-modal="true" aria-label="Project details" data-lenis-prevent hidden></div>
+
+  <!-- Hover preview (WebGL) -->
+  <canvas class="preview" data-preview aria-hidden="true"></canvas>
+
+  <div class="toast" data-toast role="status" aria-live="polite"></div>
+
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

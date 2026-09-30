@@ -1,5 +1,5 @@
 /* ==================================================================
-   TOYS - the small stuff: static fills, Dubai clock, copy-email,
+   TOYS - the small stuff: static fills, local clock, copy-email,
    the runaway "Hire me" button, velocity marquee, light-switch cord
    and the gravity easter egg (type "mohsin" or the Konami code).
    ================================================================== */
@@ -39,7 +39,7 @@ function initClock() {
   const hourFmt = new Intl.DateTimeFormat('en-GB', { timeZone: site.timezone, hour: 'numeric', hourCycle: 'h23' })
   const update = () => {
     const now = new Date()
-    clock.textContent = `Dubai ${fmt.format(now)}`
+    clock.textContent = `${site.city} ${fmt.format(now)}`
     const h = Number(hourFmt.format(now))
     status.textContent = h < 7 ? 'Probably asleep, still hireable' : 'Available for work'
   }
