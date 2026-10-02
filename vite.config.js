@@ -11,6 +11,10 @@ const india = [
   ['<html lang="en"', '<html lang="en" data-region="in"'],
   ['Full-stack developer in Dubai', 'Full-stack developer in New Delhi'],
   ['based in Dubai.', 'based in New Delhi.'],
+  ['Based in Dubai, available for work.', 'Based in New Delhi, available for work.'],
+  ['content="https://mohsinxaifii.github.io/Port/">', 'content="https://mohsinxaifii.github.io/Port/in/">'],
+  ['<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
+  ['<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
   ['<p class="label hero__loc">Dubai, UAE</p>', '<p class="label hero__loc">New Delhi, India</p>'],
   ['<span data-clock>Dubai</span>', '<span data-clock>New Delhi</span>'],
 ]
