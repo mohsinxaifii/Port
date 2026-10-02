@@ -18,8 +18,15 @@ function ensure() {
     if (!AC) return null
     ctx = new AC()
     master = ctx.createGain()
-    master.gain.value = 0.32
-    master.connect(ctx.destination)
+    master.gain.value = 0.9
+    // Soft limiter so stacked effects (pit collisions, chaos) don't clip at the louder master.
+    const limiter = ctx.createDynamicsCompressor()
+    limiter.threshold.value = -6
+    limiter.knee.value = 6
+    limiter.ratio.value = 12
+    limiter.attack.value = 0.002
+    limiter.release.value = 0.1
+    master.connect(limiter).connect(ctx.destination)
     noiseBuf = ctx.createBuffer(1, ctx.sampleRate * 0.5, ctx.sampleRate)
     const data = noiseBuf.getChannelData(0)
     for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1
@@ -65,13 +72,13 @@ function noise({ dur = 0.05, vol = 0.2, freq = 2000, to = null, q = 1, type = 'b
 }
 
 const effects = {
-  hover: () => tone({ freq: 2200, type: 'sine', dur: 0.025, vol: 0.04 }),
+  hover: () => tone({ freq: 2200, type: 'sine', dur: 0.025, vol: 0.08 }),
   click: () => tone({ freq: 720, to: 360, type: 'triangle', dur: 0.07, vol: 0.22 }),
   pop: () => tone({ freq: 320, to: 980, type: 'sine', dur: 0.1, vol: 0.28 }),
   drop: () => tone({ freq: 520, to: 140, type: 'sine', dur: 0.12, vol: 0.22 }),
   switch: () => { noise({ dur: 0.03, vol: 0.4, freq: 3500, q: 3 }); tone({ freq: 180, type: 'square', dur: 0.03, vol: 0.08 }) },
   tick: () => noise({ dur: 0.018, vol: 0.18, freq: 5000, q: 6 }),
-  print: () => { noise({ dur: 0.04, vol: 0.12, freq: 1600, q: 2 }); tone({ freq: 90, type: 'sawtooth', dur: 0.04, vol: 0.03 }) },
+  print: () => { noise({ dur: 0.04, vol: 0.2, freq: 1600, q: 2 }); tone({ freq: 90, type: 'sawtooth', dur: 0.04, vol: 0.06 }) },
   tear: () => noise({ dur: 0.35, vol: 0.35, freq: 800, to: 6000, q: 0.8 }),
   whoosh: () => noise({ dur: 0.4, vol: 0.2, freq: 300, to: 2400, q: 1.2 }),
   squash: () => { noise({ dur: 0.12, vol: 0.4, freq: 600, to: 120, type: 'lowpass' }); tone({ freq: 220, to: 50, type: 'square', dur: 0.12, vol: 0.1 }) },
