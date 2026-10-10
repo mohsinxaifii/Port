@@ -15,6 +15,7 @@ import { initCounters } from './modules/counters.js'
 import { initAbout } from './modules/about.js'
 import { initWork } from './modules/work.js'
 import { initCase } from './modules/case.js'
+import { initTestimonials } from './modules/testimonials.js'
 import { initExperience } from './modules/experience.js'
 import { initStack } from './modules/stack.js'
 import { initPrinter } from './modules/printer.js'
@@ -22,6 +23,7 @@ import { initStickers } from './modules/stickers.js'
 import { initToys } from './modules/toys.js'
 import { initBugs } from './modules/bugs.js'
 import { initCursor } from './modules/cursor.js'
+import { initFloaters } from './modules/floaters.js'
 import { runLoader } from './modules/loader.js'
 
 initPrefs()
@@ -31,12 +33,14 @@ initCounters()
 initAbout()
 initWork()
 const openFromHash = initCase()
+initTestimonials()
 initExperience()
 initStack()
 initPrinter()
 initStickers()
 initBugs()
 initCursor()
+initFloaters()
 splitHeadings()
 
 const heroReady = initHero(site.name)

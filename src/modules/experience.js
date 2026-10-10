@@ -30,11 +30,11 @@ export function initExperience() {
   const trips = experience
   const current = experience.find((j) => j.current)
 
-  if (current) {
-    $('[data-current]').innerHTML =
-      `Currently ${esc(current.role)} at <strong>${esc(current.org)}</strong>, since ${esc(current.from)}. ` +
-      `Five stops in, one seat still open.`
-  }
+  const latest = current ?? experience[0]
+  $('[data-current]').innerHTML = current
+    ? `Currently ${esc(current.role)} at <strong>${esc(current.org)}</strong>, since ${esc(current.from)}.`
+    : `${experience.length} stops so far, most recently <strong>${esc(latest.org)}</strong>. ` +
+      `Now open to work, and the next seat is yours.`
 
   const passes = trips.map((job, i) => {
     // Each pass flies to the job that came after it; the current one flies to you.
@@ -44,7 +44,7 @@ export function initExperience() {
     return `
       <article class="pass${job.current ? ' pass--current' : ''}">
         <div class="pass__main">
-          <div class="pass__top"><span>Boarding pass</span><span>Flight MM${flight}</span></div>
+          <div class="pass__top"><span>Boarding pass <span class="ar" lang="ar">بطاقة صعود</span></span><span>Flight MM${flight}</span></div>
           <div class="pass__route">
             <p class="pass__code">${esc(job.code)}<small>${esc(job.from)}</small></p>
             <div class="pass__line" aria-hidden="true"></div>

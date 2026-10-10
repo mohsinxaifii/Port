@@ -14,6 +14,8 @@ const regions = {
     location: 'Dubai, UAE',
     city: 'Dubai',
     timezone: 'Asia/Dubai',
+    tz: 'GST',
+    status: 'In Dubai · can join immediately',
     phone: '+971 55 780 5809',
     cv: asset('/cv/Mohd-Mohsin-CV.pdf'),
   },
@@ -21,6 +23,8 @@ const regions = {
     location: 'New Delhi, India',
     city: 'New Delhi',
     timezone: 'Asia/Kolkata',
+    tz: 'IST',
+    status: 'Available for work',
     phone: '+91 93196 17848',
     cv: asset('/cv/Mohd-Mohsin-CV-India.pdf'),
   },
@@ -34,8 +38,6 @@ export const site = {
   email: 'mohsinxaifi@gmail.com',
   title: 'Full-Stack Developer / Software Developer',
   portrait: asset('/me.webp'),
-
-  roles: ['Full-stack developer', 'Shopify engineer', 'Automation builder'],
 
   socials: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/mohsinxaifi' },
@@ -57,7 +59,7 @@ export const counters = [
 export const stickers = [
   { text: 'certified shipper', tone: 'lime', in: 'hero', at: [74, 150], rot: 8 },
   { text: 'no cap: 8x', tone: 'ink', in: 'impact', at: [84, 18], rot: -6 },
-  { text: 'touch grass later', tone: 'pink', in: 'work', at: [80, 64], rot: 5 },
+  { text: 'touch grass later', tone: 'pink', in: 'work', at: [48, 64], rot: 5 },
   { text: 'liquid? i speak it', tone: 'lime', in: 'experience', at: [58, 70], rot: -8 },
   { text: 'ctrl+z enjoyer', tone: 'blue', in: 'stack', at: [76, 64], rot: 7 },
   { text: 'it works on prod ✦', tone: 'pink', in: 'contact', at: [62, 150], rot: -5 },

@@ -10,7 +10,7 @@ export const summary =
   'behind it, and the AI and automation layer that connects them.'
 
 export const about = [
-  'Currently accountable for the entire technology function at a design and ' +
+  'Most recently ran the entire technology function at a design and ' +
     'production studio: every client account’s architecture, full project ' +
     'development, AI chat assistants, sales analytics and workflow automation.',
   'Previously led a cross-functional development and design team while owning ' +
@@ -25,12 +25,11 @@ export const experience = [
     role: 'Software Developer',
     org: 'Design Dimensions',
     from: 'Jul 2026',
-    to: 'Present',
-    current: true,
+    to: 'Oct 2026',
     points: [
-      'Own the entire technology function for the studio and its full client portfolio as the sole technical decision-maker.',
-      'Build and deploy AI chat assistants trained on studio and client data to answer product queries, qualify leads and resolve first-line support.',
-      'Design sales tracking and analytics systems giving leadership real-time visibility into pipeline, revenue attribution and campaigns.',
+      'Owned the entire technology function for the studio and its full client portfolio as the sole technical decision-maker.',
+      'Built and deployed AI chat assistants trained on studio and client data to answer product queries, qualify leads and resolve first-line support.',
+      'Designed sales tracking and analytics systems giving leadership real-time visibility into pipeline, revenue attribution and campaigns.',
     ],
   },
   {

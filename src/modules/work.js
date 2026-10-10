@@ -63,7 +63,7 @@ export function initWork() {
         <span class="row__num">${String(featured.length + i + 1).padStart(2, '0')}</span>
         <span class="row__title">${esc(p.title)}</span>
         <span class="row__desc">${esc(p.description)}</span>
-        <span class="row__meta">${esc(categoryOf(p))}</span>
+        <span class="row__meta">${esc(categoryOf(p))}${p.market ? ` · ${esc(p.market.split(',')[0])}` : ''}</span>
         <span class="row__arrow" aria-hidden="true">→</span>
       </a>
     </li>`).join('')

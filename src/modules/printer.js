@@ -68,6 +68,7 @@ function receiptHTML() {
     ${rule}
     <div class="receipt__center">
       <p>Thank you for scrolling</p>
+      <p class="ar receipt__ar" lang="ar" dir="rtl">شكراً لزيارتكم</p>
       <p>Please come again</p>
     </div>
     <div class="receipt__barcode">${barcode('mohsin-cv', 46)}</div>

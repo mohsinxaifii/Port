@@ -25,7 +25,6 @@ export function initToys() {
 
 function fillStatic() {
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear() })
-  $('[data-roles]').innerHTML = site.roles.map((r) => `<li>${esc(r)}</li>`).join('')
   $('[data-email-text]').textContent = site.email
   $('[data-socials]').innerHTML = site.socials
     .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></li>`)
@@ -39,9 +38,11 @@ function initClock() {
   const hourFmt = new Intl.DateTimeFormat('en-GB', { timeZone: site.timezone, hour: 'numeric', hourCycle: 'h23' })
   const update = () => {
     const now = new Date()
-    clock.textContent = `${site.city} ${fmt.format(now)}`
+    clock.textContent = `${fmt.format(now)} ${site.tz}`
     const h = Number(hourFmt.format(now))
-    status.textContent = h < 7 ? 'Probably asleep, still hireable' : 'Available for work'
+    // The status is the line recruiters scan for, so the late-night joke only
+    // shows in chaos mode.
+    status.textContent = h < 7 && isChaos() ? 'Probably asleep, still hireable' : site.status
   }
   update()
   setInterval(update, 15000)
@@ -97,7 +98,8 @@ function initHire() {
 
 function initMarquee() {
   const row = $('[data-marquee-row]')
-  const item = `<span class="marquee__item">Let's build something that <em>ships</em> <span class="marquee__star">✦</span></span>`
+  // "Yalla, let's work" in Gulf Arabic, as the second beat of each loop.
+  const item = `<span class="marquee__item">Let's build something that <em>ships</em> <span class="marquee__star">✦</span> <span class="ar" lang="ar" dir="rtl">يلا نشتغل</span> <span class="marquee__star">✦</span></span>`
   row.innerHTML = item.repeat(4)
   const first = row.firstElementChild
   let x = 0

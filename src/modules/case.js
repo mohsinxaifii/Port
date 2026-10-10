@@ -36,7 +36,7 @@ function render(i) {
         <h2 class="case__title">${esc(p.title)}</h2>
         <dl class="case__meta">
           <div><dt class="label">Client</dt><dd>${esc(p.client)}</dd></div>
-          <div><dt class="label">Type</dt><dd>${esc(categoryOf(p))}</dd></div>
+          <div><dt class="label">Type</dt><dd>${esc(categoryOf(p))}${p.market ? ` · ${esc(p.market)}` : ''}</dd></div>
           <div><dt class="label">Stack</dt><dd>${p.stack.map(esc).join(', ')}</dd></div>
           <div><dt class="label">Live site</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(host(p.url))} ↗</a></dd></div>
         </dl>
@@ -67,13 +67,20 @@ function render(i) {
   currentIdx = i
 }
 
-export function openCase(slug) {
+const baseUrl = () => location.pathname + location.search
+const caseSlug = () => location.hash.match(/^#p-([\w-]+)$/)?.[1]
+
+/* Opening from a closed state pushes a history entry, so the browser / phone
+   Back button closes the case instead of leaving the site. Stepping between
+   projects replaces that entry, so one Back always returns to the page. */
+export function openCase(slug, fromHistory = false) {
   const i = projects.findIndex((p) => p.slug === slug)
   if (i < 0) return
   const wasOpen = !el.hidden
   render(i)
   el.scrollTop = 0
-  history.replaceState(null, '', `#p-${slug}`)
+  if (fromHistory || wasOpen) history.replaceState({ case: true }, '', `#p-${slug}`)
+  else history.pushState({ case: true }, '', `#p-${slug}`)
 
   if (wasOpen) {
     gsap.fromTo(el.children, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: 'expo.out' })
@@ -90,9 +97,13 @@ export function openCase(slug) {
   $('[data-case-close]', el).focus({ preventScroll: true })
 }
 
-export function closeCase() {
+export function closeCase(fromHistory = false) {
   if (el.hidden) return
-  history.replaceState(null, '', location.pathname + location.search)
+  if (!fromHistory) {
+    // Pop our own entry; the popstate handler runs the close animation.
+    if (history.state?.case) { history.back(); return }
+    history.replaceState(null, '', baseUrl())
+  }
   play('drop')
   gsap.to(el, {
     clipPath: 'inset(0% 0% 100% 0%)',
@@ -128,10 +139,19 @@ export function initCase() {
     if (e.key === 'ArrowLeft') step(-1)
   })
 
-  const fromHash = () => {
-    const m = location.hash.match(/^#p-([\w-]+)$/)
-    if (m) openCase(m[1])
+  // Back / Forward (and in-page #p- links, which also fire popstate).
+  addEventListener('popstate', () => {
+    const slug = caseSlug()
+    if (slug) openCase(slug, true)
+    else closeCase(true)
+  })
+
+  // Deep link: put the bare page underneath the case, so Back closes it
+  // rather than leaving the site.
+  return () => {
+    const slug = caseSlug()
+    if (!slug) return
+    history.replaceState(null, '', baseUrl())
+    openCase(slug)
   }
-  addEventListener('hashchange', fromHash)
-  return fromHash
 }
