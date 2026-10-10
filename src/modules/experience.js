@@ -7,7 +7,7 @@
 
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { $, esc, barcode } from './utils.js'
+import { $, esc, barcode, reducedMotion } from './utils.js'
 import { experience, education } from '../data/cv.js'
 import { site } from '../data/site.js'
 import { play } from './sound.js'
@@ -123,6 +123,33 @@ export function initExperience() {
       },
     })
   })
+  // Phones: a sticky deck. Each pass pins a little lower than the one
+  // before; tall passes pin with their bottom on screen so nothing is
+  // hidden. The pass underneath shrinks and dims as the next one covers it.
+  mm.add('(max-width: 900px)', () => {
+    const cards = [...track.querySelectorAll('.pass')]
+    const place = () => cards.forEach((card, i) => {
+      const top = 76 + i * 10
+      card.style.top = `${Math.min(top, innerHeight - card.offsetHeight - 16)}px`
+    })
+    place()
+    addEventListener('resize', place)
+    if (!reducedMotion) {
+      cards.slice(0, -1).forEach((card, i) => {
+        gsap.to(card, {
+          scale: 0.9,
+          filter: 'brightness(.6)',
+          ease: 'none',
+          scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 30%', scrub: true },
+        })
+      })
+    }
+    return () => {
+      removeEventListener('resize', place)
+      cards.forEach((card) => { card.style.top = '' })
+    }
+  })
+
   // Fonts change pass widths; re-measure once they're in.
   document.fonts?.ready.then(() => ScrollTrigger.refresh())
 }

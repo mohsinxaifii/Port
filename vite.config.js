@@ -15,7 +15,6 @@ const india = [
   ['content="https://mohsinxaifii.github.io/Port/">', 'content="https://mohsinxaifii.github.io/Port/in/">'],
   ['<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
   ['<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
-  ['<p class="label hero__loc">Dubai, UAE</p>', '<p class="label hero__loc">New Delhi, India</p>'],
   ['<span data-status>In Dubai · can join immediately</span>', '<span data-status>Available for work</span>'],
   ['<span data-clock>Dubai</span>', '<span data-clock>New Delhi</span>'],
 ]

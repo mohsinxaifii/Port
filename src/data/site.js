@@ -34,6 +34,7 @@ const region = regions[globalThis.document?.documentElement.dataset.region] ?? r
 export const site = {
   name: 'Mohsin',
   fullName: 'Mohd Mohsin',
+  nameAr: 'محسن',
   ...region,
   email: 'mohsinxaifi@gmail.com',
   title: 'Full-Stack Developer / Software Developer',

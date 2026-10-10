@@ -5,7 +5,7 @@
    ================================================================== */
 
 import { gsap } from 'gsap'
-import { $, $$, esc, finePointer, isChaos, reducedMotion } from './utils.js'
+import { $, $$, esc, finePointer, isChaos, reducedMotion, whileVisible } from './utils.js'
 import { site } from '../data/site.js'
 import { play } from './sound.js'
 import { toast } from './toast.js'
@@ -16,19 +16,17 @@ export function initToys() {
   fillStatic()
   initClock()
   initCopyEmail()
-  initHire()
   initMarquee()
+  initBadge()
   initCord()
   initEasterEgg()
-  $$('.btn, .chip, .socials a').forEach((b) => b.addEventListener('mouseenter', () => play('hover')))
+  $$('.btn, .chip, .dir__row').forEach((b) => b.addEventListener('mouseenter', () => play('hover')))
 }
 
 function fillStatic() {
+  if (!finePointer) $('.hero__hint').textContent = "↑ swipe through the name. it's wet."
   $$('[data-year]').forEach((el) => { el.textContent = new Date().getFullYear() })
-  $('[data-email-text]').textContent = site.email
-  $('[data-socials]').innerHTML = site.socials
-    .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)} ↗</a></li>`)
-    .join('') + `<li><a href="tel:${esc(site.phone.replace(/[^\d+]/g, ''))}">${esc(site.phone)}</a></li>`
+  fillDirectory()
 }
 
 function initClock() {
@@ -48,12 +46,39 @@ function initClock() {
   setInterval(update, 15000)
 }
 
+// One clipped box per letter, so the value can roll on hover.
+const roll = (text) => `<span class="dir__v" aria-label="${esc(text)}">${[...text].map((c, i) =>
+  `<span class="roll" aria-hidden="true" style="--i:${i}"><span>${c === ' ' ? '&nbsp;' : esc(c)}</span></span>`).join('')}</span>`
+
+/* Contact directory: one row per way to reach me. Email copies, the CV
+   row downloads (printer.js binds [data-cv-download]), the rest link out. */
+function fillDirectory() {
+  const handle = (url) => url.replace(/^https?:\/\/(www\.)?[^/]+\//, '').replace(/\/$/, '')
+  const social = (label) => site.socials.find((x) => x.label === label)
+  const rows = [
+    { key: 'Email', value: site.email, act: 'copy', attrs: 'type="button" data-copy-email', tag: 'button' },
+    { key: 'WhatsApp', value: site.phone, act: 'chat ↗', attrs: `href="https://wa.me/${site.phone.replace(/\D/g, '')}" target="_blank" rel="noopener"` },
+    ...['LinkedIn', 'GitHub'].map((l) => ({ key: l, value: handle(social(l).url), act: 'open ↗', attrs: `href="${esc(social(l).url)}" target="_blank" rel="noopener"` })),
+    { key: 'CV', value: 'Download the PDF', act: 'pdf ↓', attrs: 'href="#" data-cv-download' },
+  ]
+  $('[data-directory]').innerHTML = rows.map((r) => {
+    const tag = r.tag || 'a'
+    return `<li><${tag} class="dir__row" ${r.attrs}>
+      <span class="label dir__k">${r.key}</span>${roll(r.value)}<span class="label dir__act">${r.act}</span>
+    </${tag}></li>`
+  }).join('')
+}
+
 function initCopyEmail() {
   $('[data-copy-email]').addEventListener('click', async () => {
     try {
       await navigator.clipboard.writeText(site.email)
       play('success')
       toast('copied, bestie ✦')
+      const hint = $('[data-copy-email] .dir__act')
+      hint.textContent = 'copied ✓'
+      clearTimeout(hint.timer)
+      hint.timer = setTimeout(() => { hint.textContent = 'copy' }, 2200)
     } catch {
       location.href = `mailto:${site.email}`
     }
@@ -62,47 +87,41 @@ function initCopyEmail() {
 
 /* Dodges the cursor three times, then gives up. Only in chaos mode, only
    with a mouse - never on touch or keyboard. */
-function initHire() {
-  const btn = $('[data-hire]')
-  const label = btn.firstChild
-  btn.href = `mailto:${site.email}?subject=Let's%20work%20together`
-  const lines = ['nope', 'too slow', 'ok ok, one more']
-  let dodges = 0
-
-  btn.addEventListener('pointerenter', (e) => {
-    if (e.pointerType !== 'mouse' || !isChaos() || dodges >= lines.length) return
-    const r = btn.getBoundingClientRect()
-    let dx = (90 + Math.random() * 90) * (Math.random() < 0.5 ? -1 : 1)
-    const dy = (30 + Math.random() * 50) * (Math.random() < 0.5 ? -1 : 1)
-    if (r.left + dx < 16 || r.right + dx > innerWidth - 16) dx = -dx
-    const [cx, cy] = (btn.style.translate || '0px 0px').split(' ').map(parseFloat)
-    btn.style.translate = `${(cx || 0) + dx}px ${(cy || 0) + dy}px`
-    label.textContent = `${lines[dodges]} `
-    dodges++
-    play('nope')
-    if (dodges === lines.length) {
-      setTimeout(() => {
-        btn.style.translate = '0px 0px'
-        label.textContent = 'ok fine, hire me 🫠 '
-        play('success')
-      }, 700)
-    }
-  })
-
-  addEventListener('modechange', () => {
-    dodges = 0
-    btn.style.translate = ''
-    label.textContent = 'Hire me '
-  })
-}
-
 function initMarquee() {
   const row = $('[data-marquee-row]')
   // "Yalla, let's work" in Gulf Arabic, as the second beat of each loop.
-  const item = `<span class="marquee__item">Let's build something that <em>ships</em> <span class="marquee__star">✦</span> <span class="ar" lang="ar" dir="rtl">يلا نشتغل</span> <span class="marquee__star">✦</span></span>`
+  // The italic word rolls through a few verbs, every copy in step. The
+  // track repeats the first word at the end so the loop can snap back.
+  const WORDS = ['ships', 'sells', 'scales', 'converts', 'launches']
+  const swap = `<span class="swap"><span class="swap__track">${[...WORDS, WORDS[0]].map((w) => `<em>${w}</em>`).join('')}</span></span>`
+  const item = `<span class="marquee__item">Let's build something that ${swap} <span class="marquee__star">✦</span> <span class="ar" lang="ar" dir="rtl">يلا نشتغل</span> <span class="marquee__star">✦</span></span>`
   row.innerHTML = item.repeat(4)
   const first = row.firstElementChild
-  let x = 0
+  // Open on the good part (the rolling word and يلا نشتغل), not a run of plain caps.
+  let x = -Math.max(0, first.querySelector('.swap').offsetLeft - 32)
+
+  if (!reducedMotion) {
+    const slots = $$('.swap', row)
+    const tracks = slots.map((s) => s.firstElementChild)
+    // Each slot is as wide as the word showing, so the gaps either side
+    // close up for "sells" and open for "converts" - eased by CSS.
+    const widthOf = (n) => `${tracks[0].children[n].offsetWidth}px`
+    const fit = (n) => slots.forEach((s) => { s.style.width = widthOf(n) })
+    document.fonts?.ready.then(() => fit(0))
+    fit(0)
+    let i = 0
+    setInterval(() => {
+      i++
+      fit(i)
+      tracks.forEach((t) => { t.style.transition = ''; t.style.transform = `translateY(${-i * 1.4}em)` })
+      if (i === WORDS.length) {
+        setTimeout(() => {
+          i = 0
+          tracks.forEach((t) => { t.style.transition = 'none'; t.style.transform = 'translateY(0)' })
+        }, 900)
+      }
+    }, 2200)
+  }
   let dir = 1
   let skew = 0
   const setX = gsap.quickSetter(row, 'x', 'px')
@@ -123,6 +142,21 @@ function initMarquee() {
   }
   const io = new IntersectionObserver(([e]) => (e.isIntersecting ? gsap.ticker.add(tick) : gsap.ticker.remove(tick)))
   io.observe(row)
+}
+
+/* Contact badge: the text ring turns slowly, faster while the page is
+   moving (Lenis velocity), easing back after. */
+function initBadge() {
+  const ring = $('[data-badge-ring]')
+  if (!ring || reducedMotion) return
+  let a = 0
+  let boost = 0
+  const tick = (_t, dt) => {
+    boost += (Math.min(Math.abs(lenis?.velocity || 0), 40) - boost) * 0.08
+    a += (0.12 + boost * 0.12) * (dt / 16.67)
+    ring.style.rotate = `${a}deg`
+  }
+  whileVisible($('[data-badge]'), () => gsap.ticker.add(tick), () => gsap.ticker.remove(tick))
 }
 
 function initCord() {

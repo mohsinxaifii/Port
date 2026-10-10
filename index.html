@@ -101,8 +101,8 @@
     <!-- 00 Hero -->
     <section class="hero" id="hero" data-section="hero">
       <div class="container hero__top">
-        <p class="label">Mohd Mohsin</p>
-        <p class="label hero__loc">Dubai, UAE</p>
+        <p class="status"><span class="status__dot"></span><span data-status>In Dubai · can join immediately</span> · <span data-clock>Dubai</span></p>
+        <a class="label hero__scroll" href="#work">Scroll <span aria-hidden="true">↓</span></a>
       </div>
 
       <div class="hero__name" data-hero>
@@ -116,7 +116,6 @@
           I build <em>storefronts</em>, the systems behind them, and the <em>AI</em> that ties it all together.
         </p>
         <div class="hero__meta" data-reveal>
-          <p class="status"><span class="status__dot"></span><span data-status>In Dubai · can join immediately</span> · <span data-clock>Dubai</span></p>
           <div class="hero__ctas">
             <a class="btn btn--ink" href="#work" data-cursor="scroll">See the work <span class="btn__arrow">↓</span></a>
             <a class="btn btn--line" href="#cv" data-cursor="print">Get my CV</a>
@@ -268,23 +267,73 @@
       </div>
 
       <div class="container contact__inner">
-        <svg class="badge" viewBox="0 0 200 200" aria-hidden="true">
-          <defs><path id="badge-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
-          <circle cx="100" cy="100" r="98" class="badge__bg"/>
-          <text class="badge__text"><textPath href="#badge-circle">open to work ✦ open to work ✦ open to work ✦ </textPath></text>
-          <text x="100" y="116" text-anchor="middle" class="badge__mid">✦</text>
-        </svg>
-        <p class="label">(07) Contact</p>
-        <h2 class="contact__title" data-split>Got a store that should sell <em>more</em>? Let's talk.</h2>
+        <div class="contact__lead">
+          <p class="label">(07) Contact</p>
+          <h2 class="contact__title" data-split>Got a store that should sell <em>more</em>? Let's talk.</h2>
+          <!-- Email, WhatsApp, LinkedIn, GitHub, CV - built from site.js (toys.js) -->
+          <ul class="dir" data-directory></ul>
+        </div>
 
-        <button class="email" type="button" data-copy-email data-cursor="copy">
-          <span data-email-text></span>
-          <span class="email__hint label">click to copy</span>
-        </button>
+        <div class="contact__side">
+          <!-- Open-to-work ring around a live dot, perched on the form's corner.
+               The ring spins faster while the page scrolls (toys.js). -->
+          <a class="badge" href="#enquiry" data-badge aria-label="Open to work: leave a note">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <defs>
+                <path id="badge-ring" d="M100,100 m-79,0 a79,79 0 1,1 158,0 a79,79 0 1,1 -158,0"/>
+              </defs>
+              <circle cx="100" cy="100" r="99" class="badge__bg"/>
+              <g class="badge__ring" data-badge-ring>
+                <text class="badge__text"><textPath href="#badge-ring" textLength="496" lengthAdjust="spacing">open to work ✦ open to work ✦ open to work ✦ </textPath></text>
+              </g>
+              <circle cx="100" cy="100" r="14" class="badge__pulse"/>
+              <circle cx="100" cy="100" r="14" class="badge__dot"/>
+            </svg>
+          </a>
+          <form class="enquiry" id="enquiry" data-enquiry data-reveal>
+            <div class="enquiry__head">
+              <p class="label">Or leave a note</p>
+              <h3 class="h3">Tell me about the <em>role</em> or the project.</h3>
+              <p class="enquiry__lede">It lands straight in my inbox, and I reply within a day.</p>
+            </div>
 
-        <div class="contact__row">
-          <a class="btn btn--accent" data-hire data-cursor="hire" href="#">Hire me <span class="btn__arrow">→</span></a>
-          <ul class="socials" data-socials></ul>
+            <fieldset class="enquiry__types">
+              <legend class="label">I'm reaching out about</legend>
+              <label class="chip"><input type="radio" name="type" value="Full-time role" checked>Full-time role</label>
+              <label class="chip"><input type="radio" name="type" value="Freelance project">Freelance project</label>
+              <label class="chip"><input type="radio" name="type" value="Something else">Something else</label>
+            </fieldset>
+
+            <div class="enquiry__grid">
+              <label class="field">
+                <span class="label">Your name</span>
+                <input name="name" type="text" autocomplete="name" maxlength="120">
+              </label>
+              <label class="field">
+                <span class="label">Email</span>
+                <input name="email" type="email" autocomplete="email" maxlength="160">
+              </label>
+              <label class="field">
+                <span class="label">Phone / WhatsApp</span>
+                <input name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40" placeholder="+971">
+              </label>
+              <label class="field">
+                <span class="label">Company</span>
+                <input name="company" type="text" autocomplete="organization" maxlength="160">
+              </label>
+              <label class="field field--wide">
+                <span class="label">Message</span>
+                <textarea name="message" rows="4" maxlength="4000" placeholder="The role, the team, the timeline..."></textarea>
+              </label>
+            </div>
+            <!-- Honeypot: humans never see it, bots fill it in. -->
+            <input class="enquiry__trap" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <div class="enquiry__foot">
+              <button class="btn btn--ink" type="submit" data-enquiry-send>Send it <span class="btn__arrow">→</span></button>
+              <p class="enquiry__status" data-enquiry-status role="status" aria-live="polite"></p>
+            </div>
+          </form>
         </div>
       </div>
     </section>

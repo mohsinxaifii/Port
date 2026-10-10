@@ -3,8 +3,10 @@
    uploaded as a texture, and pushed around by an OGL flowmap that
    follows the pointer. Colour fringes (lime + pink) appear where the
    flow is strongest. When nobody is touching it, a "ghost" pointer
-   drifts through so it never looks static. Falls back to the plain
-   <h1> if WebGL isn't available.
+   drifts through so it never looks static. Every few seconds the name
+   pours between Arabic (محسن, shown first) and Latin, a wavy wipe that ripples the
+   liquid as it passes. Falls back to the plain <h1> if WebGL isn't
+   available.
    ================================================================== */
 
 import { Renderer, Program, Mesh, Triangle, Texture, Flowmap, Vec2 } from 'ogl'
@@ -21,22 +23,33 @@ const vertex = /* glsl */ `
 const fragment = /* glsl */ `
   precision highp float;
   uniform sampler2D tMap;
+  uniform sampler2D tMap2;
   uniform sampler2D tFlow;
+  uniform float uMix;
   uniform vec3 uInk;
   uniform vec3 uA;
   uniform vec3 uB;
   uniform float uTime;
   varying vec2 vUv;
 
+  // 0 = Latin, 1 = Arabic. A wavy front sweeps across as uMix runs 0 -> 1.
+  float wipe() {
+    float edge = vUv.x + 0.12 * sin(vUv.y * 10.0 + uTime * 2.0);
+    return smoothstep(edge - 0.1, edge + 0.1, uMix * 1.6 - 0.3);
+  }
+
   void main() {
+    float t = wipe();
+    float crest = 1.0 - abs(t * 2.0 - 1.0);
+
     vec3 flow = texture2D(tFlow, vUv).rgb;
-    vec2 f = flow.xy * flow.z;
+    vec2 f = flow.xy * flow.z + vec2(0.0, sin(vUv.x * 28.0 + uTime * 5.0) * 0.18 * crest);
     vec2 uv = vUv - f * 0.14;
     uv.x += sin(vUv.y * 9.0 + uTime * 1.1) * 0.0012;
 
-    float r = texture2D(tMap, uv + f * 0.06).a;
-    float g = texture2D(tMap, uv).a;
-    float b = texture2D(tMap, uv - f * 0.06).a;
+    float r = mix(texture2D(tMap, uv + f * 0.06).a, texture2D(tMap2, uv + f * 0.06).a, t);
+    float g = mix(texture2D(tMap, uv).a, texture2D(tMap2, uv).a, t);
+    float b = mix(texture2D(tMap, uv - f * 0.06).a, texture2D(tMap2, uv - f * 0.06).a, t);
 
     float fr = clamp(r - g, 0.0, 1.0);
     float fb = clamp(b - g, 0.0, 1.0);
@@ -53,7 +66,7 @@ const hexToVec = (hex) => {
 }
 const cssVar = (name) => getComputedStyle(document.documentElement).getPropertyValue(name)
 
-export async function initHero(text) {
+export async function initHero(text, textAr) {
   const wrap = $('[data-hero]')
   const canvas = $('[data-hero-gl]')
 
@@ -66,11 +79,18 @@ export async function initHero(text) {
   const gl = renderer.gl
   if (!gl) return
 
-  try { await document.fonts.load('600 100px Geist') } catch {}
+  try {
+    await Promise.all([
+      document.fonts.load('600 100px Geist'),
+      textAr && document.fonts.load(`700 100px "Reem Kufi"`, textAr),
+    ])
+  } catch {}
 
   const flowmap = new Flowmap(gl, { size: 256, falloff: 0.22, dissipation: 0.94, alpha: 0.6 })
   const texture = new Texture(gl, { generateMipmaps: false })
+  const texture2 = new Texture(gl, { generateMipmaps: false })
   const textCanvas = document.createElement('canvas')
+  const textCanvas2 = document.createElement('canvas')
 
   const program = new Program(gl, {
     vertex,
@@ -79,6 +99,9 @@ export async function initHero(text) {
     depthTest: false,
     uniforms: {
       tMap: { value: texture },
+      tMap2: { value: texture2 },
+      // Opens on the Arabic name; the timeline below pours it into Latin.
+      uMix: { value: textAr && !reducedMotion ? 1 : 0 },
       tFlow: flowmap.uniform,
       uInk: { value: hexToVec(cssVar('--ink')) },
       uA: { value: hexToVec(cssVar('--accent')) },
@@ -91,35 +114,55 @@ export async function initHero(text) {
   let w = 1
   let h = 1
 
-  function drawText() {
+  // Fit a word to the canvas: as wide as the gutters allow, at most 80%
+  // of the height. Arabic letters join, so it gets no negative tracking.
+  function drawWord(target, tex, word, arabic) {
     const dpr = renderer.dpr
     const W = Math.max(1, Math.round(w * dpr))
     const H = Math.max(1, Math.round(h * dpr))
-    textCanvas.width = W
-    textCanvas.height = H
-    const c = textCanvas.getContext('2d')
-    const word = text.toUpperCase()
+    target.width = W
+    target.height = H
+    const c = target.getContext('2d')
     const pad = parseFloat(getComputedStyle(wrap.parentElement.querySelector('.container')).paddingLeft) * dpr
 
     const setFont = (size) => {
-      c.font = `600 ${size}px Geist, system-ui, sans-serif`
-      if ('letterSpacing' in c) c.letterSpacing = `${-0.065 * size}px`
+      c.font = arabic
+        ? `700 ${size}px "Reem Kufi", "Noto Kufi Arabic", sans-serif`
+        : `600 ${size}px Geist, system-ui, sans-serif`
+      if ('letterSpacing' in c) c.letterSpacing = arabic ? '0px' : `${-0.065 * size}px`
+      c.direction = arabic ? 'rtl' : 'ltr'
+      c.textAlign = 'left'
     }
-    setFont(100)
-    let m = c.measureText(word)
-    const inkW = m.actualBoundingBoxLeft + m.actualBoundingBoxRight
-    const inkH = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent
-    const size = Math.min((100 * (W - pad * 2)) / inkW, (100 * H * 0.8) / inkH)
-    setFont(size)
-    m = c.measureText(word)
+    // Portrait screens stack the Latin name (MOH / SIN) so it fills the
+    // tall hero instead of a thin strip across it.
+    const lines = !arabic && H > W * 0.75 ? [word.slice(0, Math.ceil(word.length / 2)), word.slice(Math.ceil(word.length / 2))] : [word]
+    const LEAD = 0.9
 
-    const x = (W - (m.actualBoundingBoxLeft + m.actualBoundingBoxRight)) / 2 + m.actualBoundingBoxLeft
-    const y = (H + m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2
+    setFont(100)
+    const ms = lines.map((l) => c.measureText(l))
+    const capH = Math.max(...ms.map((m) => m.actualBoundingBoxAscent + m.actualBoundingBoxDescent))
+    const inkW = Math.max(...ms.map((m) => m.actualBoundingBoxLeft + m.actualBoundingBoxRight))
+    const inkH = capH + (lines.length - 1) * capH * (1 + (1 - LEAD))
+    const size = Math.min((100 * (W - pad * 2)) / inkW, (100 * H * (arabic ? 0.9 : 0.8)) / inkH)
+    setFont(size)
+
     c.clearRect(0, 0, W, H)
     c.fillStyle = '#fff'
-    c.fillText(word, x, y)
-    texture.image = textCanvas
-    texture.needsUpdate = true
+    const step = (capH * size / 100) * (2 - LEAD)
+    const blockH = step * (lines.length - 1)
+    lines.forEach((line, i) => {
+      const m = c.measureText(line)
+      const x = (W - (m.actualBoundingBoxLeft + m.actualBoundingBoxRight)) / 2 + m.actualBoundingBoxLeft
+      const y = (H + m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2 - blockH / 2 + i * step
+      c.fillText(line, x, y)
+    })
+    tex.image = target
+    tex.needsUpdate = true
+  }
+
+  function drawText() {
+    drawWord(textCanvas, texture, text.toUpperCase(), false)
+    drawWord(textCanvas2, texture2, textAr || text.toUpperCase(), Boolean(textAr))
   }
 
   function resize() {
@@ -196,6 +239,13 @@ export async function initHero(text) {
     () => { running = false; gsap.ticker.remove(tick) },
     '0px',
   )
+
+  // Arabic -> Latin -> Arabic, holding each long enough to read.
+  if (textAr && !reducedMotion) {
+    gsap.timeline({ repeat: -1, delay: 3.2, repeatDelay: 3.2 })
+      .to(program.uniforms.uMix, { value: 0, duration: 1.6, ease: 'power2.inOut' })
+      .to(program.uniforms.uMix, { value: 1, duration: 1.6, ease: 'power2.inOut' }, '+=3.2')
+  }
 
   document.documentElement.classList.add('has-gl')
 }

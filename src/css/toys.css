@@ -209,7 +209,16 @@
 [data-mode="recruiter"] .preview { display: none; }
 
 /* ---------- hire-me runaway ---------- */
-[data-hire] { position: relative; transition: translate .35s var(--ease-back), background-color .35s, color .35s; }
 
 /* ---------- easter egg ---------- */
 .is-falling { pointer-events: none; }
+
+/* ---------- tap ripple (phones) ---------- */
+.tap {
+  position: fixed; z-index: 250; width: 56px; height: 56px; margin: -28px 0 0 -28px;
+  border-radius: 50%; border: 2px solid var(--accent);
+  pointer-events: none;
+  animation: tap .6s var(--ease) forwards;
+}
+@keyframes tap { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
+[data-mode="recruiter"] .tap { display: none; }

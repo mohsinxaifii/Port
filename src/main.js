@@ -24,6 +24,7 @@ import { initToys } from './modules/toys.js'
 import { initBugs } from './modules/bugs.js'
 import { initCursor } from './modules/cursor.js'
 import { initFloaters } from './modules/floaters.js'
+import { initEnquiry } from './modules/enquiry.js'
 import { runLoader } from './modules/loader.js'
 
 initPrefs()
@@ -41,9 +42,10 @@ initStickers()
 initBugs()
 initCursor()
 initFloaters()
+initEnquiry()
 splitHeadings()
 
-const heroReady = initHero(site.name)
+const heroReady = initHero(site.name, site.nameAr)
 
 runLoader().then(async () => {
   await heroReady

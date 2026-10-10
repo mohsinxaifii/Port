@@ -2,10 +2,11 @@
    shows a word over anything with data-cursor="word". Desktop only. */
 
 import { gsap } from 'gsap'
-import { finePointer, reducedMotion } from './utils.js'
+import { finePointer, reducedMotion, isChaos } from './utils.js'
 
 export function initCursor() {
-  if (!finePointer || reducedMotion) return
+  if (reducedMotion) return
+  if (!finePointer) { initTapRipple(); return }
 
   const el = document.createElement('div')
   el.className = 'cursor is-hidden'
@@ -39,4 +40,17 @@ export function initCursor() {
       el.classList.add('is-link')
     }
   })
+}
+
+/* Phones: a lime ring blooms wherever you tap (chaos mode only). */
+function initTapRipple() {
+  addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' || !isChaos()) return
+    const ring = document.createElement('span')
+    ring.className = 'tap'
+    ring.style.left = `${e.clientX}px`
+    ring.style.top = `${e.clientY}px`
+    document.body.appendChild(ring)
+    ring.addEventListener('animationend', () => ring.remove())
+  }, { passive: true })
 }

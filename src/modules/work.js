@@ -69,6 +69,7 @@ export function initWork() {
     </li>`).join('')
 
   initFilters(archive)
+  initCardScrub()
 
   const rows = $$('.row')
   rows.forEach((row) => row.addEventListener('mouseenter', () => play('hover')))
@@ -87,6 +88,22 @@ export function initWork() {
       })
     }
   }
+}
+
+/* Phones have no hover, so the featured screenshots move with the scroll
+   instead: each one comes in small and tilted and settles flat as it
+   reaches the middle of the screen. */
+function initCardScrub() {
+  gsap.matchMedia().add('(max-width: 800px) and (prefers-reduced-motion: no-preference)', () => {
+    $$('.card__media').forEach((media, i) => {
+      gsap.fromTo(media,
+        { scale: 0.84, rotation: i % 2 ? 3 : -3, yPercent: 8 },
+        {
+          scale: 1, rotation: 0, yPercent: 0, ease: 'none',
+          scrollTrigger: { trigger: media, start: 'top bottom', end: 'center 55%', scrub: 0.4 },
+        })
+    })
+  })
 }
 
 function initFilters(archive) {

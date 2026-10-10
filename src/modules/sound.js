@@ -94,7 +94,13 @@ const effects = {
 /* Throttle per effect so hover sweeps and pit collisions don't turn into noise. */
 const minGap = { hover: 45, bonk: 40, tick: 25, print: 50 }
 
+/* Phones can't hear hovers, but they can feel the big moments. Android
+   only (iOS has no vibrate API); chaos mode only, like the sounds. */
+const HAPTIC = { success: 18, pop: 12, tear: [30, 40, 60], nope: [12, 50, 12], tick: 6, whoosh: 10 }
+const touch = matchMedia('(pointer: coarse)').matches
+
 export function play(name, arg) {
+  if (touch && HAPTIC[name] && isChaos()) navigator.vibrate?.(HAPTIC[name])
   if (!enabled || !isChaos()) return
   // Hovers happen before any gesture; don't create the context for them.
   if (!ctx || ctx.state !== 'running') {
