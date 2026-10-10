@@ -12,12 +12,14 @@
    `featured: true` puts it on the index (the first four fill the lead
    block and the closing strip).
    `market` (optional) tags work for a client outside India, e.g. Dubai.
+   `category` overrides the filter chip; `status` replaces the live-site
+   link with a line of text; `system` adds an "Under the hood" block.
    `live: false` hides the outbound links for work that isn't on its
    domain yet (`url` still feeds the browser bar).
    `upcoming: true` puts it in the "Upcoming Next" slot (pick one).
 
-   Images live in public/work/<slug>/: thumb.jpg is 5:2 (card + case
-   hero), gallery-*.jpg are 16:9 desktop captures of the live site.
+   Images live in public/work/<slug>/ as WebP: thumb.webp is 5:2 (card + case
+   hero), gallery-*.webp are 16:9 desktop captures of the live site.
    `year` is optional - null hides it everywhere.
    ================================================================== */
 
@@ -28,8 +30,8 @@ const SHOPIFY = ['Shopify', 'Liquid', 'JavaScript', 'CSS']
 
 // Every project follows the same image layout, so build the paths once.
 const shots = (slug, count = 3) => ({
-  thumb: asset(`/work/${slug}/thumb.jpg`),
-  gallery: Array.from({ length: count }, (_, i) => asset(`/work/${slug}/gallery-${i + 1}.jpg`)),
+  thumb: asset(`/work/${slug}/thumb.webp`),
+  gallery: Array.from({ length: count }, (_, i) => asset(`/work/${slug}/gallery-${i + 1}.webp`)),
 })
 
 export const projects = [
@@ -48,20 +50,20 @@ export const projects = [
     thumbAlt: 'The Bikaneri Kitchen - campaign portraits with the bhujia thali and red tin',
     logo: null,
     description:
-      'A heritage storefront for Bikaneri bhujia - a story-led Shopify build '
-      + 'that sells a snack with 150 years of history behind it.',
+      'A heritage D2C brand built as a story-led Shopify store, where the '
+      + 'narrative is the sales funnel and every chapter ends in a cart.',
     background:
-      'Bikaneri bhujia traces back to the royal kitchen of Maharaja Dungar '
-      + 'Singh in 1877, and the brand makes it the old way: slow-cooked in a '
-      + 'bhatti, by hand, in small batches. The challenge was a shop that felt '
-      + 'like that history rather than a packet on a grocery shelf.',
+      'The Bikaneri Kitchen sells bhujia made the way it was in the royal '
+      + 'kitchen of Maharaja Dungar Singh in 1877. A premium price only holds '
+      + 'if the brand feels like that heritage, so I treated the store as a '
+      + 'positioning problem first and a build second.',
     story:
-      'Built on Shopify with a deep maroon-and-parchment system, woodcut-style '
-      + 'illustration and serif type that let the product read as an heirloom. '
-      + 'Products sit inside the narrative - Paraat Bhujia and Handmade Bhujia '
-      + 'each get their own editorial plate with add-to-cart built in - '
-      + 'alongside The Bhandaar shop, a Rituals journal, the Archive and '
-      + 'Behind the Craft profiles of the karigars who make it.',
+      'I owned the build end to end on a custom Shopify theme: editorial '
+      + 'product ‘plates’ with add-to-cart inside the story, a Rituals journal, '
+      + 'an Archive and profiles of the karigars behind the craft, all as '
+      + 'reusable sections the brand team can run without a developer. Heavy '
+      + 'campaign photography is served responsively so the store stays fast on '
+      + 'mobile, where most orders start.',
   },
   {
     slug: 'solethreads',
@@ -80,21 +82,21 @@ export const projects = [
     thumbAlt: 'Solethreads - "We bring in the sneaker revolution" campaign section',
     logo: null,
     description:
-      'A full revamp of an Indian footwear brand - sneakers, slides and '
-      + 'clogs - with a loud, streetwear-first Shopify store built mobile-first.',
+      'End-to-end revamp of a multi-brand footwear label: research, UX, '
+      + 'design system and a mobile-first Shopify build for drops, comfort '
+      + 'lines and collabs.',
     background:
-      'Solethreads sells everything from everyday slides to limited sneaker '
-      + 'drops, across several sub-brands like Gelatoe and Marshmellow. The old '
-      + 'store treated them all the same, so the drops had no hype and the '
-      + 'comfort lines had no personality. I led the research, then designed '
-      + 'and built the whole thing.',
+      'Solethreads runs several sub-brands under one roof, from limited '
+      + 'sneaker drops to comfort lines like Gelatoe and Marshmellow, and the '
+      + 'old store sold all of them the same way. I led the research and owned '
+      + 'the product from information architecture to theme code.',
     story:
-      'Designed mobile-first at 375px, then adapted for desktop: a homepage '
-      + 'with "What’s Hot" rails and drop countdowns, a sneaker landing page '
-      + 'split into high tops, low tops and canvas, and a dedicated world for '
-      + 'each comfort line - Gelatoe gets melting-ice-cream drips. Behind it: '
-      + 'filterable listings, a size guide, product pages with care '
-      + 'instructions and reviews, a community page and the full account area.',
+      'Designed at 375px first and adapted to desktop, on a component-based '
+      + 'design system that gives each sub-brand its own world without forking '
+      + 'the theme. Drop countdowns and ‘What’s Hot’ rails build hype, faceted '
+      + 'listings and a size guide cut friction and returns, and product pages '
+      + 'carry care instructions and reviews, alongside a community page and '
+      + 'the full account area.',
   },
   {
     slug: 'kachori-story',
@@ -110,27 +112,24 @@ export const projects = [
     ...shots('kachori-story'),
     // Illustrated cover: people round a table sharing kachoris. Cropped
     // from 30% down so the headline and the plate both stay in frame.
-    thumb: asset('/work/kachori-story/cover.jpg'),
+    thumb: asset('/work/kachori-story/cover.webp'),
     thumbPosition: '50% 30%',
     thumbAlt: 'The Kachori Story illustration: "From the heart of the streets to your table", a row of people sharing kachoris, chai and samosas',
     logo: null,
     description:
-      'A custom-built site for a Gurugram street-food brand - an appetite-first '
-      + 'menu that carries the brand’s hand-drawn, playful identity from the '
-      + 'counter onto the screen.',
+      'A franchise-ready brand site for a Gurugram street-food chain, built '
+      + 'in React to work as both a menu and a lead-generation channel.',
     background:
-      'The Kachori Story serves Rajasthani and North Indian street food - '
-      + 'kachoris, chaat, thalis, sharbats - out of Gurugram, with a franchise '
-      + 'programme looking to take it further. The brand already had a loud, '
-      + 'illustrated personality, and a stock template would have flattened it '
-      + 'into another restaurant listing.',
+      'The Kachori Story is growing through franchising, so the site had two '
+      + 'jobs: make the food irresistible, and turn the right visitors into '
+      + 'franchise enquiries. A template would have flattened a loud, '
+      + 'illustrated brand into another restaurant listing.',
     story:
-      'Designed and built from scratch in React on Vite rather than on a theme, '
-      + 'so every section could be art-directed: full-bleed food, a yellow-and-'
-      + 'black menu that reads like the packaging, and the street-scene '
-      + 'illustration that closes the page. Recommended dishes, the full menu, '
-      + 'the brand story and a dedicated franchise route sit behind a single '
-      + 'navigation, turning the site into both a menu and a lead channel.',
+      'I architected and built it from scratch in React on Vite, as a '
+      + 'component library mapped to the brand’s illustration system, so every '
+      + 'section is art-directed without a heavy CMS in the way. The menu, '
+      + 'recommendations, brand story and a dedicated franchise funnel share '
+      + 'one navigation, on a lean bundle that loads quickly on mobile.',
   },
   {
     slug: 'the-trost',
@@ -147,20 +146,20 @@ export const projects = [
     thumbAlt: 'The Trost - Hemp Based Wellness hero over cannabis leaves',
     logo: null,
     description:
-      'A premium storefront for a New Delhi hemp-wellness brand - cinematic, '
-      + 'dark and calm, built to make a new category feel trustworthy.',
+      'A premium Shopify store that makes a brand-new wellness category feel '
+      + 'safe to buy into, for a hemp brand pairing Ayurveda with Swiss '
+      + 'formulation.',
     background:
-      'The Trost sells cannabis-leaf-extract gummies, hemp herbal smokes, oils '
-      + 'and hemp nutrition in a market where most shoppers are meeting the '
-      + 'category for the first time. “Trost” is German for solace, and the '
-      + 'brand pairs Ayurvedic wisdom with Swiss formulation - the site had to '
-      + 'carry that calm, and the credibility, at the same time.',
+      'Most of The Trost’s shoppers meet hemp wellness for the first time on '
+      + 'this site, so conversion depends on trust before product. I treated '
+      + 'education, careful language and calm design as conversion tools, not '
+      + 'decoration.',
     story:
-      'A Shopify build on a near-black palette with full-bleed foliage, restrained '
-      + 'type and warm orange product cards. A Find Your Calm Ritual section '
-      + 'guides first-timers, sub-brands like Mello and Kosha get room of '
-      + 'their own, and the site extends past the shop into a journal, '
-      + 'partner enquiries and a store locator for offline stockists.',
+      'Built on Shopify with a dark, cinematic design system and a guided '
+      + '‘Find Your Calm’ ritual that routes first-timers to the right product. '
+      + 'Sub-brands Mello and Kosha get their own space, and the site reaches '
+      + 'past the cart into B2B: partner enquiries, a journal and a store '
+      + 'locator for offline stockists.',
   },
   {
     slug: 'rasayanam',
@@ -177,19 +176,19 @@ export const projects = [
     thumbAlt: 'Rasayanam - Feel the calm, see the change - ashwagandha hero',
     logo: null,
     description:
-      'A high-volume Shopify store for a clean-supplements brand trusted by '
-      + 'over ten lakh customers - built to convert, and to prove what’s in '
-      + 'the bottle.',
+      'A high-volume Shopify store for a supplements brand trusted by over a '
+      + 'million customers, engineered to convert and to prove what’s in the '
+      + 'bottle.',
     background:
-      'Rasayanam makes vegetarian, purity-tested supplements - ashwagandha, '
-      + 'magnesium, shilajit and more - and sells them at scale, with a 4.5 star '
-      + 'rating across more than 20,000 reviews. In a category full of '
-      + 'questionable claims, the site had to sell hard and earn trust at once.',
+      'Rasayanam sells purity-tested supplements at scale, with a 4.5-star '
+      + 'average across 20,000+ reviews. In a category crowded with doubtful '
+      + 'claims, the store had to sell hard and earn trust in the same scroll.',
     story:
-      'A Shopify storefront where shoppers start from how they feel: a '
-      + 'shop-by-concern rail answers “what’s stopping you from feeling your '
-      + 'best?” before it shows a single SKU. Build-your-own-box bundles, a '
-      + 'Verify Order page and review-led social proof run through every page.',
+      'Merchandising starts from the customer’s problem: a shop-by-concern '
+      + 'rail answers ‘what’s stopping you from feeling your best?’ before '
+      + 'showing a single SKU. Build-your-own-box bundles are designed to lift '
+      + 'order value, an order-verification page tackles counterfeit worries, '
+      + 'and review-led proof runs through every template.',
   },
   {
     slug: 'zinara',
@@ -200,25 +199,70 @@ export const projects = [
     featured: false,
     upcoming: false,
     role: ROLE,
-    stack: SHOPIFY,
+    stack: ['Shopify', 'Liquid', 'Laravel', 'Admin API', 'Google Sheets API', 'PHP'],
     url: 'https://zinara.in',
     ...shots('zinara'),
     thumbAlt: 'Zinara - Double Take, two stones in 18K gold vermeil',
     logo: null,
     description:
-      'A soft, editorial Shopify store for a lab-grown diamond jewellery brand - '
-      + 'certified stones, everyday pieces, easy to shop.',
+      'The storefront and the back office behind it: a Shopify store for a '
+      + 'lab-grown diamond brand, plus the inventory, reviews and wishlist '
+      + 'systems I built to run it.',
     background:
-      'Zinara makes lab-grown diamond jewellery certified by IGI and SGL and '
-      + 'hallmarked by BIS, designed to be worn every day. Buying diamonds '
-      + 'online asks for a lot of trust, so certification had to sit as close '
-      + 'to the product as the price.',
+      'Zinara sells IGI- and SGL-certified lab-grown diamond jewellery, '
+      + 'hallmarked by BIS. Online, trust has to sit right next to the price, '
+      + 'and a variant-heavy catalogue has to stay accurate in Shopify without '
+      + 'a team re-typing it by hand.',
     story:
-      'Built on Shopify in blush and wine, with campaign heroes, a shop-by-'
-      + 'category row and filterable collection pages for rings, earrings, '
-      + 'pendants and bracelets. The Zinara Experience strip - certified '
-      + 'diamonds, lifetime exchange, insured shipping - sits under the fold '
-      + 'where hesitation usually starts.',
+      'On the front end, an editorial Shopify theme puts certification, '
+      + 'lifetime exchange and insured shipping where hesitation starts. Behind '
+      + 'it sit three services I designed and built. Zinara Inventory is a '
+      + 'Laravel app that treats a Google Sheet as the product master and syncs '
+      + 'products, variants, prices, stock levels and metafields into Shopify '
+      + 'through the Admin API, on queued jobs with retries, rate-limit backoff '
+      + 'and a live sync-status dashboard. A reviews bridge pipes Judge.me '
+      + 'reviews into the theme’s own native section through webhooks and '
+      + 'metaobjects. An HMAC-signed wishlist service keeps a logged-in '
+      + 'customer’s list in sync across every device.',
+  },
+  {
+    slug: 'zinara-back-office',
+    title: 'Zinara Back Office',
+    client: 'Zinara',
+    year: null,
+    isNew: true,
+    featured: false,
+    upcoming: false,
+    role: 'Architecture & development',
+    stack: ['Laravel', 'PHP', 'Shopify Admin API', 'GraphQL', 'Google Sheets API', 'Webhooks'],
+    // Its own filter chip, and no outbound link: it is internal tooling.
+    category: 'Systems',
+    url: 'https://zinara.in',
+    status: 'Internal system, runs the zinara.in store',
+    // Renders the animated "Under the hood" block from src/modules/system.js.
+    system: 'zinara',
+    ...shots('zinara-back-office'),
+    frame: false,
+    thumbAlt: 'Zinara Back Office - Google Sheet to Laravel queue to Shopify Admin API, as a live system diagram',
+    logo: null,
+    description:
+      'The back office I architected for a lab-grown diamond brand: a Laravel '
+      + 'sync engine, a reviews bridge and a signed wishlist service that keep '
+      + 'a Shopify store accurate without manual data entry.',
+    background:
+      'Zinara’s catalogue is variant-heavy, with metals, sizes and certified '
+      + 'stones, and the team manages it in Google Sheets. Re-typing that into '
+      + 'Shopify was slow and error-prone, reviews came through a third-party '
+      + 'widget that didn’t match the theme, and wishlists vanished between '
+      + 'devices.',
+    story:
+      'I designed and built three services around the store. A Laravel 10 '
+      + 'sync engine reads the sheet and writes products, variants, prices, '
+      + 'stock and metafields through the Shopify Admin API, on queued jobs '
+      + 'with a shared retry layer for rate limits and a status dashboard. A '
+      + 'PHP bridge moves Judge.me reviews into native metaobjects through '
+      + 'webhooks and a scheduled sync. A wishlist service stores each list on '
+      + 'the customer record, secured with short-lived HMAC signatures.',
   },
   {
     slug: 'beyond-beyond',
@@ -235,19 +279,20 @@ export const projects = [
     thumbAlt: 'Beyond Beyond - clean clinical skincare, About hero',
     logo: null,
     description:
-      'The launch storefront for India’s first NAD+ skincare line - clean, '
-      + 'clinical and built around shopping by skin concern.',
+      'The launch store for India’s first NAD+ skincare line: a clinical, '
+      + 'concern-led Shopify build that sells a new ingredient to people who '
+      + 'have never heard of it.',
     background:
-      'Beyond Beyond brought NAD+ skincare to India for the first time - a '
-      + 'science-first ingredient most customers had never heard of. The site '
-      + 'had to introduce the ingredient, and still make choosing a product '
-      + 'simple.',
+      'Beyond Beyond had to create the category before it could sell into it. '
+      + 'I approached the store as an education-to-checkout funnel: explain '
+      + 'NAD+ fast, then make choosing a product effortless.',
     story:
-      'A Shopify build on a white, clinical system with the brand’s orange '
-      + 'packaging doing the colour work. Navigation splits by concern, '
-      + 'bestsellers and sets, a dedicated NAD+ section explains the science, '
-      + 'and a “No Nasties. No Compromises.” free-from strip answers the '
-      + 'ingredient questions before they are asked.',
+      'A Shopify build on a white, clinical system where the orange packaging '
+      + 'does the colour work. Navigation splits by concern, bestsellers and '
+      + 'sets; a dedicated NAD+ science page and an expert-guidance module '
+      + 'carry the education; and product pages lead with benefits and a '
+      + 'free-from strip that answers ingredient questions before they are '
+      + 'asked.',
   },
   {
     slug: 'design-dimensions',
@@ -264,19 +309,19 @@ export const projects = [
     thumbAlt: 'Design Dimensions - homepage with Snack Factory packaging',
     logo: null,
     description:
-      'A holding site for a branding and packaging studio that still shows the '
-      + 'work - a portfolio carousel carrying the studio while its full site is rebuilt.',
+      'The web presence of a branding, packaging and spatial-design studio, '
+      + 'built to win clients with the work itself: case studies, a Work Diary '
+      + 'and a design journal.',
     background:
-      'Design Dimensions is a branding, packaging and space-design studio with '
-      + 'clients from Suryagarh to CATCH. While its full site is rebuilt, '
-      + 'a bare “coming soon” page would have hidden the studio’s best asset: '
-      + 'the portfolio.',
+      'Design Dimensions works with hospitality and FMCG brands, from '
+      + 'Suryagarh and Samsara to Snack Factory. As the studio’s sole technical '
+      + 'lead, I owned its own site as well as client delivery.',
     story:
-      'Hand-built in HTML, CSS and GSAP: an animated preloader, a looping '
-      + 'discipline ticker and a “Design is, As Design Does” headline, over a '
-      + 'running carousel of case cards - identity, packaging, campaigns and '
-      + 'spaces - each with a one-line brief - a holding page that is still a '
-      + 'real portfolio.',
+      'I shipped an interim portfolio in hand-coded HTML, CSS and GSAP so the '
+      + 'work stayed visible during the rebuild, then led the new site: a '
+      + 'homepage that opens on the work, a filterable Work Diary, long-form '
+      + 'case studies like Samsara, a Design Dialogue journal and an About page '
+      + 'built around the founder.',
   },
   {
     slug: 'twisty-designs',
@@ -293,19 +338,19 @@ export const projects = [
     thumbAlt: 'Twisty Designs - See it, want it, buy it',
     logo: null,
     description:
-      'A kinetic Webflow site for an e-commerce design agency working across '
-      + 'India, Germany and the USA - loud type, live marquees, zero boredom.',
+      'A conversion-focused Webflow site for an e-commerce design agency '
+      + 'serving clients in India, Germany and the USA.',
     background:
-      'Twisty helps e-commerce brands sell with product personalisation, '
-      + 'visualisation, branding and performance creative. An agency that '
-      + 'promises to make other brands’ products irresistible needed a site '
-      + 'that proved it in the first scroll.',
+      'Twisty sells product personalisation, visualisation and performance '
+      + 'creative to e-commerce brands. An agency that promises to make '
+      + 'products irresistible has to prove it in the first scroll, and this '
+      + 'site is its main sales asset.',
     story:
-      'Built in Webflow on a black-and-lime system with oversized condensed '
-      + 'type, scrolling marquees and a “See it, want it, buy it!” voice that '
-      + 'runs through the copy. Service pages, 150-plus portfolio projects, the '
-      + 'team of designers who code and a consultation booking flow each get '
-      + 'their own section, with a call to action never far away.',
+      'Built in Webflow with custom JavaScript on top of native interactions: '
+      + 'oversized condensed type, live marquees and a ‘See it, want it, buy '
+      + 'it!’ voice. Services, a 150+ project portfolio, the team and a '
+      + 'consultation-booking flow each have their own section, with a call to '
+      + 'action never more than a scroll away.',
   },
   {
     slug: 'niche-star-advertising',
@@ -323,19 +368,20 @@ export const projects = [
     thumbAlt: 'Niche Star - Advertising, events, visual merchandising and retail displays',
     logo: null,
     description:
-      'A bold, motion-led site for the production arm of Niche Marketing '
-      + 'Management - displays, events, fabrication and print.',
+      'A capability site for a Dubai production house, built to win B2B '
+      + 'briefs for retail displays, events, fabrication and large-format '
+      + 'print.',
     background:
-      'Niche Star builds the physical side of advertising - point-of-sale '
-      + 'displays, gondola ends, exhibition branding, signage and large-format '
-      + 'print - from its own 4,000 sq ft facility. The site needed to sell '
-      + 'capability to brands and agencies at a glance.',
+      'Niche Star is the production arm of Niche Marketing Management in the '
+      + 'UAE, delivering point-of-sale, exhibition and signage work from its '
+      + 'own 4,000 sq ft facility. Its buyers are brand managers and agencies '
+      + 'comparing suppliers, so the site has to communicate capacity and '
+      + 'reliability at a glance.',
     story:
-      'Hand-built with GSAP on a red-and-white system anchored by the brand’s '
-      + 'arrow mark, with heavy display type and scroll-driven reveals. A '
-      + 'services menu across eight disciplines, a video gallery of finished '
-      + 'work, a five-step process walkthrough and live Google reviews take a '
-      + 'visitor from “who are you” to “contact us” in one page.',
+      'Hand-built in HTML, CSS and GSAP for full control over motion and load '
+      + 'time: scroll-driven reveals, eight service lines, a video gallery of '
+      + 'delivered work, a five-step process and live Google reviews, all '
+      + 'leading to a single enquiry action.',
   },
   {
     slug: 'the-casabella',
@@ -352,18 +398,18 @@ export const projects = [
     thumbAlt: 'The Casabella - Elevate your walls with timeless elegance',
     logo: null,
     description:
-      'A heritage home-décor store - jharokhas, pichwai and hand-carved wall '
-      + 'art - presented with the restraint of a gallery.',
+      'A premium Shopify store for artisan home décor, designed with the '
+      + 'restraint of a gallery so ornate pieces can carry the sale.',
     background:
-      'The Casabella sells artisan-made décor rooted in Indian craft: carved '
-      + 'jharokhas, gopurams, corbels, pichwai and sacred pieces. The pieces '
-      + 'are ornate, so the store around them needed to step back.',
+      'The Casabella sells hand-carved jharokhas, pichwai and sacred décor at '
+      + 'gallery prices. Ornate products need a quiet store, and buyers '
+      + 'furnishing a room need to find the right piece fast.',
     story:
-      'A Shopify build on warm ivory with serif headlines and arched product '
-      + 'frames that echo the jharokhas themselves. Collections are split by '
-      + 'room and intent - wall décor, mirrors and lighting, the wood edit, puja '
-      + 'and sacred, gifting - with New Arrivals and Best Sellers carousels '
-      + 'doing the merchandising on the homepage.',
+      'A Shopify build on warm ivory, with arched product frames that echo '
+      + 'the jharokhas themselves. Collections are organised by room and intent '
+      + '(wall décor, mirrors and lighting, the wood edit, puja and sacred, '
+      + 'gifting), with New Arrivals and Best Sellers rails doing the '
+      + 'merchandising.',
   },
   {
     slug: 'ocher-studio',
@@ -380,19 +426,17 @@ export const projects = [
     thumbAlt: 'Ocher Studio - Made to live with, handcrafted Indian décor',
     logo: null,
     description:
-      'A storefront for contemporary Indian craft - handmade décor and gifts '
-      + 'made with artisan communities, for homes and for business.',
+      'One Shopify store serving two markets: retail shoppers furnishing '
+      + 'their homes, and companies placing bulk corporate-gifting orders.',
     background:
-      'Ocher Studio works with artisan communities to make décor, desk pieces, '
-      + 'jewellery and gifts in contemporary Indian craft. It sells to two '
-      + 'audiences at once: people furnishing a home, and companies ordering '
-      + 'gifts in bulk.',
+      'Ocher Studio makes contemporary craft with artisan communities. Its '
+      + 'revenue splits between consumers and B2B gifting, and the two need '
+      + 'very different journeys without one cluttering the other.',
     story:
-      'A Shopify build in warm terracotta and cream with lifestyle-first '
-      + 'imagery. Retail shoppers browse by room and by craft, while dedicated '
-      + 'Bulk Gifting and For Business journeys, festive gifting edits and '
-      + 'Ocher Signature pieces serve the corporate side without cluttering '
-      + 'the main shop.',
+      'A terracotta-and-cream Shopify build where retail shoppers browse by '
+      + 'room and by craft, while dedicated Bulk Gifting and For Business '
+      + 'journeys, festive edits and Ocher Signature pieces route corporate '
+      + 'buyers to an enquiry. One catalogue, two funnels.',
   },
   {
     slug: 'amino-forge',
@@ -413,19 +457,19 @@ export const projects = [
     thumbAlt: 'Amino Forge - AF 9 advance liposomal amino supplement',
     logo: null,
     description:
-      'A science-led Shopify store for AF 9, pitched as India’s first '
-      + 'liposomal amino supplement.',
+      'A science-led D2C store for AF 9, positioned as India’s first '
+      + 'liposomal amino supplement. Research, design and Shopify build.',
     background:
-      'Amino Forge launched with one product and a lot of science to explain. '
-      + 'Supplement buyers are sceptical, so the store had to make the '
-      + 'research approachable and put the founders and the formulation front '
-      + 'and centre, without reading like a lab report.',
+      'Amino Forge launched with a single hero product and a complex '
+      + 'scientific story. Supplement buyers are sceptical, so the store had to '
+      + 'make the science credible and simple, and put the founders and the '
+      + 'formulation up front.',
     story:
-      'Soft lavender and violet with a sunny yellow call to action. Our Story '
-      + 'introduces the founders and walks through "The Science Inside Amino '
-      + 'Forge" with plain-language benefit cards, then lands on the AF 9 '
-      + 'product reveal. A blog on amino acids and recovery and a categorised '
-      + 'FAQ handle the questions before they become support tickets.',
+      'I designed the information architecture around buyer objections: Our '
+      + 'Story introduces the founders, ‘The Science Inside Amino Forge’ turns '
+      + 'the research into plain-language benefit cards, and the AF 9 reveal '
+      + 'closes the case. A blog on amino acids and recovery and a categorised '
+      + 'FAQ answer pre-sale questions before they become support tickets.',
   },
   {
     slug: 'vivahnam',
@@ -442,19 +486,20 @@ export const projects = [
     thumbAlt: 'Vivahnam - Estimate your destination wedding cost',
     logo: null,
     description:
-      'A destination-wedding planning platform - 500-plus verified venues, '
-      + 'availability checks and a live cost estimator, built on Laravel.',
+      'A destination-wedding platform built on Laravel: 500+ verified venues, '
+      + 'availability requests and a live cost estimator.',
     background:
-      'Vivahnam connects families with destination wedding venues across India '
-      + 'and abroad. Planning one usually means weeks of calls to hotels just to '
-      + 'learn what is available and what it will cost - the platform set out '
-      + 'to collapse that into a few clicks.',
+      'Planning a destination wedding usually means weeks of calls to hotels '
+      + 'just to learn availability and cost. Vivahnam set out to compress that '
+      + 'into a few clicks, and to turn each search into a qualified lead for '
+      + 'its planning team.',
     story:
-      'A custom Laravel application with venues browsable by destination and '
-      + 'country, a shortlist-and-check-availability flow that routes date '
-      + 'requests to the planning team, and a wedding cost calculator that '
-      + 'turns guest count, rooms and ceremony details into a personalised '
-      + 'estimate. Planner consultations are booked straight from the page.',
+      'I built it as a custom Laravel application: venues browsable by '
+      + 'destination and country, a shortlist-and-availability flow that routes '
+      + 'date requests to planners, and a cost calculator that turns guest '
+      + 'count, rooms and ceremonies into a personalised estimate. '
+      + 'Consultations book straight from the page, so every visit ends as a '
+      + 'lead with context.',
   },
   {
     slug: 'echo-india',
@@ -475,19 +520,20 @@ export const projects = [
     thumbAlt: 'ECHO India - Empowering communities with knowledge',
     logo: null,
     description:
-      'A redesign for a non-profit that trains frontline health, education '
-      + 'and livelihood workers across India.',
+      'A redesign for a national non-profit that trains frontline health, '
+      + 'education and livelihood workers. UX research, information '
+      + 'architecture and design.',
     background:
-      'ECHO India runs the Project ECHO "all teach, all learn" model through '
-      + 'hundreds of knowledge hubs nationwide. The old site buried that scale. '
-      + 'Donors, partners and trainees each needed a clear way in, across '
-      + 'dozens of programmes and years of results.',
+      'ECHO India runs the Project ECHO ‘all teach, all learn’ model through '
+      + 'hundreds of knowledge hubs. The old site buried that scale, and '
+      + 'donors, partners and trainees each needed a clear way in across dozens '
+      + 'of programmes.',
     story:
-      'A full information architecture and design across the homepage, Who '
-      + 'We Are and every What We Do vertical. Impact numbers lead each page, '
-      + 'the ECHO model is explained as a hub-and-spoke diagram, and case '
-      + 'studies, a programme timeline, partners and testimonials build trust '
-      + 'before the "Take action" asks: attend, donate, partner, join.',
+      'I led the research and rebuilt the information architecture across the '
+      + 'homepage, Who We Are and every What We Do vertical. Impact data leads '
+      + 'each page, the model is explained as a hub-and-spoke diagram, and case '
+      + 'studies, a programme timeline and partner logos build trust before the '
+      + 'asks: attend, donate, partner, join.',
   },
   {
     slug: 'niche-cape',
@@ -505,18 +551,18 @@ export const projects = [
     thumbAlt: 'Niche Cape - Your global logistics partner in excellence',
     logo: null,
     description:
-      'A bilingual English-Arabic site for a UAE freight and logistics company '
-      + 'serving 15-plus countries across the GCC and beyond.',
+      'A bilingual English and Arabic site for a UAE freight-forwarding '
+      + 'company serving 15+ countries across the GCC and beyond.',
     background:
-      'Niche Cape is the logistics division of Niche Marketing Management, '
-      + 'moving air, sea and land freight, clearing customs and running '
-      + 'warehousing for brands across the region. Its buyers read in English '
-      + 'and Arabic and compare rates before they call.',
+      'Niche Cape is the logistics division of Niche Marketing Management: '
+      + 'air, sea and land freight, customs clearance and warehousing. Its '
+      + 'buyers read in English and Arabic, and compare rates before they ever '
+      + 'pick up the phone.',
     story:
-      'A hand-built GSAP site with a full English and Arabic interface. Each service - air and sea freight, '
-      + 'land transport, customs, warehousing, packaging - gets its own page, '
-      + 'and a match-rates call to action sits in the navigation so the '
-      + 'quote request is never more than one click away.',
+      'Hand-built in HTML, CSS and GSAP with a full English and Arabic '
+      + 'interface, including right-to-left layouts. Each service has its own '
+      + 'page, and a ‘match rates’ quote request sits in the navigation, so a '
+      + 'lead is never more than one click away.',
   },
 ]
 

@@ -10,8 +10,8 @@ import { projects } from '../data/projects.js'
 import { play } from './sound.js'
 import { initPreview } from './preview.js'
 
-export const categoryOf = (p) =>
-  p.stack.includes('Shopify') ? 'Shopify' : p.stack.includes('Webflow') ? 'Webflow' : 'Custom build'
+export const categoryOf = (p) => p.category ||
+  (p.stack.includes('Shopify') ? 'Shopify' : p.stack.includes('Webflow') ? 'Webflow' : 'Custom build')
 
 export const hostOf = (url) => { try { return new URL(url).host.replace(/^www\./, '') } catch { return url } }
 

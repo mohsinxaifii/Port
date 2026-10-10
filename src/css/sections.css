@@ -665,3 +665,73 @@
 .enquiry__foot .btn:disabled { opacity: .5; cursor: progress; }
 .enquiry__status { font-size: var(--fs-sm); color: var(--ink-2); }
 @media (max-width: 700px) { .enquiry__grid { grid-template-columns: 1fr; } }
+
+/* ---------- system block (case studies of back-office work) ----------
+   Always dark, whatever the theme: it reads as a console, not a page. */
+.sys {
+  --sys-ink: #F1F0E8; --sys-dim: #8C8A81; --sys-line: rgba(241, 240, 232, .14); --sys-card: #1A1A17;
+  display: grid; gap: clamp(32px, 4vw, 56px);
+  margin-bottom: var(--s9); padding: clamp(24px, 4vw, 64px);
+  border-radius: calc(var(--radius) + 8px);
+  background: #0D0D0B; color: var(--sys-ink);
+}
+.sys .label { color: var(--sys-dim); }
+.sys__head { display: grid; gap: var(--s3); max-width: 60ch; }
+.sys__title { font-size: clamp(30px, 3.6vw, 56px); font-weight: 500; letter-spacing: -.045em; line-height: 1; }
+.sys__intro { color: var(--sys-dim); font-size: var(--fs-lg); line-height: 1.4; }
+
+.sys__lanes { display: grid; gap: var(--s4); }
+.lane {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: var(--gap); align-items: center;
+  padding: var(--s5); border-radius: var(--radius); background: var(--sys-card);
+  box-shadow: inset 0 0 0 1px var(--sys-line);
+}
+.lane__meta { display: grid; gap: var(--s2); }
+.lane__meta .label { color: var(--accent); }
+.lane__meta p { color: var(--sys-dim); font-size: var(--fs-sm); line-height: 1.45; }
+.lane__flow { display: flex; align-items: stretch; margin: 0; padding: 0; list-style: none; }
+.node {
+  flex: 1 1 0; min-width: 0; display: grid; align-content: start; gap: 6px;
+  padding: 14px 16px; border-radius: 12px;
+  background: #0D0D0B; box-shadow: inset 0 0 0 1px var(--sys-line);
+}
+.node b { font-weight: 500; font-size: 15px; letter-spacing: -.01em; }
+.node span { font-family: var(--font-mono); font-size: 10.5px; line-height: 1.45; color: var(--sys-dim); text-transform: uppercase; letter-spacing: .03em; }
+.node--end { background: var(--accent); color: #0D0D0B; box-shadow: none; }
+.node--end span { color: rgba(13, 13, 11, .65); }
+/* A wire is a hairline with a lime packet running along it. */
+.wire { position: relative; flex: 0 0 clamp(18px, 2.4vw, 40px); align-self: center; height: 2px; background: var(--sys-line); }
+.wire i {
+  position: absolute; top: 50%; left: 0; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 12px var(--accent);
+  animation: packet 1.6s linear infinite; animation-delay: var(--d, 0s);
+}
+@keyframes packet { from { left: 0; opacity: 0; } 15%, 85% { opacity: 1; } to { left: 100%; opacity: 0; } }
+
+.sys__split { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: var(--gap); align-items: start; }
+.term { border-radius: var(--radius); background: #050504; box-shadow: inset 0 0 0 1px var(--sys-line); overflow: hidden; }
+.term__bar { display: flex; align-items: center; gap: var(--s3); padding: 10px 14px; border-bottom: 1px solid var(--sys-line); font-family: var(--font-mono); font-size: 11px; color: var(--sys-dim); }
+.term__dots { display: flex; gap: 6px; }
+.term__dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--sys-line); }
+.term__lines { display: grid; align-content: end; gap: 4px; height: 260px; margin: 0; padding: 14px 16px; list-style: none; overflow: hidden; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; }
+.term__line { color: var(--sys-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; animation: term-in .4s var(--ease); }
+.term__line--warn { color: #FFB86B; }
+.term__line--ok { color: var(--accent); }
+.term__t { color: var(--sys-dim); margin-right: 10px; }
+@keyframes term-in { from { opacity: 0; transform: translateY(6px); } }
+.sys__problems { display: grid; gap: var(--s2); margin: 0; padding: 0; list-style: none; }
+.sys__problems li { display: grid; gap: 4px; padding: 14px 16px; border-radius: 12px; background: var(--sys-card); box-shadow: inset 0 0 0 1px var(--sys-line); }
+.sys__problems b { font-weight: 500; }
+.sys__problems p { color: var(--sys-dim); font-size: var(--fs-sm); line-height: 1.45; }
+
+@media (max-width: 900px) {
+  .lane { grid-template-columns: 1fr; }
+  .sys__split { grid-template-columns: 1fr; }
+  /* Phones: the flow runs top to bottom, packets travel down. */
+  .lane__flow { flex-direction: column; }
+  .wire { flex-basis: 22px; width: 2px; height: auto; align-self: center; }
+  .wire i { left: 50%; top: 0; margin: -4px 0 0 -4px; animation-name: packet-down; }
+  @keyframes packet-down { from { top: 0; opacity: 0; } 15%, 85% { opacity: 1; } to { top: 100%; opacity: 0; } }
+  .term__lines { height: 220px; font-size: 11px; }
+}
+@media (prefers-reduced-motion: reduce) { .wire i { display: none; } }

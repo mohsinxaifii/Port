@@ -10,6 +10,7 @@ import { projects } from '../data/projects.js'
 import { categoryOf, browserFrame, hostOf as host } from './work.js'
 import { stopScroll, startScroll } from './scroll.js'
 import { play } from './sound.js'
+import { systemHTML, startSystem } from './system.js'
 
 let el
 let currentIdx = -1
@@ -38,8 +39,8 @@ function render(i) {
           <div><dt class="label">Client</dt><dd>${esc(p.client)}</dd></div>
           <div><dt class="label">Type</dt><dd>${esc(categoryOf(p))}${p.market ? ` · ${esc(p.market)}` : ''}</dd></div>
           <div><dt class="label">Stack</dt><dd>${p.stack.map(esc).join(', ')}</dd></div>
-          ${p.live === false
-            ? '<div><dt class="label">Status</dt><dd>Designed &amp; built, not live yet</dd></div>'
+          ${p.status || p.live === false
+            ? `<div><dt class="label">Status</dt><dd>${esc(p.status || 'Designed & built, not live yet')}</dd></div>`
             : `<div><dt class="label">Live site</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(host(p.url))} ↗</a></dd></div>`}
         </dl>
       </header>
@@ -51,12 +52,14 @@ function render(i) {
         <div class="case__text">
           ${p.background ? `<h3 class="label">Background</h3><p>${esc(p.background)}</p>` : ''}
           ${p.story ? `<h3 class="label">What I built</h3><p>${esc(p.story)}</p>` : ''}
-          ${p.live === false ? '' : `<div><a class="btn btn--ink" href="${esc(p.url)}" target="_blank" rel="noopener">Visit the live site ↗</a></div>`}
+          ${p.status || p.live === false ? '' : `<div><a class="btn btn--ink" href="${esc(p.url)}" target="_blank" rel="noopener">Visit the live site ↗</a></div>`}
         </div>
       </div>
 
+      ${p.system ? systemHTML(p.system) : ''}
+
       <div class="case__gallery">
-        ${p.gallery.map((src, g) => `<img src="${src}" alt="${esc(p.title)}, section ${g + 1} of the live site" loading="lazy" decoding="async">`).join('')}
+        ${p.gallery.map((src, g) => `<img src="${src}" alt="${esc(p.title)}, image ${g + 1}" loading="lazy" decoding="async">`).join('')}
       </div>
     </div>
 
@@ -67,6 +70,7 @@ function render(i) {
       </span>
     </button>`
   currentIdx = i
+  startSystem(el)
 }
 
 const baseUrl = () => location.pathname + location.search

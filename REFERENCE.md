@@ -1,6 +1,10 @@
 # Reference assets
 
-Everything under `public/ref/` was downloaded from
+> Moved out of `public/` to `legacy-assets/` so it is no longer copied into
+> the deployed site. Only the old unbuilt pages (about.html, work.html,
+> legal.html) pointed at it.
+
+Everything under `legacy-assets/ref/` (formerly `public/ref/`) was downloaded from
 [niccolomiranda.com](https://www.niccolomiranda.com/) — 216 files, ~28 MB.
 It is wired into the site so the layout renders at full density while you
 work, and it is **all placeholder art**. None of it is yours to publish.
