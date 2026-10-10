@@ -45,22 +45,21 @@ function render(i) {
         </dl>
       </header>
 
-      <figure class="case__hero">${browserFrame(p, p.thumb, true)}</figure>
+      ${p.system ? '' : `<figure class="case__hero">${browserFrame(p, p.thumb, true)}</figure>`}
 
       <div class="case__body">
         <p class="case__lede">${esc(p.description)}</p>
         <div class="case__text">
           ${p.background ? `<h3 class="label">Background</h3><p>${esc(p.background)}</p>` : ''}
-          ${p.story ? `<h3 class="label">What I built</h3><p>${esc(p.story)}</p>` : ''}
+          ${p.story && !p.system ? `<h3 class="label">What I built</h3><p>${esc(p.story)}</p>` : ''}
           ${p.status || p.live === false ? '' : `<div><a class="btn btn--ink" href="${esc(p.url)}" target="_blank" rel="noopener">Visit the live site ↗</a></div>`}
         </div>
       </div>
 
-      ${p.system ? systemHTML(p.system) : ''}
-
+      ${p.system ? systemHTML(p.system) : `
       <div class="case__gallery">
         ${p.gallery.map((src, g) => `<img src="${src}" alt="${esc(p.title)}, image ${g + 1}" loading="lazy" decoding="async">`).join('')}
-      </div>
+      </div>`}
     </div>
 
     <button class="case__next" type="button" data-case-step="1">

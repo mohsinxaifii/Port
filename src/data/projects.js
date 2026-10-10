@@ -239,9 +239,10 @@ export const projects = [
     category: 'Systems',
     url: 'https://zinara.in',
     status: 'Internal system, runs the zinara.in store',
-    // Renders the animated "Under the hood" block from src/modules/system.js.
+    // Its case page is the live "Under the hood" block (src/modules/system.js)
+    // instead of a hero image + gallery, so only the card cover is needed.
     system: 'zinara',
-    ...shots('zinara-back-office'),
+    ...shots('zinara-back-office', 0),
     frame: false,
     thumbAlt: 'Zinara Back Office - Google Sheet to Laravel queue to Shopify Admin API, as a live system diagram',
     logo: null,
