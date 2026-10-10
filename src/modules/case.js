@@ -38,7 +38,9 @@ function render(i) {
           <div><dt class="label">Client</dt><dd>${esc(p.client)}</dd></div>
           <div><dt class="label">Type</dt><dd>${esc(categoryOf(p))}${p.market ? ` · ${esc(p.market)}` : ''}</dd></div>
           <div><dt class="label">Stack</dt><dd>${p.stack.map(esc).join(', ')}</dd></div>
-          <div><dt class="label">Live site</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(host(p.url))} ↗</a></dd></div>
+          ${p.live === false
+            ? '<div><dt class="label">Status</dt><dd>Designed &amp; built, not live yet</dd></div>'
+            : `<div><dt class="label">Live site</dt><dd><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(host(p.url))} ↗</a></dd></div>`}
         </dl>
       </header>
 
@@ -49,7 +51,7 @@ function render(i) {
         <div class="case__text">
           ${p.background ? `<h3 class="label">Background</h3><p>${esc(p.background)}</p>` : ''}
           ${p.story ? `<h3 class="label">What I built</h3><p>${esc(p.story)}</p>` : ''}
-          <div><a class="btn btn--ink" href="${esc(p.url)}" target="_blank" rel="noopener">Visit the live site ↗</a></div>
+          ${p.live === false ? '' : `<div><a class="btn btn--ink" href="${esc(p.url)}" target="_blank" rel="noopener">Visit the live site ↗</a></div>`}
         </div>
       </div>
 

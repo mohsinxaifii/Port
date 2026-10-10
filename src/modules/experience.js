@@ -128,19 +128,27 @@ export function initExperience() {
   // hidden. The pass underneath shrinks and dims as the next one covers it.
   mm.add('(max-width: 900px)', () => {
     const cards = [...track.querySelectorAll('.pass')]
-    const place = () => cards.forEach((card, i) => {
-      const top = 76 + i * 10
-      card.style.top = `${Math.min(top, innerHeight - card.offsetHeight - 16)}px`
-    })
+    const topOf = (i) => Math.min(76 + i * 10, innerHeight - cards[i].offsetHeight - 16)
+    const place = () => cards.forEach((card, i) => { card.style.top = `${topOf(i)}px` })
     place()
     addEventListener('resize', place)
     if (!reducedMotion) {
+      // Dim only while the next pass is actually sliding over this one:
+      // from when its top meets this pass's bottom edge until it pins.
+      // The dim is an overlay opacity (--dim), not a filter - filters on
+      // big sticky cards stutter on phones.
       cards.slice(0, -1).forEach((card, i) => {
-        gsap.to(card, {
-          scale: 0.9,
-          filter: 'brightness(.6)',
+        gsap.fromTo(card, { scale: 1, '--dim': 0 }, {
+          scale: 0.92,
+          '--dim': 0.5,
           ease: 'none',
-          scrollTrigger: { trigger: cards[i + 1], start: 'top bottom', end: 'top 30%', scrub: true },
+          scrollTrigger: {
+            trigger: cards[i + 1],
+            start: () => `top ${topOf(i) + card.offsetHeight}px`,
+            end: () => `top ${topOf(i + 1)}px`,
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
         })
       })
     }

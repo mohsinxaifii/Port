@@ -28,7 +28,35 @@ export function initFloaters() {
     </a>`
   mount.querySelectorAll('.floater').forEach((a) => a.addEventListener('mouseenter', () => play('hover')))
 
+  initVisibility(mount)
   initPartnerBadge()
+}
+
+/* Keep the capsule off content. Wide desktops park it in the empty right
+   margin (CSS). Everywhere it steps aside on the hero, which has its own
+   buttons, and once Contact is on screen, whose tiles do the same job.
+   Below 1400px, where there's no margin to park in, it also hides while
+   scrolling down (reading) and comes back on scroll up. */
+function initVisibility(el) {
+  const wide = matchMedia('(min-width: 1400px)')
+  const reasons = new Set()
+  const sync = () => el.classList.toggle('is-off', reasons.size > 0)
+  const flag = (key, on) => { reasons[on ? 'add' : 'delete'](key); sync() }
+
+  new IntersectionObserver(([e]) => flag('hero', e.intersectionRatio > 0.35), { threshold: [0, 0.35, 1] })
+    .observe($('#hero'))
+  // Contact counts once its top passes 60% of the way up the screen.
+  new IntersectionObserver(([e]) => flag('contact', e.isIntersecting), { rootMargin: '0px 0px -40% 0px' })
+    .observe($('#contact'))
+
+  let lastY = scrollY
+  addEventListener('scroll', () => {
+    const y = scrollY
+    if (Math.abs(y - lastY) < 8) return
+    flag('reading', !wide.matches && y > lastY)
+    lastY = y
+  }, { passive: true })
+  wide.addEventListener('change', () => flag('reading', false))
 }
 
 /* The badge sits on the About/Work seam. While it crosses the screen it

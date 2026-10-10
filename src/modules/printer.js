@@ -41,13 +41,13 @@ function receiptHTML() {
   const line = (l, r, cls = '') => `<div class="receipt__line ${cls}"><span>${l}</span><span>${r}</span></div>`
   const rule = '<hr class="receipt__rule">'
   const items = [
-    ['1x Shopify engineering', '✓'],
-    ['1x ERP, built solo', '✓'],
-    ['1x AI assistants', '✓'],
-    ['18x Live storefronts', '✓'],
-    ['8x Conversion lift', '✓'],
-    ['3+ Yrs experience', '✓'],
-    ['∞ Coffee', '✓'],
+    ['Shopify engineering', '✓'],
+    ['ERPs + inventory systems', '✓'],
+    ['AI assistants', '✓'],
+    ['A shelf of live storefronts', '✓'],
+    ['Conversion lifts', '✓'],
+    ['Commerce, end to end', '✓'],
+    ['Coffee, unlimited', '✓'],
   ]
   return `
     <div class="receipt__center">
@@ -58,7 +58,7 @@ function receiptHTML() {
     </div>
     ${rule}
     ${line(`Date ${date}`, `Time ${time}`)}
-    ${line('Order #0018', 'Cashier: Mohsin')}
+    ${line('Order #DXB-MM', 'Cashier: Mohsin')}
     ${rule}
     ${items.map(([l, r]) => line(l, r)).join('')}
     ${rule}

@@ -133,9 +133,7 @@ export async function initHero(text, textAr) {
       c.direction = arabic ? 'rtl' : 'ltr'
       c.textAlign = 'left'
     }
-    // Portrait screens stack the Latin name (MOH / SIN) so it fills the
-    // tall hero instead of a thin strip across it.
-    const lines = !arabic && H > W * 0.75 ? [word.slice(0, Math.ceil(word.length / 2)), word.slice(Math.ceil(word.length / 2))] : [word]
+    const lines = [word]
     const LEAD = 0.9
 
     setFont(100)
@@ -143,7 +141,8 @@ export async function initHero(text, textAr) {
     const capH = Math.max(...ms.map((m) => m.actualBoundingBoxAscent + m.actualBoundingBoxDescent))
     const inkW = Math.max(...ms.map((m) => m.actualBoundingBoxLeft + m.actualBoundingBoxRight))
     const inkH = capH + (lines.length - 1) * capH * (1 + (1 - LEAD))
-    const size = Math.min((100 * (W - pad * 2)) / inkW, (100 * H * (arabic ? 0.9 : 0.8)) / inkH)
+    // Arabic's tall ascenders and deep descenders need more air than caps.
+    const size = Math.min((100 * (W - pad * 2)) / inkW, (100 * H * (arabic ? 0.72 : 0.8)) / inkH)
     setFont(size)
 
     c.clearRect(0, 0, W, H)

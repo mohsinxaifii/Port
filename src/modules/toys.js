@@ -1,7 +1,8 @@
 /* ==================================================================
    TOYS - the small stuff: static fills, local clock, copy-email,
    the runaway "Hire me" button, velocity marquee, light-switch cord
-   and the gravity easter egg (type "mohsin" or the Konami code).
+   and the easter eggs: type "mohsin" (or tap the logo five times) for
+   the tower game, the Konami code for gravity.
    ================================================================== */
 
 import { gsap } from 'gsap'
@@ -11,6 +12,7 @@ import { play } from './sound.js'
 import { toast } from './toast.js'
 import { toggleTheme } from './prefs.js'
 import { lenis } from './scroll.js'
+import { openTower } from './tower.js'
 
 export function initToys() {
   fillStatic()
@@ -204,12 +206,24 @@ function initEasterEgg() {
   let typed = ''
   let busy = false
 
+  // Phones have no keyboard: five quick taps on the logo open the game too.
+  let taps = []
+  $('.nav__logo').addEventListener('click', () => {
+    const now = performance.now()
+    taps = [...taps.filter((t) => now - t < 2000), now]
+    if (taps.length >= 5 && isChaos()) { taps = []; openTower() }
+  })
+
   addEventListener('keydown', (e) => {
     if (e.metaKey || e.ctrlKey || e.altKey) return
+    // Typing in the form shouldn't set anything off.
+    if (e.target.closest?.('input, textarea, select, [contenteditable]')) return
     keys = [...keys, e.key].slice(-konami.length)
     typed = (typed + (e.key.length === 1 ? e.key.toLowerCase() : '')).slice(-6)
-    if (typed === 'mohsin' || keys.join() === konami.join()) {
+    if (typed === 'mohsin') {
       typed = ''
+      if (isChaos()) openTower()
+    } else if (keys.join() === konami.join()) {
       keys = []
       gravity()
     }
@@ -220,7 +234,7 @@ function initEasterEgg() {
     busy = true
     play('chaos')
     toast('gravity.exe has stopped working', 3000)
-    const targets = $$('.h2, .card, .pass, .odo, .sticker, .hero__pitch, .hero__meta, .btn, .row, .skills__group, .printer, .contact__title, .email')
+    const targets = $$('.h2, .card, .pass, .impact__line, .sticker, .hero__pitch, .hero__meta, .btn, .row, .skills__group, .printer, .contact__title, .email')
       .filter((el) => {
         const r = el.getBoundingClientRect()
         return r.bottom > 0 && r.top < innerHeight && r.width > 0

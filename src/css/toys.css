@@ -222,3 +222,48 @@
 }
 @keyframes tap { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.4); opacity: 0; } }
 [data-mode="recruiter"] .tap { display: none; }
+
+/* ---------- tower game (type "mohsin") ---------- */
+.tower-overlay {
+  position: fixed; inset: 0; z-index: 180;
+  display: grid; place-items: center; padding: var(--s4);
+  background: rgba(13, 13, 11, .86);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity .4s var(--ease);
+}
+.tower-overlay.is-on { opacity: 1; }
+.tower {
+  position: relative;
+  display: grid; gap: 10px;
+  width: min(420px, 100%);
+  padding: 16px;
+  border-radius: 20px;
+  background: #1A1A17;
+  box-shadow: inset 0 0 0 1px rgba(241, 240, 232, .08), 0 40px 80px -30px #000;
+  transform: translateY(16px) scale(.97); transition: transform .5s var(--ease-back);
+}
+.tower-overlay.is-on .tower { transform: none; }
+.tower .label { color: #8C8A81; }
+.tower .label b { color: #F1F0E8; font-weight: 600; }
+.tower__hud { display: flex; justify-content: space-between; align-items: baseline; padding-right: 36px; }
+.tower__hud .ar { color: #F1F0E8; font-size: 17px; margin-left: 4px; }
+.tower__canvas {
+  width: 100%; aspect-ratio: 2 / 3; max-height: 68vh;
+  border-radius: 12px; cursor: pointer; touch-action: manipulation;
+}
+.tower__hint { text-align: center; }
+.tower__over {
+  position: absolute; inset: 52px 16px auto; display: grid; justify-items: center; gap: 8px;
+  padding: 24px 18px; border-radius: 14px; text-align: center;
+  background: rgba(13, 13, 11, .9); color: #F1F0E8;
+}
+.tower__over[hidden] { display: none; }
+.tower__big { font-size: 44px; font-weight: 600; letter-spacing: -.05em; line-height: 1; }
+.tower__sub { color: #A6A59C; max-width: 30ch; }
+.tower__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px; }
+.tower__actions .btn--line { color: #F1F0E8; box-shadow: inset 0 0 0 1px rgba(241, 240, 232, .3); }
+.tower__x {
+  position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%;
+  color: #F1F0E8; box-shadow: inset 0 0 0 1px rgba(241, 240, 232, .2);
+}
+.tower__x:hover { background: #F1F0E8; color: #0D0D0B; }

@@ -70,6 +70,7 @@ export function initWork() {
 
   initFilters(archive)
   initCardScrub()
+  initReel()
 
   const rows = $$('.row')
   rows.forEach((row) => row.addEventListener('mouseenter', () => play('hover')))
@@ -88,6 +89,25 @@ export function initWork() {
       })
     }
   }
+}
+
+/* Hero reel (phones): two slow strips of project covers sliding in
+   opposite directions. Each list is doubled so the CSS loop can slide
+   exactly half its width; the copies are hidden from keyboards. */
+function initReel() {
+  const reel = $('[data-reel]')
+  if (!reel) return
+  const tiles = (list) => list.map((p) => `
+    <a class="reel__tile" href="#p-${p.slug}" data-open="${p.slug}" aria-label="${esc(p.title)}">
+      <img src="${p.thumb}" alt="" loading="lazy" decoding="async">
+      <span class="reel__name">${esc(p.title)}</span>
+    </a>`).join('')
+  const track = (list, cls) => {
+    const t = tiles(list)
+    return `<div class="reel__track ${cls}">${t}${t.replace(/<a /g, '<a tabindex="-1" aria-hidden="true" ')}</div>`
+  }
+  const half = Math.ceil(projects.length / 2)
+  reel.innerHTML = track(projects.slice(0, half), '') + track(projects.slice(half), 'reel__track--back')
 }
 
 /* Phones have no hover, so the featured screenshots move with the scroll

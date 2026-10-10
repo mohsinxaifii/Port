@@ -102,7 +102,7 @@ export const skills = [
     items: [
       'JavaScript (ES6+)', 'React', 'HTML5', 'CSS3', 'AJAX', 'Node.js',
       'REST APIs', 'Webhooks', 'MySQL', 'Database Design', 'System Architecture',
-      'Internal Tools', 'ERP Systems',
+      'Internal Tools', 'ERP Systems', 'Inventory Systems',
     ],
   },
   {
@@ -152,6 +152,7 @@ const SHORT = {
   'Database Design': 'DB Design',
   'System Architecture': 'Architecture',
   'ERP Systems': 'ERP',
+  'Inventory Systems': 'Inventory',
   'Prompt Engineering': 'Prompting',
   'LLM Integration': 'LLMs',
   'Workflow Automation': 'Automation',

@@ -6,12 +6,14 @@
    every dev and build run, so adding or removing an entry here is all
    it takes.
 
-   Order is the pitch: Shopify first (featured + archive), then custom
-   builds, then the Dubai client work last since it isn't Shopify.
+   Order is hand-picked and is the order the site shows. The first four
+   are featured.
 
    `featured: true` puts it on the index (the first four fill the lead
    block and the closing strip).
    `market` (optional) tags work for a client outside India, e.g. Dubai.
+   `live: false` hides the outbound links for work that isn't on its
+   domain yet (`url` still feeds the browser bar).
    `upcoming: true` puts it in the "Upcoming Next" slot (pick one).
 
    Images live in public/work/<slug>/: thumb.jpg is 5:2 (card + case
@@ -42,8 +44,8 @@ export const projects = [
     role: ROLE,
     stack: SHOPIFY,
     url: 'https://thebikanerikitchen.com',
-    ...shots('the-bikaneri-kitchen'),
-    thumbAlt: 'The Bikaneri Kitchen - Paraat Bhujia tin on a woven basket',
+    ...shots('the-bikaneri-kitchen', 4),
+    thumbAlt: 'The Bikaneri Kitchen - campaign portraits with the bhujia thali and red tin',
     logo: null,
     description:
       'A heritage storefront for Bikaneri bhujia - a story-led Shopify build '
@@ -60,6 +62,75 @@ export const projects = [
       + 'each get their own editorial plate with add-to-cart built in - '
       + 'alongside The Bhandaar shop, a Rituals journal, the Archive and '
       + 'Behind the Craft profiles of the karigars who make it.',
+  },
+  {
+    slug: 'solethreads',
+    title: 'Solethreads',
+    client: 'Solethreads',
+    year: null,
+    isNew: true,
+    featured: true,
+    upcoming: false,
+    role: 'Research, design & development',
+    stack: SHOPIFY,
+    // This design isn't on the domain yet, so the case study doesn't link out.
+    live: false,
+    url: 'https://solethreads.com',
+    ...shots('solethreads'),
+    thumbAlt: 'Solethreads - "We bring in the sneaker revolution" campaign section',
+    logo: null,
+    description:
+      'A full revamp of an Indian footwear brand - sneakers, slides and '
+      + 'clogs - with a loud, streetwear-first Shopify store built mobile-first.',
+    background:
+      'Solethreads sells everything from everyday slides to limited sneaker '
+      + 'drops, across several sub-brands like Gelatoe and Marshmellow. The old '
+      + 'store treated them all the same, so the drops had no hype and the '
+      + 'comfort lines had no personality. I led the research, then designed '
+      + 'and built the whole thing.',
+    story:
+      'Designed mobile-first at 375px, then adapted for desktop: a homepage '
+      + 'with "What’s Hot" rails and drop countdowns, a sneaker landing page '
+      + 'split into high tops, low tops and canvas, and a dedicated world for '
+      + 'each comfort line - Gelatoe gets melting-ice-cream drips. Behind it: '
+      + 'filterable listings, a size guide, product pages with care '
+      + 'instructions and reviews, a community page and the full account area.',
+  },
+  {
+    slug: 'kachori-story',
+    title: 'The Kachori Story',
+    client: 'The Kachori Story',
+    year: null,
+    isNew: false,
+    featured: true,
+    upcoming: false,
+    role: ROLE,
+    stack: ['React', 'Vite', 'JavaScript', 'CSS animation'],
+    url: 'https://kachoristory.com',
+    ...shots('kachori-story'),
+    // Illustrated cover: people round a table sharing kachoris. Cropped
+    // from 30% down so the headline and the plate both stay in frame.
+    thumb: asset('/work/kachori-story/cover.jpg'),
+    thumbPosition: '50% 30%',
+    thumbAlt: 'The Kachori Story illustration: "From the heart of the streets to your table", a row of people sharing kachoris, chai and samosas',
+    logo: null,
+    description:
+      'A custom-built site for a Gurugram street-food brand - an appetite-first '
+      + 'menu that carries the brand’s hand-drawn, playful identity from the '
+      + 'counter onto the screen.',
+    background:
+      'The Kachori Story serves Rajasthani and North Indian street food - '
+      + 'kachoris, chaat, thalis, sharbats - out of Gurugram, with a franchise '
+      + 'programme looking to take it further. The brand already had a loud, '
+      + 'illustrated personality, and a stock template would have flattened it '
+      + 'into another restaurant listing.',
+    story:
+      'Designed and built from scratch in React on Vite rather than on a theme, '
+      + 'so every section could be art-directed: full-bleed food, a yellow-and-'
+      + 'black menu that reads like the packaging, and the street-scene '
+      + 'illustration that closes the page. Recommended dishes, the full menu, '
+      + 'the brand story and a dedicated franchise route sit behind a single '
+      + 'navigation, turning the site into both a menu and a lead channel.',
   },
   {
     slug: 'the-trost',
@@ -97,7 +168,7 @@ export const projects = [
     client: 'Rasayanam',
     year: null,
     isNew: false,
-    featured: true,
+    featured: false,
     upcoming: false,
     role: ROLE,
     stack: SHOPIFY,
@@ -121,18 +192,47 @@ export const projects = [
       + 'Verify Order page and review-led social proof run through every page.',
   },
   {
+    slug: 'zinara',
+    title: 'Zinara',
+    client: 'Zinara',
+    year: null,
+    isNew: false,
+    featured: false,
+    upcoming: false,
+    role: ROLE,
+    stack: SHOPIFY,
+    url: 'https://zinara.in',
+    ...shots('zinara'),
+    thumbAlt: 'Zinara - Double Take, two stones in 18K gold vermeil',
+    logo: null,
+    description:
+      'A soft, editorial Shopify store for a lab-grown diamond jewellery brand - '
+      + 'certified stones, everyday pieces, easy to shop.',
+    background:
+      'Zinara makes lab-grown diamond jewellery certified by IGI and SGL and '
+      + 'hallmarked by BIS, designed to be worn every day. Buying diamonds '
+      + 'online asks for a lot of trust, so certification had to sit as close '
+      + 'to the product as the price.',
+    story:
+      'Built on Shopify in blush and wine, with campaign heroes, a shop-by-'
+      + 'category row and filterable collection pages for rings, earrings, '
+      + 'pendants and bracelets. The Zinara Experience strip - certified '
+      + 'diamonds, lifetime exchange, insured shipping - sits under the fold '
+      + 'where hesitation usually starts.',
+  },
+  {
     slug: 'beyond-beyond',
     title: 'Beyond Beyond',
     client: 'Beyond Beyond Skincare',
     year: null,
     isNew: false,
-    featured: true,
+    featured: false,
     upcoming: false,
     role: ROLE,
     stack: SHOPIFY,
     url: 'https://beyondbeyond.co.in',
     ...shots('beyond-beyond'),
-    thumbAlt: 'Beyond Beyond - All-Day Comfort NAD+ day cream',
+    thumbAlt: 'Beyond Beyond - clean clinical skincare, About hero',
     logo: null,
     description:
       'The launch storefront for India’s first NAD+ skincare line - clean, '
@@ -150,33 +250,92 @@ export const projects = [
       + 'ingredient questions before they are asked.',
   },
   {
-    slug: 'zinara',
-    title: 'Zinara',
-    client: 'Zinara',
+    slug: 'design-dimensions',
+    title: 'Design Dimensions',
+    client: 'Design Dimensions',
     year: null,
     isNew: false,
     featured: false,
     upcoming: false,
     role: ROLE,
-    stack: SHOPIFY,
-    url: 'https://zinara.in',
-    ...shots('zinara'),
-    thumbAlt: 'Zinara - Double Take lab-grown diamond campaign',
+    stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
+    url: 'https://designdimensions.in',
+    ...shots('design-dimensions', 2),
+    thumbAlt: 'Design Dimensions - homepage with Snack Factory packaging',
     logo: null,
     description:
-      'A soft, editorial Shopify store for a lab-grown diamond jewellery brand - '
-      + 'certified stones, everyday pieces, easy to shop.',
+      'A holding site for a branding and packaging studio that still shows the '
+      + 'work - a portfolio carousel carrying the studio while its full site is rebuilt.',
     background:
-      'Zinara makes lab-grown diamond jewellery certified by IGI and SGL and '
-      + 'hallmarked by BIS, designed to be worn every day. Buying diamonds '
-      + 'online asks for a lot of trust, so certification had to sit as close '
-      + 'to the product as the price.',
+      'Design Dimensions is a branding, packaging and space-design studio with '
+      + 'clients from Suryagarh to CATCH. While its full site is rebuilt, '
+      + 'a bare “coming soon” page would have hidden the studio’s best asset: '
+      + 'the portfolio.',
     story:
-      'Built on Shopify in blush and wine, with campaign heroes, a shop-by-'
-      + 'category row and filterable collection pages for rings, earrings, '
-      + 'pendants and bracelets. The Zinara Experience strip - certified '
-      + 'diamonds, lifetime exchange, insured shipping - sits under the fold '
-      + 'where hesitation usually starts.',
+      'Hand-built in HTML, CSS and GSAP: an animated preloader, a looping '
+      + 'discipline ticker and a “Design is, As Design Does” headline, over a '
+      + 'running carousel of case cards - identity, packaging, campaigns and '
+      + 'spaces - each with a one-line brief - a holding page that is still a '
+      + 'real portfolio.',
+  },
+  {
+    slug: 'twisty-designs',
+    title: 'Twisty Designs',
+    client: 'Twisty Designs',
+    year: null,
+    isNew: false,
+    featured: false,
+    upcoming: true,
+    role: ROLE,
+    stack: ['Webflow', 'JavaScript', 'Interactions'],
+    url: 'https://www.twistydesigns.co',
+    ...shots('twisty-designs'),
+    thumbAlt: 'Twisty Designs - See it, want it, buy it',
+    logo: null,
+    description:
+      'A kinetic Webflow site for an e-commerce design agency working across '
+      + 'India, Germany and the USA - loud type, live marquees, zero boredom.',
+    background:
+      'Twisty helps e-commerce brands sell with product personalisation, '
+      + 'visualisation, branding and performance creative. An agency that '
+      + 'promises to make other brands’ products irresistible needed a site '
+      + 'that proved it in the first scroll.',
+    story:
+      'Built in Webflow on a black-and-lime system with oversized condensed '
+      + 'type, scrolling marquees and a “See it, want it, buy it!” voice that '
+      + 'runs through the copy. Service pages, 150-plus portfolio projects, the '
+      + 'team of designers who code and a consultation booking flow each get '
+      + 'their own section, with a call to action never far away.',
+  },
+  {
+    slug: 'niche-star-advertising',
+    title: 'Niche Star',
+    client: 'Niche Star Advertising',
+    year: null,
+    market: 'Dubai, UAE',
+    isNew: false,
+    featured: false,
+    upcoming: false,
+    role: ROLE,
+    stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
+    url: 'https://nichestaradvertising.com',
+    ...shots('niche-star-advertising'),
+    thumbAlt: 'Niche Star - Advertising, events, visual merchandising and retail displays',
+    logo: null,
+    description:
+      'A bold, motion-led site for the production arm of Niche Marketing '
+      + 'Management - displays, events, fabrication and print.',
+    background:
+      'Niche Star builds the physical side of advertising - point-of-sale '
+      + 'displays, gondola ends, exhibition branding, signage and large-format '
+      + 'print - from its own 4,000 sq ft facility. The site needed to sell '
+      + 'capability to brands and agencies at a glance.',
+    story:
+      'Hand-built with GSAP on a red-and-white system anchored by the brand’s '
+      + 'arrow mark, with heavy display type and scroll-driven reveals. A '
+      + 'services menu across eight disciplines, a video gallery of finished '
+      + 'work, a five-step process walkthrough and live Google reviews take a '
+      + 'visitor from “who are you” to “contact us” in one page.',
   },
   {
     slug: 'the-casabella',
@@ -236,98 +395,37 @@ export const projects = [
       + 'the main shop.',
   },
   {
-    slug: 'kachori-story',
-    title: 'The Kachori Story',
-    client: 'The Kachori Story',
+    slug: 'amino-forge',
+    title: 'Amino Forge',
+    client: 'Amino Forge',
     year: null,
-    isNew: false,
+    isNew: true,
     featured: false,
     upcoming: false,
-    role: ROLE,
-    stack: ['React', 'Vite', 'JavaScript', 'CSS animation'],
-    url: 'https://kachoristory.com',
-    ...shots('kachori-story'),
-    // Illustrated cover: people round a table sharing kachoris. Cropped
-    // from 30% down so the headline and the plate both stay in frame.
-    thumb: asset('/work/kachori-story/cover.jpg'),
-    thumbPosition: '50% 30%',
-    thumbAlt: 'The Kachori Story illustration: "From the heart of the streets to your table", a row of people sharing kachoris, chai and samosas',
+    role: 'Research, design & development',
+    stack: SHOPIFY,
+    // This design isn't on the domain yet, so the case study doesn't link out.
+    live: false,
+    url: 'https://aminoforge.in',
+    ...shots('amino-forge'),
+    // Composed presentation shots (several pages on a brand backdrop), so no browser bar.
+    frame: false,
+    thumbAlt: 'Amino Forge - AF 9 advance liposomal amino supplement',
     logo: null,
     description:
-      'A custom-built site for a Gurugram street-food brand - an appetite-first '
-      + 'menu that carries the brand’s hand-drawn, playful identity from the '
-      + 'counter onto the screen.',
+      'A science-led Shopify store for AF 9, pitched as India’s first '
+      + 'liposomal amino supplement.',
     background:
-      'The Kachori Story serves Rajasthani and North Indian street food - '
-      + 'kachoris, chaat, thalis, sharbats - out of Gurugram, with a franchise '
-      + 'programme looking to take it further. The brand already had a loud, '
-      + 'illustrated personality, and a stock template would have flattened it '
-      + 'into another restaurant listing.',
+      'Amino Forge launched with one product and a lot of science to explain. '
+      + 'Supplement buyers are sceptical, so the store had to make the '
+      + 'research approachable and put the founders and the formulation front '
+      + 'and centre, without reading like a lab report.',
     story:
-      'Designed and built from scratch in React on Vite rather than on a theme, '
-      + 'so every section could be art-directed: full-bleed food, a yellow-and-'
-      + 'black menu that reads like the packaging, and the street-scene '
-      + 'illustration that closes the page. Recommended dishes, the full menu, '
-      + 'the brand story and a dedicated franchise route sit behind a single '
-      + 'navigation, turning the site into both a menu and a lead channel.',
-  },
-  {
-    slug: 'twisty-designs',
-    title: 'Twisty Designs',
-    client: 'Twisty Designs',
-    year: null,
-    isNew: false,
-    featured: false,
-    upcoming: true,
-    role: ROLE,
-    stack: ['Webflow', 'JavaScript', 'Interactions'],
-    url: 'https://www.twistydesigns.co',
-    ...shots('twisty-designs'),
-    thumbAlt: 'Twisty Designs - See it, want it, buy it',
-    logo: null,
-    description:
-      'A kinetic Webflow site for an e-commerce design agency working across '
-      + 'India, Germany and the USA - loud type, live marquees, zero boredom.',
-    background:
-      'Twisty helps e-commerce brands sell with product personalisation, '
-      + 'visualisation, branding and performance creative. An agency that '
-      + 'promises to make other brands’ products irresistible needed a site '
-      + 'that proved it in the first scroll.',
-    story:
-      'Built in Webflow on a black-and-lime system with oversized condensed '
-      + 'type, scrolling marquees and a “See it, want it, buy it!” voice that '
-      + 'runs through the copy. Service pages, 150-plus portfolio projects, the '
-      + 'team of designers who code and a consultation booking flow each get '
-      + 'their own section, with a call to action never far away.',
-  },
-  {
-    slug: 'design-dimensions',
-    title: 'Design Dimensions',
-    client: 'Design Dimensions',
-    year: null,
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: ROLE,
-    stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
-    url: 'https://designdimensions.in',
-    ...shots('design-dimensions', 2),
-    thumbAlt: 'Design Dimensions - Design is, As Design Does',
-    logo: null,
-    description:
-      'A holding site for a branding and packaging studio that still shows the '
-      + 'work - a portfolio carousel carrying the studio while its full site is rebuilt.',
-    background:
-      'Design Dimensions is a branding, packaging and space-design studio with '
-      + 'clients from Suryagarh to CATCH. While its full site is rebuilt, '
-      + 'a bare “coming soon” page would have hidden the studio’s best asset: '
-      + 'the portfolio.',
-    story:
-      'Hand-built in HTML, CSS and GSAP: an animated preloader, a looping '
-      + 'discipline ticker and a “Design is, As Design Does” headline, over a '
-      + 'running carousel of case cards - identity, packaging, campaigns and '
-      + 'spaces - each with a one-line brief - a holding page that is still a '
-      + 'real portfolio.',
+      'Soft lavender and violet with a sunny yellow call to action. Our Story '
+      + 'introduces the founders and walks through "The Science Inside Amino '
+      + 'Forge" with plain-language benefit cards, then lands on the AF 9 '
+      + 'product reveal. A blog on amino acids and recovery and a categorised '
+      + 'FAQ handle the questions before they become support tickets.',
   },
   {
     slug: 'vivahnam',
@@ -359,34 +457,37 @@ export const projects = [
       + 'estimate. Planner consultations are booked straight from the page.',
   },
   {
-    slug: 'niche-star-advertising',
-    title: 'Niche Star',
-    client: 'Niche Star Advertising',
+    slug: 'echo-india',
+    title: 'ECHO India',
+    client: 'ECHO India',
     year: null,
-    market: 'Dubai, UAE',
-    isNew: false,
+    isNew: true,
     featured: false,
     upcoming: false,
-    role: ROLE,
-    stack: ['HTML', 'CSS', 'JavaScript', 'GSAP'],
-    url: 'https://nichestaradvertising.com',
-    ...shots('niche-star-advertising'),
-    thumbAlt: 'Niche Star - Advertising, events, visual merchandising and retail displays',
+    role: 'Research, design & development',
+    stack: ['UX research', 'Figma', 'WordPress'],
+    // This design isn't on the domain yet, so the case study doesn't link out.
+    live: false,
+    url: 'https://echoindia.in',
+    ...shots('echo-india'),
+    // Composed presentation shots (several pages on a brand backdrop), so no browser bar.
+    frame: false,
+    thumbAlt: 'ECHO India - Empowering communities with knowledge',
     logo: null,
     description:
-      'A bold, motion-led site for the production arm of Niche Marketing '
-      + 'Management - displays, events, fabrication and print.',
+      'A redesign for a non-profit that trains frontline health, education '
+      + 'and livelihood workers across India.',
     background:
-      'Niche Star builds the physical side of advertising - point-of-sale '
-      + 'displays, gondola ends, exhibition branding, signage and large-format '
-      + 'print - from its own 4,000 sq ft facility. The site needed to sell '
-      + 'capability to brands and agencies at a glance.',
+      'ECHO India runs the Project ECHO "all teach, all learn" model through '
+      + 'hundreds of knowledge hubs nationwide. The old site buried that scale. '
+      + 'Donors, partners and trainees each needed a clear way in, across '
+      + 'dozens of programmes and years of results.',
     story:
-      'Hand-built with GSAP on a red-and-white system anchored by the brand’s '
-      + 'arrow mark, with heavy display type and scroll-driven reveals. A '
-      + 'services menu across eight disciplines, a video gallery of finished '
-      + 'work, a five-step process walkthrough and live Google reviews take a '
-      + 'visitor from “who are you” to “contact us” in one page.',
+      'A full information architecture and design across the homepage, Who '
+      + 'We Are and every What We Do vertical. Impact numbers lead each page, '
+      + 'the ECHO model is explained as a hub-and-spoke diagram, and case '
+      + 'studies, a programme timeline, partners and testimonials build trust '
+      + 'before the "Take action" asks: attend, donate, partner, join.',
   },
   {
     slug: 'niche-cape',
