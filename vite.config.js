@@ -12,9 +12,9 @@ const india = [
   ['Full-stack developer in Dubai', 'Full-stack developer in New Delhi'],
   ['based in Dubai.', 'based in New Delhi.'],
   ['In Dubai, can join immediately.', 'Based in New Delhi, available for work.'],
-  ['content="https://mohsinxaifii.github.io/Port/">', 'content="https://mohsinxaifii.github.io/Port/in/">'],
-  ['<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta property="og:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
-  ['<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og.png">', '<meta name="twitter:image" content="https://mohsinxaifii.github.io/Port/og-in.png">'],
+  ['content="https://mohsinxaifii.github.io/work/">', 'content="https://mohsinxaifii.github.io/work/in/">'],
+  ['<meta property="og:image" content="https://mohsinxaifii.github.io/work/og.png">', '<meta property="og:image" content="https://mohsinxaifii.github.io/work/og-in.png">'],
+  ['<meta name="twitter:image" content="https://mohsinxaifii.github.io/work/og.png">', '<meta name="twitter:image" content="https://mohsinxaifii.github.io/work/og-in.png">'],
   ['<span data-status>In Dubai · can join immediately</span>', '<span data-status>Available for work</span>'],
   ['<span data-clock>Dubai</span>', '<span data-clock>New Delhi</span>'],
 ]
@@ -39,12 +39,12 @@ const indiaPage = () => ({
 })
 
 // GitHub Pages serves the repo at https://<user>.github.io/<repo>/, so the
-// production build is based at /Port/. `npm run dev` stays at the root.
+// production build is based at /work/. `npm run dev` stays at the root.
 // On a custom domain (or a <user>.github.io repo) set BASE_PATH=/ instead.
 export default defineConfig(({ command, isPreview }) => {
   writeIndia()
   return {
-    base: command === 'build' || isPreview ? (process.env.BASE_PATH || '/Port/') : '/',
+    base: command === 'build' || isPreview ? (process.env.BASE_PATH || '/work/') : '/',
     plugins: [indiaPage()],
     build: {
       target: 'es2020',
