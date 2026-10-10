@@ -26,6 +26,13 @@
   --orange: #FF8A3D;
   --violet: #B69CFF;
   --on-accent: #0D0D0B;
+  /* Lime is unreadable as text on a light ground. Small accent text uses a
+     deep olive there; big accent words turn ink with a lime highlighter
+     stroke behind them. On dark grounds both stay plain lime. */
+  --accent-text: #4F6A00;          /* small accent text on the page */
+  --accent-on-ink: var(--accent);  /* accent text on an --ink ground */
+  --accent-word: var(--ink);       /* big accent words on the page */
+  --accent-mark: var(--accent);    /* their highlighter stroke */
 
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
@@ -64,6 +71,10 @@
   --line: rgba(241, 240, 232, .12);
   --line-strong: rgba(241, 240, 232, .3);
   --paper: #F6F4EA;
+  --accent-text: var(--accent);
+  --accent-on-ink: #4F6A00;
+  --accent-word: var(--accent);
+  --accent-mark: transparent;
   color-scheme: dark;
 }
 

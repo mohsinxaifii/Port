@@ -12,7 +12,7 @@
 }
 .loader__inner { display: grid; gap: var(--s2); }
 .loader__count { font-size: clamp(96px, 18vw, 280px); font-weight: 600; line-height: .8; letter-spacing: -.07em; font-variant-numeric: tabular-nums; }
-.loader__word { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+.loader__word { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent-on-ink); }
 .loader.is-done { display: none; }
 
 /* ---------- cursor ---------- */
