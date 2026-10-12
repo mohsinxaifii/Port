@@ -16,7 +16,7 @@ const regions = {
     timezone: 'Asia/Dubai',
     tz: 'GST',
     status: 'In Dubai · can join immediately',
-    phone: '+971 55 780 5809',
+    phone: '+971 54 127 3247',
     cv: asset('/cv/Mohd-Mohsin-CV.pdf'),
   },
   in: {
