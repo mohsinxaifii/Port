@@ -7,6 +7,7 @@ import { projects } from '../data/projects.js'
 import { navMarkup, footerMarkup, cardMarkup, swap, esc } from './partials.js'
 
 import { initViewportUnit } from './viewport.js'
+import { initAnalytics } from '../modules/analytics.js'
 import { initScroll, lockScroll, unlockScroll } from './scroll.js'
 import { initNav } from './nav.js'
 import { initFitText } from './fit.js'
@@ -23,6 +24,7 @@ mount('[data-work-mount]', projects.map(cardMarkup).join(''))
 
 document.title = `${site.wordmark} — Work`
 
+initAnalytics()
 initViewportUnit()
 initScroll()
 initNav()

@@ -5,6 +5,7 @@ import '../styles/home.css'
 import { site } from '../data/site.js'
 import { navMarkup, footerMarkup, swap, esc } from './partials.js'
 import { initViewportUnit } from './viewport.js'
+import { initAnalytics } from '../modules/analytics.js'
 import { initScroll } from './scroll.js'
 import { initNav } from './nav.js'
 import { initFitText } from './fit.js'
@@ -24,8 +25,11 @@ const clauses = [
   {
     title: 'Analytics',
     body:
-      'This site ships no third-party analytics, advertising or tracking cookies. ' +
-      'If that changes, this notice will be updated first.',
+      'This site uses Umami, a cookieless analytics service, to count visits: the ' +
+      'pages viewed, approximate location (country, region, city), device, browser, ' +
+      'referring site and which buttons and links are clicked. It stores no cookies ' +
+      'and no personal data, and does not track you across other sites. There is no ' +
+      'advertising.',
   },
   {
     title: 'Contact',
@@ -47,6 +51,7 @@ mount('[data-legal-mount]', clauses.map((c) => `
 
 document.title = `${site.wordmark} — Legal`
 
+initAnalytics()
 initViewportUnit()
 initScroll()
 initNav()

@@ -44,6 +44,14 @@ export const site = {
     { label: 'LinkedIn', url: 'https://linkedin.com/in/mohsinxaifi' },
     { label: 'GitHub', url: 'https://github.com/mohsinxaifii' },
   ],
+
+  /* Umami Cloud (cloud.umami.is): paste the Website ID from Settings ->
+     Websites. Empty turns analytics off. It only loads in production
+     builds, and only counts visits on `domains`. */
+  analytics: {
+    umamiId: 'a07b98d2-591a-40db-8632-38449a7d0f32',
+    domains: 'mohsinxaifii.github.io',
+  },
 }
 
 /* Impact line: the proof as one sentence instead of a row of stats.

@@ -26,7 +26,9 @@ import { initCursor } from './modules/cursor.js'
 import { initFloaters } from './modules/floaters.js'
 import { initEnquiry } from './modules/enquiry.js'
 import { runLoader } from './modules/loader.js'
+import { initAnalytics } from './modules/analytics.js'
 
+initAnalytics()
 initPrefs()
 initScroll()
 initToys()
