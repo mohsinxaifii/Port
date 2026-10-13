@@ -14,6 +14,10 @@
       Google warns the app is unverified: it's your own script).
    5. Copy the Web app URL into `enquiry.sheetUrl` in src/data/site.js.
 
+   Instant notifications (optional): Project Settings -> Script Properties
+   -> add NTFY_TOPIC = a long random name. Subscribe to the same topic at
+   ntfy.sh/app (desktop) or in the ntfy phone app. No account needed.
+
    After editing this script, Deploy -> Manage deployments -> edit ->
    Version: New version, or the live URL keeps running the old code.
    ================================================================== */
@@ -45,6 +49,27 @@ function doPost(e) {
         body: `${body}\n\nAll enquiries: ${SpreadsheetApp.getActiveSpreadsheet().getUrl()}`,
         replyTo: /^\S+@\S+\.\S+$/.test(data.email || '') ? data.email : undefined,
       })
+    } catch (err) {}
+
+    // Instant push through ntfy.sh, if a topic is set. It lives in Project
+    // Settings -> Script Properties as NTFY_TOPIC, not in this file, because
+    // anyone who knows the topic can read it.
+    try {
+      const topic = PropertiesService.getScriptProperties().getProperty('NTFY_TOPIC')
+      if (topic) {
+        const who = data.name || data.company || data.email || 'Someone'
+        UrlFetchApp.fetch(`https://ntfy.sh/${topic}`, {
+          method: 'post',
+          payload: `${who}: ${String(data.message || '(no message)').slice(0, 300)}`,
+          headers: {
+            Title: `New enquiry: ${data.type || 'Portfolio'}`,
+            Tags: 'envelope',
+            Priority: 'high',
+            Click: SpreadsheetApp.getActiveSpreadsheet().getUrl(),
+          },
+          muteHttpExceptions: true,
+        })
+      }
     } catch (err) {}
 
     return reply({ ok: true })

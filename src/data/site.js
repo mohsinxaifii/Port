@@ -46,11 +46,13 @@ export const site = {
   ],
 
   /* Contact form delivery. Each message goes to both at once and counts as
-     sent when either one gets it. `sheetUrl` is the Web app URL of
-     scripts/enquiry-inbox.gs (saves every message to your Google Sheet and
-     emails you); FormSubmit relays to `email` above as the backup. */
+     sent when either one confirms. `formspree` is the form endpoint
+     (formspree.io -> the form -> Integration); `sheetUrl` is the Web app
+     URL of scripts/enquiry-inbox.gs, which saves a row to a Google Sheet
+     and emails you. Leave either empty to drop that route. */
   enquiry: {
-    sheetUrl: '',
+    formspree: 'https://formspree.io/f/xaeqdreo',
+    sheetUrl: 'https://script.google.com/macros/s/AKfycbxpCWTUgIdM9JaNPR6LVv3_Hj6XCJNfJu464_UYyVC52NoqWrD1Hiy_8w3_mO4c_EZz/exec',
   },
 
   /* Umami Cloud (cloud.umami.is): paste the Website ID from Settings ->

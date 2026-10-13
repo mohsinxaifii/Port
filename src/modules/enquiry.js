@@ -1,10 +1,9 @@
 /* Contact form. The site is static, so each message goes out two ways at
-   once: to a Google Sheet through your own Apps Script
-   (scripts/enquiry-inbox.gs, which also emails you), and through
-   FormSubmit to site.email as the backup. It counts as sent when either
-   one confirms. Each route retries on its own, and the draft is kept in
-   the browser until a send gets through, so a note is never lost and the
-   visitor never leaves the page. */
+   once (site.enquiry): to Formspree, and to a Google Sheet through your
+   own Apps Script (scripts/enquiry-inbox.gs), which also emails you. It
+   counts as sent when either one confirms. Each route retries on its own,
+   and the draft is kept in the browser until a send gets through, so a
+   note is never lost and the visitor never leaves the page. */
 
 import { $, esc } from './utils.js'
 import { site } from '../data/site.js'
@@ -12,8 +11,7 @@ import { play } from './sound.js'
 import { toast } from './toast.js'
 import { track } from './analytics.js'
 
-const FORMSUBMIT = `https://formsubmit.co/ajax/${site.email}`
-const SHEET = site.enquiry?.sheetUrl
+const { formspree: FORMSPREE, sheetUrl: SHEET } = site.enquiry ?? {}
 
 // Fields that went in, never their contents: analytics gets the shape of
 // the note, the inbox gets the note.
@@ -39,23 +37,24 @@ async function request(url, init, ok) {
   try {
     const res = await fetch(url, { method: 'POST', ...init, signal: ctrl.signal })
     const body = await res.json().catch(() => ({}))
-    if (!res.ok || !ok(body)) throw new Error(body.message || body.error || res.statusText || 'send failed')
+    if (!res.ok || !ok(body)) throw new Error(body.errors?.map((e) => e.message).join('; ') || body.error || res.statusText || 'send failed')
   } finally {
     clearTimeout(timer)
   }
 }
 
 const routes = [
+  // Formspree answers {ok: true}, or {errors: [{message}]} on a 4xx.
+  FORMSPREE && ((payload) => request(FORMSPREE, {
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(payload),
+  }, (b) => b.ok === true)),
   // text/plain keeps it a "simple" request: Apps Script can't answer a CORS
   // preflight, but it does allow the redirect it replies with.
   SHEET && ((payload) => request(SHEET, {
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload),
   }, (b) => b.ok === true)),
-  (payload) => request(FORMSUBMIT, {
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(payload),
-  }, (b) => String(b.success) === 'true'),
 ].filter(Boolean)
 
 // Three tries, 1s then 3s apart: rides out a dropped request or a slow relay.
@@ -71,7 +70,7 @@ async function retry(send, payload) {
 
 // Every route runs to the end; the first to confirm resolves this.
 const deliver = (payload) => Promise.any(routes.map((send) => retry(send, payload)))
-  .catch((agg) => { throw agg.errors?.[0] ?? agg })
+  .catch((agg) => { throw agg.errors?.[0] ?? new Error('no delivery route set') })
 
 // The draft is kept in this browser until it sends, so a failed send, a
 // reload or a closed tab never loses what the visitor typed.
@@ -128,12 +127,13 @@ export function initEnquiry() {
     send.disabled = true
     status.textContent = 'Sending...'
     try {
+      const { _honey, ...fields } = data
       await deliver({
-        ...data,
+        ...fields,
         ...context(),
         _subject: `Portfolio: ${data.type} from ${who}`,
-        _template: 'table',
-        _captcha: 'false',
+        // Reply in your inbox goes straight to the visitor.
+        ...(fields.email?.trim() && { _replyto: fields.email.trim() }),
       })
       store.clear()
       track('enquiry-sent', { type: data.type, fields: filled(data) })
