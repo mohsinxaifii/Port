@@ -6,7 +6,7 @@
    every dev and build run, so adding or removing an entry here is all
    it takes.
 
-   Order is hand-picked and is the order the site shows. The first four
+   Order is hand-picked and is the order the site shows. The first five
    are featured.
 
    `featured: true` puts it on the index (the first four fill the lead
@@ -162,6 +162,41 @@ export const projects = [
       + 'locator for offline stockists.',
   },
   {
+    slug: 'zinara',
+    title: 'Zinara',
+    client: 'Zinara',
+    year: null,
+    isNew: false,
+    featured: true,
+    upcoming: false,
+    role: ROLE,
+    stack: ['Shopify', 'Liquid', 'Laravel', 'Admin API', 'Google Sheets API', 'PHP'],
+    url: 'https://zinara.in',
+    ...shots('zinara'),
+    thumbAlt: 'Zinara - Evil Eye Collection hero, look chic while keeping away bad vibes',
+    logo: null,
+    description:
+      'The storefront and the back office behind it: a Shopify store for a '
+      + 'lab-grown diamond brand, plus the inventory, reviews and wishlist '
+      + 'systems I built to run it.',
+    background:
+      'Zinara sells IGI- and SGL-certified lab-grown diamond jewellery, '
+      + 'hallmarked by BIS. Online, trust has to sit right next to the price, '
+      + 'and a variant-heavy catalogue has to stay accurate in Shopify without '
+      + 'a team re-typing it by hand.',
+    story:
+      'On the front end, an editorial Shopify theme puts certification, '
+      + 'lifetime exchange and insured shipping where hesitation starts. Behind '
+      + 'it sit three services I designed and built. Zinara Inventory is a '
+      + 'Laravel app that treats a Google Sheet as the product master and syncs '
+      + 'products, variants, prices, stock levels and metafields into Shopify '
+      + 'through the Admin API, on queued jobs with retries, rate-limit backoff '
+      + 'and a live sync-status dashboard. A reviews bridge pipes Judge.me '
+      + 'reviews into the theme’s own native section through webhooks and '
+      + 'metaobjects. An HMAC-signed wishlist service keeps a logged-in '
+      + 'customer’s list in sync across every device.',
+  },
+  {
     slug: 'rasayanam',
     title: 'Rasayanam',
     client: 'Rasayanam',
@@ -189,41 +224,6 @@ export const projects = [
       + 'showing a single SKU. Build-your-own-box bundles are designed to lift '
       + 'order value, an order-verification page tackles counterfeit worries, '
       + 'and review-led proof runs through every template.',
-  },
-  {
-    slug: 'zinara',
-    title: 'Zinara',
-    client: 'Zinara',
-    year: null,
-    isNew: false,
-    featured: false,
-    upcoming: false,
-    role: ROLE,
-    stack: ['Shopify', 'Liquid', 'Laravel', 'Admin API', 'Google Sheets API', 'PHP'],
-    url: 'https://zinara.in',
-    ...shots('zinara'),
-    thumbAlt: 'Zinara - Double Take, two stones in 18K gold vermeil',
-    logo: null,
-    description:
-      'The storefront and the back office behind it: a Shopify store for a '
-      + 'lab-grown diamond brand, plus the inventory, reviews and wishlist '
-      + 'systems I built to run it.',
-    background:
-      'Zinara sells IGI- and SGL-certified lab-grown diamond jewellery, '
-      + 'hallmarked by BIS. Online, trust has to sit right next to the price, '
-      + 'and a variant-heavy catalogue has to stay accurate in Shopify without '
-      + 'a team re-typing it by hand.',
-    story:
-      'On the front end, an editorial Shopify theme puts certification, '
-      + 'lifetime exchange and insured shipping where hesitation starts. Behind '
-      + 'it sit three services I designed and built. Zinara Inventory is a '
-      + 'Laravel app that treats a Google Sheet as the product master and syncs '
-      + 'products, variants, prices, stock levels and metafields into Shopify '
-      + 'through the Admin API, on queued jobs with retries, rate-limit backoff '
-      + 'and a live sync-status dashboard. A reviews bridge pipes Judge.me '
-      + 'reviews into the theme’s own native section through webhooks and '
-      + 'metaobjects. An HMAC-signed wishlist service keeps a logged-in '
-      + 'customer’s list in sync across every device.',
   },
   {
     slug: 'zinara-back-office',
