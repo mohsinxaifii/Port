@@ -45,6 +45,14 @@ export const site = {
     { label: 'GitHub', url: 'https://github.com/mohsinxaifii' },
   ],
 
+  /* Contact form delivery. Each message goes to both at once and counts as
+     sent when either one gets it. `sheetUrl` is the Web app URL of
+     scripts/enquiry-inbox.gs (saves every message to your Google Sheet and
+     emails you); FormSubmit relays to `email` above as the backup. */
+  enquiry: {
+    sheetUrl: '',
+  },
+
   /* Umami Cloud (cloud.umami.is): paste the Website ID from Settings ->
      Websites. Empty turns analytics off. It only loads in production
      builds, and only counts visits on `domains`. */
